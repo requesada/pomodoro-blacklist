@@ -1,0 +1,19 @@
+{
+    "manifest_version": 2,
+    "name": "Pomodoro Blacklist",
+    "version": "1.0",
+  
+    "description": "Work timer that uses the Pomodoro Technique and blocks sites.",
+  
+    "icons": {
+      "": ""
+    },
+  
+    "content_scripts": [
+      {
+        "matches": [""],
+        "js": [""]
+      }
+    ]
+  }
+  
