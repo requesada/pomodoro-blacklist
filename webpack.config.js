@@ -1,12 +1,15 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const path = require('path')
+import HtmlWebpackPlugin from 'html-webpack-plugin'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url';
 
-module.exports = {
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+export default {
   entry: 'index.js',
   mode: 'development',
   output: {
     path: path.resolve(__dirname, './dist'),
-    filename: 'index_bundle.js',
+    filename: 'index-bundle.js',
   },
   target: 'web',
   devServer: {
