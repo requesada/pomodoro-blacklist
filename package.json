@@ -30,6 +30,7 @@
     "react-dom": "^18.2.0"
   },
   "eslintConfig": {
+    "ignorePatterns": ["/dist"],
 		"env": {
       "browser": true,
 			"es2024": true
