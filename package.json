@@ -47,7 +47,16 @@
 		],
 		"extends": "plugin:unicorn/recommended",
 		"rules": {
-			"unicorn/better-regex": "warn"
+			"unicorn/better-regex": "warn",
+      "unicorn/filename-case": [
+        "error",
+        {
+          "cases": {
+            "kebabCase": true,
+            "pascalCase": true
+          }
+        }
+      ]
 		}
 	}
 }

@@ -1,4 +1,4 @@
-const tempColors = {
+const temporaryColors = {
       "lightGreen": {
         50: "#F3FBF3",
         100: "#E8F8E7",
