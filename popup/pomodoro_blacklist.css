@@ -1,0 +1,25 @@
+html,
+body {
+    width: 350px;
+    background-color: #7D98A1;
+}
+
+#clock {
+    display: flex;
+    flex-direction: column;
+}
+
+#counter {
+    display: flex;
+    justify-content: center;
+}
+
+#display-et-al {
+    display: flex;
+    justify-content: center;
+}
+
+#start-button {
+    display: flex;
+    justify-content: center;
+}
