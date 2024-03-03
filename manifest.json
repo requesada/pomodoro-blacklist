@@ -6,13 +6,13 @@
     "description": "Work timer that uses the Pomodoro Technique and blocks sites.",
   
     "icons": {
-      "48": "src/icons/beasts-48.png"
+      "48": "icons/clock.png"
     },
 
     "browser_action": {
-        "default_icon": "src/icons/beasts-48.png",
+        "default_icon": "icons/clock.png",
         "default_title": "Pomodoro Blacklist",
-        "default_popup": "dist/index.html"
+        "default_popup": "popup/pomodoro_blacklist.html"
     }
   }
   
