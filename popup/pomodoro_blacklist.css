@@ -23,3 +23,8 @@ body {
     display: flex;
     justify-content: center;
 }
+
+#options-and-reset {
+    display: flex;
+    flex-direction: column;
+}
