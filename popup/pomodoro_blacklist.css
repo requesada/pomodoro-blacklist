@@ -1,6 +1,9 @@
 :root {
     --cadetGray: #7D98A1;
     --richBlack: #001011;
+    --sliderThumbWidth: 9px;
+    --svgWidth: 10px;
+    --svgHeight: 65px;
 }
 
 html,
@@ -34,6 +37,27 @@ input[type="range"][orient="vertical"]::-moz-range-thumb {
     border: 1px solid red;
     display: flex;
     flex-direction: column;
+    align-items: center;
+}
+
+svg {
+    width: var(--svgWidth);
+    height: var(--svgHeight);
+}
+
+polygon {
+    fill: var(--richBlack);
+}
+
+#slider-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: calc(1.5 * var(--sliderThumbWidth) + var(--svgWidth))
+}
+
+#volume-image {
+    display: flex;
     align-items: center;
 }
 
