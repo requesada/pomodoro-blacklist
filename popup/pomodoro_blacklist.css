@@ -1,7 +1,40 @@
+:root {
+    --cadetGray: #7D98A1;
+    --richBlack: #001011;
+}
+
 html,
 body {
     width: 350px;
-    background-color: #7D98A1;
+    background-color: var(--cadetGray);
+}
+
+input[type="range"][orient="vertical"] {
+    writing-mode: bt-lr;
+    appearance: slider-vertical;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 2px;
+    height: 65px;
+    background: var(--richBlack);
+    outline: none;
+}
+
+input[type="range"][orient="vertical"]::-webkit-slider-thumb,
+input[type="range"][orient="vertical"]::-moz-range-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 9px;
+    height: 2px;
+    background: var(--richBlack);
+    cursor: pointer;
+}
+
+#volume {
+    border: 1px solid red;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #clock {
