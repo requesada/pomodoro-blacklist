@@ -6,6 +6,11 @@
     --svgHeight: 65px;
 }
 
+@font-face {
+    font-family: josefin;
+    src: url(../fonts/josefin-sans-variable-weight.ttf);
+}
+
 html,
 body {
     width: 350px;
@@ -38,6 +43,7 @@ input[type="range"][orient="vertical"]::-moz-range-thumb {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 
 svg {
@@ -71,9 +77,23 @@ polygon {
     justify-content: center;
 }
 
-#display-et-al {
+#middle-row {
+    display: flex;
+    justify-content: space-around;
+}
+
+#display {
     display: flex;
     justify-content: center;
+    align-items: center;
+    width: 225px;
+    height: 110px;
+    background-color: white;
+    color: var(--richBlack);
+    border-radius: 10px;
+    border: 1px solid var(--richBlack);
+    font-family: josefin;
+    font-size: 64px;
 }
 
 #start-button {
@@ -84,4 +104,6 @@ polygon {
 #options-and-reset {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
