@@ -8,6 +8,8 @@
     --volumeSvgHeight: 65px;
     --oliveSize: 24px;
     --oliveStrokes: 1px;
+    --oliveColor: var(--richBlack);
+    --pimentoColor: var(--richBlack);
 }
 
 @font-face {

@@ -1,3 +1,6 @@
+const lightGreen = '#92DE91'
+const richBlack = '#001011'
+
 class OliveCounter extends HTMLElement {
     constructor() {
         super()
@@ -17,11 +20,11 @@ class OliveCounter extends HTMLElement {
                     stroke-width: var(--oliveStrokes);
                 }
                 #olive {
-                    fill: var(--lightGreen);
+                    fill: var(--oliveColor);
                     r: calc(var(--oliveSize) / 2 - var(--oliveStrokes));
                 }
                 #pimento {
-                    fill: var(--tomato);
+                    fill: var(--pimentoColor);
                     r: calc(0.47 * var(--oliveSize) / 2 - var(--oliveStrokes));
                 }
             </style>
@@ -42,3 +45,9 @@ class OliveCounter extends HTMLElement {
 }
 
 customElements.define('olive-counter', OliveCounter)
+
+const rootElement = document.querySelector(':root')
+const setOliveFillGreen = () => {
+    rootElement.style.setProperty('--oliveColor', lightGreen)
+}
+// setOliveFillGreen()
