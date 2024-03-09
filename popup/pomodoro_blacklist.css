@@ -1,9 +1,13 @@
 :root {
     --cadetGray: #7D98A1;
     --richBlack: #001011;
+    --lightGreen: #92DE91;
+    --tomato: #F95738;
     --sliderThumbWidth: 9px;
-    --svgWidth: 10px;
-    --svgHeight: 65px;
+    --volumeSvgWidth: 10px;
+    --volumeSvgHeight: 65px;
+    --oliveSize: 24px;
+    --oliveStrokes: 1px;
 }
 
 @font-face {
@@ -45,9 +49,9 @@ input[type="range"][orient="vertical"]::-moz-range-thumb {
     justify-content: center;
 }
 
-svg {
-    width: var(--svgWidth);
-    height: var(--svgHeight);
+#volume-svg {
+    width: var(--volumeSvgWidth);
+    height: var(--volumeSvgHeight);
 }
 
 polygon {
@@ -58,7 +62,7 @@ polygon {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: calc(1.5 * var(--sliderThumbWidth) + var(--svgWidth))
+    width: calc(1.5 * var(--sliderThumbWidth) + var(--volumeSvgWidth))
 }
 
 #volume-image {

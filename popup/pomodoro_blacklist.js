@@ -4,14 +4,37 @@ class OliveCounter extends HTMLElement {
         const shadowRoot = this.attachShadow({mode: 'open'})
         const template = document.createElement('template')
         template.innerHTML = `
+            <style>
+                svg {
+                    width: var(--oliveSize);
+                    height: var(--oliveSize);
+                }
+                #olive,
+                #pimento {
+                    cx: calc(var(--oliveSize) / 2);
+                    cy: calc(var(--oliveSize) / 2);
+                    stroke: var(--richBlack);
+                    stroke-width: var(--oliveStrokes);
+                }
+                #olive {
+                    fill: var(--lightGreen);
+                    r: calc(var(--oliveSize) / 2 - var(--oliveStrokes));
+                }
+                #pimento {
+                    fill: var(--tomato);
+                    r: calc(0.47 * var(--oliveSize) / 2 - var(--oliveStrokes));
+                }
+            </style>
             <svg
                 version="1.1"
                 xmlns="http://www.w3.org/2000/svg"
-                width="24px"
-                height="24px"
             >
-                <circle cx="12" cy="12" r="11px" stroke="#001011" stroke-width="1px" fill="#92DE91" />
-                <circle cx="12" cy="12" r="4.5px" stroke="#001011" stroke-width="1px" fill="#F95738" />
+                <circle 
+                    id="olive"
+                />
+                <circle 
+                    id="pimento"
+                />
             </svg>
         `
         shadowRoot.append(template.content.cloneNode(true))
