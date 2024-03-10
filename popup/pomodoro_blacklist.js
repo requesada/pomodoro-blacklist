@@ -8,9 +8,14 @@ class OliveCounter extends HTMLElement {
         const template = document.createElement('template')
         template.innerHTML = `
             <style>
-                svg {
+                :host {
                     width: var(--oliveSize);
                     height: var(--oliveSize);
+                    display: block;
+                }
+                svg {
+                    width: 100%;
+                    height: 100%;
                 }
                 #olive,
                 #pimento {
@@ -28,26 +33,46 @@ class OliveCounter extends HTMLElement {
                     r: calc(0.47 * var(--oliveSize) / 2 - var(--oliveStrokes));
                 }
             </style>
-            <svg
-                version="1.1"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <circle 
-                    id="olive"
-                />
-                <circle 
-                    id="pimento"
-                />
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <circle id="olive" />
+                <circle id="pimento" />
             </svg>
         `
         shadowRoot.append(template.content.cloneNode(true))
+    }
+
+    static get observedAttributes() {
+        return ['test']
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+        console.log(name, oldValue, newValue)
     }
 }
 
 customElements.define('olive-counter', OliveCounter)
 
-const rootElement = document.querySelector(':root')
-const setOliveFillGreen = () => {
-    rootElement.style.setProperty('--oliveColor', lightGreen)
+const changeTestAttribute = (event) => {
+    event.target.attributes.test.value = 'hi'
 }
-// setOliveFillGreen()
+document.querySelector('#counter-0').addEventListener('click', changeTestAttribute)
+
+const timer = (startingMinutes) => {
+    let minutes = startingMinutes
+    let seconds = 0
+    let intervalID
+
+    const subtractSecond = () => {
+        console.log({minutes, seconds})
+        if (seconds === 0 && minutes > 0) {
+            minutes--
+            seconds = 59
+        } else if (seconds > 0) {
+            seconds--
+        } else if (seconds === 0 && minutes === 0) {
+            clearInterval(intervalID)
+        }
+    }
+
+    intervalID = setInterval(subtractSecond, 1000)
+}
