@@ -63,16 +63,18 @@ const timer = (startingMinutes) => {
     let intervalID
 
     const subtractSecond = () => {
-        console.log({minutes, seconds})
+        document.querySelector('#display').innerHTML = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
         if (seconds === 0 && minutes > 0) {
             minutes--
             seconds = 59
         } else if (seconds > 0) {
             seconds--
-        } else if (seconds === 0 && minutes === 0) {
+        } else {
             clearInterval(intervalID)
         }
     }
 
     intervalID = setInterval(subtractSecond, 1000)
 }
+
+timer(2)

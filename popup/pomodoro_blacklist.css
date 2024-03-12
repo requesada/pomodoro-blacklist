@@ -17,6 +17,11 @@
     src: url(../fonts/josefin-sans-variable-weight.ttf);
 }
 
+@font-face {
+    font-family: bedstead;
+    src: url(../fonts/bedstead.otf);
+}
+
 html,
 body {
     width: 350px;
@@ -102,7 +107,7 @@ polygon {
     color: var(--richBlack);
     border-radius: 10px;
     border: 1px solid var(--richBlack);
-    font-family: josefin;
+    font-family: bedstead;
     font-size: 64px;
 }
 
