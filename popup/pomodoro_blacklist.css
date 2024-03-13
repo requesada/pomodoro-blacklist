@@ -147,6 +147,15 @@ polygon {
     transform: translateY(3px);
 }
 
+#stop-button:hover {
+    background-color: var(--tomato);
+}
+
+#stop-button:active {
+    box-shadow: var(--richBlack) 0 1px;
+    transform: translateY(5px);
+}
+
 #options-and-reset {
     display: flex;
     flex-direction: column;
