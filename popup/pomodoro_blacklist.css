@@ -1,176 +1,204 @@
 :root {
-    --cadetGray: #7D98A1;
-    --richBlack: #001011;
-    --lightGreen: #92DE91;
-    --lighterGreen: #D4F2D4;
-    --tomato: #F95738;
-    --lightTomato: #FDBDB0;
-    --sliderThumbWidth: 9px;
-    --volumeSvgWidth: 10px;
-    --volumeSvgHeight: 65px;
-    --oliveSize: 24px;
-    --oliveStrokes: 1px;
-    --oliveColor: var(--richBlack);
-    --pimentoColor: var(--richBlack);
+  --cadetGray: #7D98A1;
+  --richBlack: #001011;
+  --lightGreen: #92DE91;
+  --lighterGreen: #D4F2D4;
+  --tomato: #F95738;
+  --lightTomato: #FDBDB0;
+  --sliderThumbWidth: 9px;
+  --volumeSvgWidth: 10px;
+  --volumeSvgHeight: 65px;
+  --oliveSize: 24px;
+  --oliveStrokes: 1px;
+  --oliveColor: var(--richBlack);
+  --pimentoColor: var(--richBlack);
 }
 
 @font-face {
-    font-family: josefin;
-    src: url(../fonts/josefin-sans-variable-weight.ttf);
+  font-family: josefin;
+  src: url(../fonts/josefin-sans-variable-weight.ttf);
 }
 
 @font-face {
-    font-family: bedstead;
-    src: url(../fonts/bedstead.otf);
+  font-family: bedstead;
+  src: url(../fonts/bedstead.otf);
 }
 
 html,
 body {
-    width: 350px;
-    background-color: var(--cadetGray);
+  width: 350px;
+  background-color: var(--cadetGray);
+}
+
+.counter-olive {
+  width: var(--oliveSize);
+  height: var(--oliveSize);
+}
+
+.olive-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.olive,
+.pimento {
+  cx: calc(var(--oliveSize) / 2);
+  cy: calc(var(--oliveSize) / 2);
+  stroke: var(--richBlack);
+  stroke-width: var(--oliveStrokes);
+}
+
+.olive {
+  fill: var(--oliveColor);
+  r: calc(var(--oliveSize) / 2 - var(--oliveStrokes));
+}
+
+.pimento {
+  fill: var(--pimentoColor);
+  r: calc(0.47 * var(--oliveSize) / 2 - var(--oliveStrokes));
 }
 
 input[type="range"][orient="vertical"] {
-    writing-mode: bt-lr;
-    appearance: slider-vertical;
-    -webkit-appearance: none;
-    appearance: none;
-    width: 2px;
-    height: 65px;
-    background: var(--richBlack);
-    outline: none;
+  writing-mode: bt-lr;
+  appearance: slider-vertical;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 2px;
+  height: 65px;
+  background: var(--richBlack);
+  outline: none;
 }
 
 input[type="range"][orient="vertical"]::-webkit-slider-thumb,
 input[type="range"][orient="vertical"]::-moz-range-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 9px;
-    height: 2px;
-    background: var(--richBlack);
-    cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 9px;
+  height: 2px;
+  background: var(--richBlack);
+  cursor: pointer;
 }
 
 #volume {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
 }
 
 #volume-svg {
-    width: var(--volumeSvgWidth);
-    height: var(--volumeSvgHeight);
+  width: var(--volumeSvgWidth);
+  height: var(--volumeSvgHeight);
 }
 
 polygon {
-    fill: var(--richBlack);
+  fill: var(--richBlack);
 }
 
 #slider-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: calc(1.5 * var(--sliderThumbWidth) + var(--volumeSvgWidth))
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: calc(1.5 * var(--sliderThumbWidth) + var(--volumeSvgWidth))
 }
 
 #volume-image {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 #volume-label {
-    font-family: josefin;
-    font-size: 16px;
+  font-family: josefin;
+  font-size: 16px;
 }
 
 #clock {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #counter {
-    display: flex;
-    justify-content: center;
-    width: 100%;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 #middle-row {
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
 }
 
 #display {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 225px;
-    height: 110px;
-    background-color: white;
-    color: var(--richBlack);
-    border-radius: 10px;
-    border: 1px solid var(--richBlack);
-    font-family: bedstead;
-    font-size: 64px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 225px;
+  height: 110px;
+  background-color: white;
+  color: var(--richBlack);
+  border-radius: 10px;
+  border: 1px solid var(--richBlack);
+  font-family: bedstead;
+  font-size: 64px;
 }
 
 #start-button,
 #stop-button {
-    border-radius: 10px;
-    border: 1px solid var(--richBlack);
-    padding-top: 8px;
-    width: 225px;
-    font-family: josefin;
-    font-size: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--richBlack);
+  padding-top: 8px;
+  width: 225px;
+  font-family: josefin;
+  font-size: 40px;
 }
 
 #start-button {
-    background-color: var(--lighterGreen);
-    box-shadow: var(--richBlack) 0 6px;
+  background-color: var(--lighterGreen);
+  box-shadow: var(--richBlack) 0 6px;
 }
 
 #start-button:hover {
-    background-color: var(--lightGreen);
+  background-color: var(--lightGreen);
 }
 
 #start-button:active {
-    box-shadow: var(--richBlack) 0 1px;
-    transform: translateY(5px);
+  box-shadow: var(--richBlack) 0 1px;
+  transform: translateY(5px);
 }
 
 #stop-button {
-    background-color: var(--lightTomato);
-    box-shadow: var(--richBlack) 0 3px;
-    transform: translateY(3px);
+  background-color: var(--lightTomato);
+  box-shadow: var(--richBlack) 0 3px;
+  transform: translateY(3px);
 }
 
 #stop-button:hover {
-    background-color: var(--tomato);
+  background-color: var(--tomato);
 }
 
 #stop-button:active {
-    box-shadow: var(--richBlack) 0 1px;
-    transform: translateY(5px);
+  box-shadow: var(--richBlack) 0 1px;
+  transform: translateY(5px);
 }
 
 #options-and-reset {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
 }
 
 #options-button {
-    font-family: josefin;
-    font-size: 16px;
+  font-family: josefin;
+  font-size: 16px;
 }
 
 #reset-button {
-    font-family: josefin;
-    font-size: 8px;
-    text-transform: uppercase;
+  font-family: josefin;
+  font-size: 8px;
+  text-transform: uppercase;
 }
