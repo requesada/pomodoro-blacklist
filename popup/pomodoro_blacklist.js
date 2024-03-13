@@ -58,8 +58,8 @@ const changeTestAttribute = (event) => {
 document.querySelector('#counter-0').addEventListener('click', changeTestAttribute)
 
 const timer = (startingMinutes) => {
-    let minutes = startingMinutes
-    let seconds = 0
+    let minutes = startingMinutes - 1
+    let seconds = 59
     let intervalID
 
     const subtractSecond = () => {
@@ -77,4 +77,9 @@ const timer = (startingMinutes) => {
     intervalID = setInterval(subtractSecond, 1000)
 }
 
-timer(2)
+const clickStartButton = () => {
+    const startButton = document.querySelector('#start-button')
+    startButton.id = 'stop-button'
+    startButton.innerHTML = 'Stop'
+    timer(25)
+}

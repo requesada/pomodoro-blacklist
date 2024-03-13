@@ -2,7 +2,9 @@
     --cadetGray: #7D98A1;
     --richBlack: #001011;
     --lightGreen: #92DE91;
+    --lighterGreen: #D4F2D4;
     --tomato: #F95738;
+    --lightTomato: #FDBDB0;
     --sliderThumbWidth: 9px;
     --volumeSvgWidth: 10px;
     --volumeSvgHeight: 65px;
@@ -54,6 +56,7 @@ input[type="range"][orient="vertical"]::-moz-range-thumb {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 30px;
 }
 
 #volume-svg {
@@ -85,16 +88,19 @@ polygon {
 #clock {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 #counter {
     display: flex;
     justify-content: center;
+    width: 100%;
 }
 
 #middle-row {
     display: flex;
     justify-content: space-around;
+    width: 100%;
 }
 
 #display {
@@ -111,9 +117,34 @@ polygon {
     font-size: 64px;
 }
 
+#start-button,
+#stop-button {
+    border-radius: 10px;
+    border: 1px solid var(--richBlack);
+    padding-top: 8px;
+    width: 225px;
+    font-family: josefin;
+    font-size: 40px;
+}
+
 #start-button {
-    display: flex;
-    justify-content: center;
+    background-color: var(--lighterGreen);
+    box-shadow: var(--richBlack) 0 6px;
+}
+
+#start-button:hover {
+    background-color: var(--lightGreen);
+}
+
+#start-button:active {
+    box-shadow: var(--richBlack) 0 1px;
+    transform: translateY(5px);
+}
+
+#stop-button {
+    background-color: var(--lightTomato);
+    box-shadow: var(--richBlack) 0 3px;
+    transform: translateY(3px);
 }
 
 #options-and-reset {
@@ -121,6 +152,7 @@ polygon {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 30px;
 }
 
 #options-button {
@@ -132,9 +164,4 @@ polygon {
     font-family: josefin;
     font-size: 8px;
     text-transform: uppercase;
-}
-
-#start-button {
-    font-family: josefin;
-    font-size: 40px;
 }
