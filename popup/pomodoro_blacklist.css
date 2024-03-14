@@ -10,8 +10,6 @@
   --volumeSvgHeight: 65px;
   --oliveSize: 24px;
   --oliveStrokes: 1px;
-  --oliveColor: var(--richBlack);
-  --pimentoColor: var(--richBlack);
 }
 
 @font-face {
@@ -49,13 +47,48 @@ body {
 }
 
 .olive {
-  fill: var(--oliveColor);
   r: calc(var(--oliveSize) / 2 - var(--oliveStrokes));
 }
 
 .pimento {
-  fill: var(--pimentoColor);
   r: calc(0.47 * var(--oliveSize) / 2 - var(--oliveStrokes));
+}
+
+.ready {
+  fill: var(--richBlack)
+}
+
+@keyframes blinkingOlive {
+  from {fill: var(--richBlack);}
+  to {fill: var(--lightGreen);}
+}
+
+@keyframes blinkingPimento {
+  from {fill: var(--richBlack);}
+  to {fill: var(--tomato);}
+}
+
+.counting-work,
+.counting-break {
+  animation-duration: 0.5s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.counting-work {
+  animation-name: blinkingOlive;
+}
+
+.counting-break {
+  animation-name: blinkingPimento;
+}
+
+.done-work {
+  fill: var(--lightGreen)
+}
+
+.done-break {
+  fill: var(--tomato)
 }
 
 input[type="range"][orient="vertical"] {

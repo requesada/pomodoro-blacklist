@@ -1,3 +1,14 @@
+let round = 0
+const phases = ['ready', 'counting', 'done']
+const directives = ['work', 'break']
+
+const state = [
+  {phase: 'ready', directive: 'work'},
+  {phase: 'ready', directive: 'work'},
+  {phase: 'ready', directive: 'work'},
+  {phase: 'ready', directive: 'work'}
+]
+
 const timer = (startingMinutes, setTime) => {
   if (setTime) {
     document.querySelector('#display').innerHTML = `${String(startingMinutes).padStart(2, '0')}:00`
