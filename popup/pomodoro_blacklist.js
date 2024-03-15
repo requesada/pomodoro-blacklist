@@ -1,13 +1,30 @@
 let round = 0
-const phases = ['ready', 'counting', 'done']
-const directives = ['work', 'break']
 
-const state = [
-  {phase: 'ready', directive: 'work'},
-  {phase: 'ready', directive: 'work'},
-  {phase: 'ready', directive: 'work'},
-  {phase: 'ready', directive: 'work'}
-]
+let phaseIndex = 0
+const phase = ['ready', 'counting', 'done']
+
+let directiveIndex = 0
+const directive = ['work', 'break']
+
+const incrementRound = () => {
+  if (round < 3) {
+    round++
+  } else {
+    round = 0
+  }
+}
+
+const incrementPhase = () => {
+  if (phaseIndex < phase.length - 1) {
+    phaseIndex++
+  } else {
+    phaseIndex = 0
+  }
+}
+
+const incrementDirective = () => {
+  directiveIndex = directiveIndex === 0 ? 1 : 0
+}
 
 const timer = (startingMinutes, setTime) => {
   if (setTime) {
