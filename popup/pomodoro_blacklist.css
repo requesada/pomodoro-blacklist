@@ -38,19 +38,19 @@ body {
   height: 100%;
 }
 
-.olive,
-.pimento {
+.work,
+.break {
   cx: calc(var(--oliveSize) / 2);
   cy: calc(var(--oliveSize) / 2);
   stroke: var(--richBlack);
   stroke-width: var(--oliveStrokes);
 }
 
-.olive {
+.work {
   r: calc(var(--oliveSize) / 2 - var(--oliveStrokes));
 }
 
-.pimento {
+.break {
   r: calc(0.47 * var(--oliveSize) / 2 - var(--oliveStrokes));
 }
 
@@ -178,8 +178,7 @@ polygon {
   font-size: 64px;
 }
 
-#start-button,
-#stop-button {
+#timer-button {
   border-radius: 10px;
   border: 1px solid var(--richBlack);
   padding-top: 8px;
@@ -188,31 +187,31 @@ polygon {
   font-size: 40px;
 }
 
-#start-button {
+.start-button {
   background-color: var(--lighterGreen);
   box-shadow: var(--richBlack) 0 6px;
 }
 
-#start-button:hover {
+.start-button:hover {
   background-color: var(--lightGreen);
 }
 
-#start-button:active {
+.start-button:active {
   box-shadow: var(--richBlack) 0 1px;
   transform: translateY(5px);
 }
 
-#stop-button {
+.stop-button {
   background-color: var(--lightTomato);
   box-shadow: var(--richBlack) 0 3px;
   transform: translateY(3px);
 }
 
-#stop-button:hover {
+.stop-button:hover {
   background-color: var(--tomato);
 }
 
-#stop-button:active {
+.stop-button:active {
   box-shadow: var(--richBlack) 0 1px;
   transform: translateY(5px);
 }
