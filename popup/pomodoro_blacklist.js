@@ -1,7 +1,7 @@
 let round = 0
 
 let phaseIndex = 0
-const phase = ['work counting', 'work done', 'break counting', 'break done']
+const phase = ['work-counting', 'work-done', 'break-counting', 'break-done']
 
 let intervalID
 let startingMinutes = 25
@@ -14,6 +14,11 @@ const stopTimer = () => {
   phaseIndex = 0
   resetTimer()
 }
+
+const getCurrentPlace = () => {
+  return document.querySelector(`#round-${round}`).className
+}
+
 
 const timer = () => {
   let minutes = startingMinutes - 1

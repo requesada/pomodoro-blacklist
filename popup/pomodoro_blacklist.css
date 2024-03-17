@@ -28,33 +28,36 @@ body {
   background-color: var(--cadetGray);
 }
 
-.counter-olive {
+div[id^="round"] {
   width: var(--oliveSize);
   height: var(--oliveSize);
 }
 
-.olive-svg {
+div[id^="round"] svg {
   width: 100%;
   height: 100%;
 }
 
-.work,
-.break {
+.olive,
+.pimento {
   cx: calc(var(--oliveSize) / 2);
   cy: calc(var(--oliveSize) / 2);
   stroke: var(--richBlack);
   stroke-width: var(--oliveStrokes);
 }
 
-.work {
+.olive {
   r: calc(var(--oliveSize) / 2 - var(--oliveStrokes));
 }
 
-.break {
+.pimento {
   r: calc(0.47 * var(--oliveSize) / 2 - var(--oliveStrokes));
 }
 
-.ready {
+.ready .olive, 
+.ready .pimento,
+.work-counting .pimento,
+.work-done .pimento {
   fill: var(--richBlack)
 }
 
@@ -68,26 +71,28 @@ body {
   to {fill: var(--tomato);}
 }
 
-.counting-work,
-.counting-break {
+.work-counting .olive,
+.break-counting .pimento {
   animation-duration: 0.5s;
   animation-iteration-count: infinite;
   animation-direction: alternate;
 }
 
-.counting-work {
+.work-counting .olive {
   animation-name: blinkingOlive;
 }
 
-.counting-break {
+.break-counting .pimento {
   animation-name: blinkingPimento;
 }
 
-.done-work {
+.work-done .olive,
+.break-counting .olive,
+.break-done .olive {
   fill: var(--lightGreen)
 }
 
-.done-break {
+.break-done .pimento {
   fill: var(--tomato)
 }
 
