@@ -12,7 +12,7 @@ const resetTimer = (newMinutes) => {
 
 const stopTimer = () => {
   phaseIndex = 0
-  resetTimer()
+  resetTimer(25)
 }
 
 const getCurrentPlace = () => {
@@ -33,6 +33,17 @@ const timer = () => {
       seconds--
     } else {
       clearInterval(intervalID)
+      if (round === 3 && phaseIndex === phase.length - 1) {
+        round = 0
+        phaseIndex = 0
+        resetTimer(25)
+      } else if (phaseIndex === phase.length - 1) {
+        round++
+        phaseIndex = 0
+        resetTimer(25)
+      } else {
+        phaseIndex++
+      }
     }
   }
 
