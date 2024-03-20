@@ -1,3 +1,35 @@
+// Audio code
+const AudioContext = window.AudioContext || window.webkitAudioContext
+const audioContext = new AudioContext()
+
+const oscillator = audioContext.createOscillator()
+const gainNode = audioContext.createGain()
+
+oscillator.connect(gainNode)
+gainNode.connect(audioContext.destination)
+
+oscillator.frequency.value = 200
+oscillator.start()
+gainNode.gain.value = 0.5
+
+const volumeSlider = document.querySelector('#volume-slider')
+volumeSlider.addEventListener('mousedown', () => {
+  if (audioContext.state === 'suspended') {
+    audioContext.resume()
+  }
+})
+
+volumeSlider.addEventListener('mouseup', () => {
+  if (audioContext.state === 'running') {
+    audioContext.suspend()
+  }
+})
+
+volumeSlider.addEventListener('input', () => {
+  gainNode.gain.value = volumeSlider.value / 100
+})
+
+// Timer code
 let round = 0
 
 let phaseIndex = 0
