@@ -69,7 +69,6 @@ const timer = () => {
       timerButton.className = 'start-button'
       timerButton.innerHTML = 'Start'
     }
-    console.log({round, phaseIndex})
   }
 
   intervalID = setInterval(subtractSecond, 1000)
