@@ -5,28 +5,30 @@ const audioContext = new AudioContext()
 const oscillator = audioContext.createOscillator()
 const gainNode = audioContext.createGain()
 
+oscillator.frequency.value = 100
+oscillator.type = 'square'
+oscillator.start()
+gainNode.gain.defaultValue = 0.25
+gainNode.gain.maxValue = 0.5
+gainNode.gain.minValue = 0
+
 oscillator.connect(gainNode)
 gainNode.connect(audioContext.destination)
-
-oscillator.frequency.value = 200
-oscillator.start()
-gainNode.gain.value = 0.5
 
 const volumeSlider = document.querySelector('#volume-slider')
 volumeSlider.addEventListener('mousedown', () => {
   if (audioContext.state === 'suspended') {
     audioContext.resume()
   }
+  gainNode.gain.setTargetAtTime(volumeSlider.value / 200 ? volumeSlider.value / 200 : 0, audioContext.currentTime, 0.015)
 })
 
 volumeSlider.addEventListener('mouseup', () => {
-  if (audioContext.state === 'running') {
-    audioContext.suspend()
-  }
+  gainNode.gain.setTargetAtTime(0, audioContext.currentTime, 0.015)
 })
 
 volumeSlider.addEventListener('input', () => {
-  gainNode.gain.value = volumeSlider.value / 100
+  gainNode.gain.setTargetAtTime(volumeSlider.value / 200 ? volumeSlider.value / 200 : 0, audioContext.currentTime, 0.015)
 })
 
 // Timer code
