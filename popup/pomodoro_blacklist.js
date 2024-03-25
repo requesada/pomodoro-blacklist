@@ -1,34 +1,18 @@
 // Audio code
-const AudioContext = window.AudioContext || window.webkitAudioContext
-const audioContext = new AudioContext()
-
-const oscillator = audioContext.createOscillator()
-const gainNode = audioContext.createGain()
-
-oscillator.frequency.value = 100
-oscillator.type = 'square'
-oscillator.start()
-gainNode.gain.defaultValue = 0.25
-gainNode.gain.maxValue = 0.5
-gainNode.gain.minValue = 0
-
-oscillator.connect(gainNode)
-gainNode.connect(audioContext.destination)
+const audio = new Audio('../audio/bler.mp3')
+audio.loop = true
 
 const volumeSlider = document.querySelector('#volume-slider')
 volumeSlider.addEventListener('mousedown', () => {
-  if (audioContext.state === 'suspended') {
-    audioContext.resume()
-  }
-  gainNode.gain.setTargetAtTime(volumeSlider.value / 200 ? volumeSlider.value / 200 : 0, audioContext.currentTime, 0.015)
+  audio.play()
 })
 
 volumeSlider.addEventListener('mouseup', () => {
-  gainNode.gain.setTargetAtTime(0, audioContext.currentTime, 0.015)
+  audio.pause()
 })
 
 volumeSlider.addEventListener('input', () => {
-  gainNode.gain.setTargetAtTime(volumeSlider.value / 200 ? volumeSlider.value / 200 : 0, audioContext.currentTime, 0.015)
+  audio.volume = volumeSlider.value / 100
 })
 
 // Timer code
