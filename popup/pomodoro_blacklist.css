@@ -10,6 +10,8 @@
   --volumeSvgHeight: 65px;
   --oliveSize: 24px;
   --oliveStrokes: 1px;
+  --optionsButtonSize: 24px;
+  --optionsButtonRadius: 5px;
 }
 
 @font-face {
@@ -229,7 +231,29 @@ polygon {
   width: 30px;
 }
 
-#options-button {
+#options-button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#options-button,
+#options-button-square {
+  width: var(--optionsButtonSize);
+  height: var(--optionsButtonSize);
+}
+
+#options-button svg {
+  width: 100%;
+  height: 100%;
+}
+
+#options-button-square {
+  rx: var(--optionsButtonRadius);
+  fill: var(--richBlack)
+}
+
+#options-label {
   font-family: josefin;
   font-size: 16px;
 }
