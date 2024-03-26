@@ -1,18 +1,31 @@
 // Audio code
-const audio = new Audio('../audio/bler.mp3')
-audio.loop = true
+const volumeTestTone = new Audio('../audio/volume-test-tone.mp3')
+const workTimerDone = new Audio('../audio/work-timer-done.mp3')
+const breakTimerDone = new Audio('../audio/break-timer-done.mp3')
+
+volumeTestTone.addEventListener('play', () => {
+  console.log('Audio playing...')
+})
+
+volumeTestTone.addEventListener('ended', () => {
+  console.log('Audio ended.')
+})
 
 const volumeSlider = document.querySelector('#volume-slider')
 volumeSlider.addEventListener('mousedown', () => {
-  audio.play()
+  volumeTestTone.loop = true
+  volumeTestTone.play()
 })
 
 volumeSlider.addEventListener('mouseup', () => {
-  audio.pause()
+  volumeTestTone.pause()
+  volumeTestTone.loop = false
+  volumeTestTone.load()
 })
 
 volumeSlider.addEventListener('input', () => {
-  audio.volume = volumeSlider.value / 100
+  // TODO: Set volume for all audio
+  volumeTestTone.volume = volumeSlider.value / 100
 })
 
 // Timer code
@@ -86,6 +99,7 @@ const timer = () => {
       advance()
       timerButton.className = 'start-button'
       timerButton.innerHTML = 'Start'
+      workTimerDone.play()
     }
   }
 
