@@ -6,80 +6,80 @@
   </head>
 
   <body>
-    <div id="clock">
-      <div id="counter">
-        <div id="round-0" class="ready">
-          <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
-            <circle class="olive" />
-            <circle class="pimento" />
-          </svg>
+    <div id="table-top">
+      <div id="device">
+        <div id="front">
+          <div id="counter">
+            <div id="round-0" class="ready">
+              <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <circle class="olive" />
+                <circle class="pimento" />
+              </svg>
+            </div>
+            <div id="round-1" class="ready">
+              <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <circle class="olive" />
+                <circle class="pimento" />
+              </svg>
+            </div>
+            <div id="round-2" class="ready">
+              <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <circle class="olive" />
+                <circle class="pimento" />
+              </svg>
+            </div>
+            <div id="round-3" class="ready">
+              <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <circle class="olive" />
+                <circle class="pimento" />
+              </svg>
+            </div>
+          </div>
+          <div id="middle-row">
+            <div id="volume">
+              <div id="volume-label">Vol</div>
+              <div id="slider-container">
+                <input id="volume-slider" type="range" autocomplete="off" min="0" max="100" value="50" step="1" orient="vertical" />
+                <div id="volume-image">
+                  <svg 
+                    id="volume-svg"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <polygon points="10, 0 0, 0 0, 65" stroke="none"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div id="display">25:00</div>
+            <div id="options-and-reset">
+              <div id="options-button-container">
+                <button id="options-button"></button>
+                <div id="options-label">
+                  Opt
+                </div>
+              </div>
+              <div id="reset-button-container">
+                <div id="reset-button">
+                  <svg 
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle id="reset-button-circle" stroke="none"/>
+                  </svg>
+                </div>
+                <div id="reset-label">
+                  Reset
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" id="timer-button" class="start-button">Start</button>
         </div>
-        <div id="round-1" class="ready">
-          <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
-            <circle class="olive" />
-            <circle class="pimento" />
-          </svg>
-        </div>
-        <div id="round-2" class="ready">
-          <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
-            <circle class="olive" />
-            <circle class="pimento" />
-          </svg>
-        </div>
-        <div id="round-3" class="ready">
-          <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
-            <circle class="olive" />
-            <circle class="pimento" />
-          </svg>
+        <div id="back">
+          Hi
         </div>
       </div>
-      <div id="middle-row">
-        <div id="volume">
-          <div id="volume-label">Vol</div>
-          <div id="slider-container">
-            <input id="volume-slider" type="range" autocomplete="off" min="0" max="100" value="50" step="1" orient="vertical" />
-            <div id="volume-image">
-              <svg 
-                id="volume-svg"
-                version="1.1"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <polygon points="10, 0 0, 0 0, 65" stroke="none"/>
-              </svg>
-            </div>
-          </div>
-        </div>
-        <div id="display">25:00</div>
-        <div id="options-and-reset">
-          <div id="options-button-container">
-            <div id="options-button">
-              <svg 
-                  version="1.1"
-                  xmlns="http://www.w3.org/2000/svg"
-              >
-                  <rect id="options-button-square" stroke="none"/>
-              </svg>
-            </div>
-            <div id="options-label">
-              Opt
-            </div>
-          </div>
-          <div id="reset-button-container">
-            <div id="reset-button">
-              <svg 
-                version="1.1"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <circle id="reset-button-circle" stroke="none"/>
-              </svg>
-            </div>
-            <div id="reset-label">
-              Reset
-            </div>
-          </div>
-        </div>
-      </div>
-      <button type="button" id="timer-button" class="start-button">Start</button>
     </div>
     <script src="pomodoro_blacklist.js"></script>
   </body>

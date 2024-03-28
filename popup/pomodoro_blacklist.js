@@ -1,4 +1,4 @@
-// Audio code
+// Audio
 const volumeTestTone = new Audio('../audio/volume-test-tone.mp3')
 const workTimerDone = new Audio('../audio/work-timer-done.mp3')
 const breakTimerDone = new Audio('../audio/break-timer-done.mp3')
@@ -28,7 +28,13 @@ volumeSlider.addEventListener('input', () => {
   volumeTestTone.volume = volumeSlider.value / 100
 })
 
-// Timer code
+// Options
+const optionsButton = document.querySelector('#options-button')
+optionsButton.addEventListener('click', () => {
+  document.querySelector('#device').className = 'flip'
+})
+
+// Timer
 let round = 0
 
 let phaseIndex = 0
