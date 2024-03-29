@@ -5,6 +5,7 @@
   --lighterGreen: #D4F2D4;
   --tomato: #F95738;
   --lightTomato: #FDBDB0;
+  --turkeyRed: #A30000;
   --sliderThumbWidth: 9px;
   --volumeSvgWidth: 10px;
   --volumeSvgHeight: 65px;
@@ -237,6 +238,7 @@ polygon {
 .start-button {
   background-color: var(--lighterGreen);
   box-shadow: var(--richBlack) 0 6px;
+  cursor: pointer;
 }
 
 .start-button:hover {
@@ -252,6 +254,7 @@ polygon {
   background-color: var(--lightTomato);
   box-shadow: var(--richBlack) 0 3px;
   transform: translateY(3px);
+  cursor: pointer;
 }
 
 .stop-button:hover {
@@ -281,9 +284,16 @@ polygon {
 #options-button {
   width: var(--optionsButtonSize);
   height: var(--optionsButtonSize);
-  background-color: var(--richBlack);
+  background-color: var(--turkeyRed);
   border: none;
   border-radius: var(--optionsButtonRadius);
+  box-shadow: var(--richBlack) 0 3px;
+  cursor: pointer;
+}
+
+#options-button:active {
+  box-shadow: var(--richBlack) 0 1px;
+  transform: translateY(2px);
 }
 
 #options-label {
@@ -299,6 +309,7 @@ polygon {
 #reset-button {
   width: var(--resetButtonSize);
   height: var(--resetButtonSize);
+  /* TODO: buttonize and give inset shadow */
 }
 
 #reset-button svg {
