@@ -29,10 +29,15 @@ volumeSlider.addEventListener('input', () => {
 })
 
 // Options
+const toggleFlip = () => {
+  document.querySelector('#device').classList.toggle('flip')
+}
+
 const optionsButton = document.querySelector('#options-button')
-optionsButton.addEventListener('click', () => {
-  document.querySelector('#device').className = 'flip'
-})
+optionsButton.addEventListener('click', toggleFlip)
+
+const optionsClose = document.querySelector('#options-close')
+optionsClose.addEventListener('click', toggleFlip)
 
 // Timer
 let round = 0
