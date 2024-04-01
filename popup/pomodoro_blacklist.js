@@ -29,6 +29,7 @@ volumeSlider.addEventListener('input', () => {
 })
 
 // Options
+document.querySelector('#device').classList.toggle('flip') // TODO: Remove
 const toggleFlip = () => {
   document.querySelector('#device').classList.toggle('flip')
 }

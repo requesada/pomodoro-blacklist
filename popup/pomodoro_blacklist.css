@@ -326,3 +326,22 @@ polygon {
   font-size: 8px;
   text-transform: uppercase;
 }
+
+#options-close-container {
+  display: flex;
+  justify-content: right;
+  width: 100%;
+}
+
+#options-close {
+  color: var(--richBlack);
+  font-size: 18px;
+  text-shadow: 0 -0.75px 0 var(--tomato);
+  margin: 22px 22px 22px 0
+}
+
+#options-list-container ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}

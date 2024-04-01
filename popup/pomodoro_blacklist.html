@@ -77,10 +77,14 @@
           <button type="button" id="timer-button" class="start-button">Start</button>
         </div>
         <div id="back">
-          <div><button id="options-close">x</button></div>
-          <div>Pomodoro length</div>
-          <div>Short break</div>
-          <div>Longer break</div>
+          <div id="options-close-container"><button id="options-close">&times;</button></div>
+          <div id="options-list-container">
+            <ul>
+              <li>Pomodoro length <input type="text" id="pomodoro-length" name="pomodoro-length"></li>
+              <li>Short break <input type="text" id="short-break-length" name="short-break-length"></li>
+              <li>Longer break <input type="text" id="longer-break-length" name="longer-break-length"></li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
