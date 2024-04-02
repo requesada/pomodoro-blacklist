@@ -1,3 +1,42 @@
+// Timer values
+let pomodoroLength = 25
+let shortBreakLength = 5
+let longBreakLength = 15
+// TODO: Force whole numbers on inputs
+
+// Init
+const pomodoroLengthInput = document.querySelector('#pomodoro-length')
+pomodoroLengthInput.value = pomodoroLength
+
+const shortBreakLengthInput = document.querySelector('#short-break-length')
+shortBreakLengthInput.value =  shortBreakLength
+
+const longBreakLengthInput = document.querySelector('#long-break-length')
+longBreakLengthInput.value = longBreakLength
+
+const checkValues = () => {
+  console.log({
+    pomodoroLength,
+    shortBreakLength,
+    longBreakLength
+  })
+}
+
+pomodoroLengthInput.addEventListener('change', (event) => {
+  pomodoroLength = Number(event.target.value)
+  checkValues()
+})
+shortBreakLengthInput.addEventListener('change', (event) => {
+  shortBreakLength = Number(event.target.value)
+  checkValues()
+})
+longBreakLengthInput.addEventListener('change', (event) => {
+ longBreakLength = Number(event.target.value)
+ checkValues()
+})
+
+
+
 // Audio
 const volumeTestTone = new Audio('../audio/volume-test-tone.mp3')
 const workTimerDone = new Audio('../audio/work-timer-done.mp3')

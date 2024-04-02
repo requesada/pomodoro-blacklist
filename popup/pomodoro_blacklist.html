@@ -79,11 +79,24 @@
         <div id="back">
           <div id="options-close-container"><button id="options-close">&times;</button></div>
           <div id="options-list-container">
-            <ul>
-              <li>Pomodoro length <input type="text" id="pomodoro-length" name="pomodoro-length"></li>
-              <li>Short break <input type="text" id="short-break-length" name="short-break-length"></li>
-              <li>Longer break <input type="text" id="longer-break-length" name="longer-break-length"></li>
-            </ul>
+            <div class="option-row">
+              <div class="option-title">Pomodoro length</div>
+              <div class="option-input-container">
+                <input type="number" class="option-input" id="pomodoro-length" size="5" min="1" max="120"> min
+              </div>
+            </div>
+            <div class="option-row">
+              <div class="option-title">Short break</div>
+              <div class="option-input-container">
+                <input type="number" class="option-input" id="short-break-length" size="5" min="1" max="15"> min
+              </div>
+            </div>
+            <div class="option-row">
+              <div class="option-title">Long break</div>
+              <div class="option-input-container">
+                <input type="number" class="option-input" id="long-break-length" size="5" min="1" max="60"> min
+              </div>
+            </div>
           </div>
         </div>
       </div>
