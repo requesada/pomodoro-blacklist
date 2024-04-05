@@ -13,6 +13,10 @@
         "default_icon": "icons/clock.png",
         "default_title": "Pomodoro Blacklist",
         "default_popup": "popup/pomodoro_blacklist.html"
-    }
+    },
+
+    "permissions": [
+      "storage"
+    ]
   }
   

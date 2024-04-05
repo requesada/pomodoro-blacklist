@@ -1,3 +1,11 @@
+// TODO: Refactor to use browser.storage.local
+
+// browser.storage.local.set({
+//   test: 99,
+//   alsoTest: 40
+// })
+// browser.storage.local.get('test').then((item) => console.log({test: item}))
+
 // Timer values
 let pomodoroLength = 25
 let shortBreakLength = 5
@@ -23,15 +31,17 @@ const checkValues = () => {
 }
 
 pomodoroLengthInput.addEventListener('change', (event) => {
-  pomodoroLength = Number(event.target.value)
+  console.log({test: event.target.id})
+  pomodoroLength = event.target.value < 1 ? 1 : Math.round(Number(event.target.value))
+  event.target.value = pomodoroLength
   checkValues()
 })
 shortBreakLengthInput.addEventListener('change', (event) => {
-  shortBreakLength = Number(event.target.value)
+  shortBreakLength = Math.round(Number(event.target.value))
   checkValues()
 })
 longBreakLengthInput.addEventListener('change', (event) => {
- longBreakLength = Number(event.target.value)
+ longBreakLength = Math.round(Number(event.target.value))
  checkValues()
 })
 
