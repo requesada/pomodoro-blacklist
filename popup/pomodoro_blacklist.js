@@ -40,6 +40,7 @@ Object.entries(timerSettings).forEach(([key, {length, selector}]) => {
   })
 })
 
+// Volume control behaviors
 const volumeControl = document.querySelector('#volume-slider');
 volumeControl.addEventListener('input', () => {
   Object.values(sounds).forEach(sound => {
@@ -57,11 +58,6 @@ volumeControl.addEventListener('mouseup', () => {
   sounds.volumeTestTone.loop = false
   sounds.volumeTestTone.load()
 })
-
-// volumeSlider.addEventListener('input', () => {
-//   // TODO: Set volume for all audio
-//   volumeTestTone.volume = volumeSlider.value / 100
-// })
 
 // Options
 document.querySelector('#device').classList.toggle('flip') // TODO: Remove
