@@ -6,76 +6,62 @@
 // })
 // browser.storage.local.get('test').then((item) => console.log({test: item}))
 
-// Timer values
-let pomodoroLength = 25
-let shortBreakLength = 5
-let longBreakLength = 15
-// TODO: Force whole numbers on inputs
-
-// Init
-const pomodoroLengthInput = document.querySelector('#pomodoro-length')
-pomodoroLengthInput.value = pomodoroLength
-
-const shortBreakLengthInput = document.querySelector('#short-break-length')
-shortBreakLengthInput.value =  shortBreakLength
-
-const longBreakLengthInput = document.querySelector('#long-break-length')
-longBreakLengthInput.value = longBreakLength
-
-const checkValues = () => {
-  console.log({
-    pomodoroLength,
-    shortBreakLength,
-    longBreakLength
-  })
+const sounds = {
+  volumeTestTone: new Audio('../audio/volume-test-tone.mp3'),
+  workTimerDone: new Audio('../audio/work-timer-done.mp3'),
+  breakTimerDone: new Audio('../audio/break-timer-done.mp3')
 }
 
-pomodoroLengthInput.addEventListener('change', (event) => {
-  console.log({test: event.target.id})
-  pomodoroLength = event.target.value < 1 ? 1 : Math.round(Number(event.target.value))
-  event.target.value = pomodoroLength
-  checkValues()
-})
-shortBreakLengthInput.addEventListener('change', (event) => {
-  shortBreakLength = Math.round(Number(event.target.value))
-  checkValues()
-})
-longBreakLengthInput.addEventListener('change', (event) => {
- longBreakLength = Math.round(Number(event.target.value))
- checkValues()
-})
+const timerSettings = {
+  pomodoro: {
+    length: 25,
+    selector: '#pomodoro-length',
+    sound: sounds.workTimerDone
+  },
+  shortBreak: {
+    length: 5,
+    selector: '#short-break-length',
+    sound: sounds.breakTimerDone
+  },
+  longBreak: {
+    length: 15,
+    selector: '#long-break-length',
+    sound: sounds.breakTimerDone
+  },
+}
 
-
-
-// Audio
-const volumeTestTone = new Audio('../audio/volume-test-tone.mp3')
-const workTimerDone = new Audio('../audio/work-timer-done.mp3')
-const breakTimerDone = new Audio('../audio/break-timer-done.mp3')
-
-volumeTestTone.addEventListener('play', () => {
-  console.log('Audio playing...')
-})
-
-volumeTestTone.addEventListener('ended', () => {
-  console.log('Audio ended.')
+// Initialize and add listeners
+Object.entries(timerSettings).forEach(([key, {length, selector}]) => {
+  const input = document.querySelector(selector)
+  input.value = length
+  input.addEventListener('change', (event) => {
+    timerSettings[key].length = event.target.value < 1 ? 1 : Math.round(Number(event.target.value))
+    event.target.value = timerSettings[key].length
+  })
 })
 
-const volumeSlider = document.querySelector('#volume-slider')
-volumeSlider.addEventListener('mousedown', () => {
-  volumeTestTone.loop = true
-  volumeTestTone.play()
+const volumeControl = document.querySelector('#volume-slider');
+volumeControl.addEventListener('input', () => {
+  Object.values(sounds).forEach(sound => {
+    sound.volume = volumeControl.value / 100;
+  });
+});
+
+volumeControl.addEventListener('mousedown', () => {
+  sounds.volumeTestTone.loop = true
+  sounds.volumeTestTone.play()
 })
 
-volumeSlider.addEventListener('mouseup', () => {
-  volumeTestTone.pause()
-  volumeTestTone.loop = false
-  volumeTestTone.load()
+volumeControl.addEventListener('mouseup', () => {
+  sounds.volumeTestTone.pause()
+  sounds.volumeTestTone.loop = false
+  sounds.volumeTestTone.load()
 })
 
-volumeSlider.addEventListener('input', () => {
-  // TODO: Set volume for all audio
-  volumeTestTone.volume = volumeSlider.value / 100
-})
+// volumeSlider.addEventListener('input', () => {
+//   // TODO: Set volume for all audio
+//   volumeTestTone.volume = volumeSlider.value / 100
+// })
 
 // Options
 document.querySelector('#device').classList.toggle('flip') // TODO: Remove
@@ -160,7 +146,7 @@ const timer = () => {
       advance()
       timerButton.className = 'start-button'
       timerButton.innerHTML = 'Start'
-      workTimerDone.play()
+      sounds.workTimerDone.play()
     }
   }
 
