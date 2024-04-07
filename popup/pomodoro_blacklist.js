@@ -35,7 +35,7 @@ Object.entries(timerSettings).forEach(([key, {length, selector}]) => {
   const input = document.querySelector(selector)
   input.value = length
   input.addEventListener('change', (event) => {
-    timerSettings[key].length = event.target.value < 1 ? 1 : Math.round(Number(event.target.value))
+    timerSettings[key].length = event.target.value < 0.5 ? timerSettings[key].length : Math.round(Number(event.target.value))
     event.target.value = timerSettings[key].length
   })
 })
@@ -89,7 +89,7 @@ const resetTimer = (newMinutes) => {
 const stopTimer = () => {
   phaseIndex = 0
   getCurrentRoundNode().className = 'ready'
-  resetTimer(25)
+  resetTimer(timerSettings.pomodoro.length)
 }
 
 const advance = () => {
@@ -115,11 +115,11 @@ const clickTimerButton = () => {
   if (timerButton.className === 'start-button') {
     timerButton.className = 'stop-button'
     timerButton.innerHTML = 'Stop'
-    timer(25)
+    timer()
   } else {
     timerButton.className = 'start-button'
     timerButton.innerHTML = 'Start'
-    resetTimer(25)
+    stopTimer()
   }
   advance()
 }
