@@ -106,7 +106,6 @@ const advance = () => {
     document.querySelectorAll('div[id^="round-"]').forEach((node) => {node.className = 'ready'})
     document.querySelector('#round-0').className = phase[phaseIndex]
   }
-  console.log({round, phaseIndex})
 }
 
 const timerButton = document.querySelector('#timer-button')

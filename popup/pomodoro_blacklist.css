@@ -29,6 +29,7 @@
 html,
 body {
   margin: 0;
+  font-family: josefin;
 }
 
 #table-top {
@@ -188,8 +189,8 @@ polygon {
   align-items: center;
 }
 
-#volume-label {
-  font-family: josefin;
+#volume-label,
+#options-label {
   font-size: 16px;
 }
 
@@ -292,11 +293,6 @@ polygon {
   transform: translateY(2px);
 }
 
-#options-label {
-  font-family: josefin;
-  font-size: 16px;
-}
-
 #options-button,
 #reset-button {
   margin-bottom: 4px;
@@ -322,7 +318,6 @@ polygon {
 }
 
 #reset-label {
-  font-family: josefin;
   font-size: 8px;
   text-transform: uppercase;
 }
