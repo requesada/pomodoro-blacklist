@@ -60,7 +60,6 @@ volumeControl.addEventListener('mouseup', () => {
 })
 
 // Options
-document.querySelector('#device').classList.toggle('flip') // TODO: Remove
 const toggleFlip = () => {
   document.querySelector('#device').classList.toggle('flip')
 }
@@ -80,7 +79,6 @@ const phase = ['work-counting', 'work-done', 'break-counting', 'break-done']
 const getCurrentRoundNode = () => document.querySelector(`#round-${round}`)
 
 let intervalID
-let startingMinutes = 25
 const resetTimer = (newMinutes) => {
   clearInterval(intervalID)
   document.querySelector('#display').innerHTML = `${String(newMinutes).padStart(2, '0')}:00`
@@ -108,6 +106,7 @@ const advance = () => {
     document.querySelectorAll('div[id^="round-"]').forEach((node) => {node.className = 'ready'})
     document.querySelector('#round-0').className = phase[phaseIndex]
   }
+  console.log({round, phaseIndex})
 }
 
 const timerButton = document.querySelector('#timer-button')
@@ -115,20 +114,28 @@ const clickTimerButton = () => {
   if (timerButton.className === 'start-button') {
     timerButton.className = 'stop-button'
     timerButton.innerHTML = 'Stop'
+    advance()
     timer()
   } else {
     timerButton.className = 'start-button'
     timerButton.innerHTML = 'Start'
     stopTimer()
   }
-  advance()
 }
 timerButton.addEventListener('click', clickTimerButton)
 
 const timer = () => {
-  // let minutes = startingMinutes - 1
-  let minutes = 0
-  let seconds = 1
+  let startingMinutes
+  if (round === 3 && phaseIndex === 2) {
+    startingMinutes = timerSettings.longBreak.length
+  } else if (phaseIndex === 2) {
+    startingMinutes = timerSettings.shortBreak.length
+  } else {
+    startingMinutes = timerSettings.pomodoro.length
+  }
+  console.log({startingMinutes})
+  let minutes = startingMinutes - 1
+  let seconds = 2
 
   const subtractSecond = () => {
     document.querySelector('#display').innerHTML = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
