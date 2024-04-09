@@ -209,6 +209,7 @@ polygon {
 
 #display {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 225px;
@@ -218,7 +219,51 @@ polygon {
   border-radius: 10px;
   border: 1px solid var(--richBlack);
   font-family: bedstead;
+}
+
+#countdown,
+#task {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+#countdown {
+  height: 60px;
   font-size: 64px;
+  padding-top: 8px;
+}
+
+#countdown.no-task {
+  height: 110px;
+  font-size: 64px;
+}
+
+#task {
+  height: 50px;
+  font-size: 24px;
+  padding-top: 4px;
+  overflow: hidden;
+}
+
+#task span {
+  display: inline-block;
+  padding-left: 100%;
+  animation: marquee 10s linear infinite;
+}
+
+#secondary {
+  animation-delay: 5s;
+}
+
+@keyframes marquee {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-100%, 0); }
+}
+
+#task.no-task {
+  display: none;
 }
 
 #timer-button {
@@ -357,4 +402,10 @@ polygon {
 
 .option-input-container {
   width: 35%;
+}
+
+#option-task {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

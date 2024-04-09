@@ -51,7 +51,15 @@
                 </div>
               </div>
             </div>
-            <div id="display">25:00</div>
+            <div id="display">
+              <div id="countdown" class="">
+                25:00
+              </div>
+              <div id="task" class="">
+                <span id="primary">1234567890</span>
+                <span id="secondary">1234567890</span>
+              </div>
+            </div>
             <div id="options-and-reset">
               <div id="options-button-container">
                 <button id="options-button"></button>
@@ -95,6 +103,12 @@
               <div class="option-title">Long break</div>
               <div class="option-input-container">
                 <input type="number" class="option-input" id="long-break-length" size="5" min="1" max="60"> min
+              </div>
+            </div>
+            <div id="option-task">
+              <div class="option-title">Task</div>
+              <div class="option-input-container">
+                <input class="option-input">
               </div>
             </div>
           </div>
