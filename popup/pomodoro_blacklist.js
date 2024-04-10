@@ -32,8 +32,15 @@ const timerSettings = {
 
 const taskOptionInput = document.querySelector('#task-option-input')
 taskOptionInput.addEventListener('keyup', (event) => {
-  document.querySelector('#primary').innerText = event.target.value
-  document.querySelector('#secondary').innerText = event.target.value
+  if (event.target.value.replace(/\s/g, '').length  === 0) {
+    document.querySelector('#countdown').className = 'no-task'
+    document.querySelector('#task').className = 'no-task'
+  } else {
+    document.querySelector('#countdown').className = ''
+    document.querySelector('#task').className = ''
+    document.querySelector('#primary').innerText = event.target.value
+    document.querySelector('#secondary').innerText = event.target.value
+  }
 })
 
 // Initialize and add listeners
