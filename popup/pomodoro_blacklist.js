@@ -30,6 +30,12 @@ const timerSettings = {
   },
 }
 
+const taskOptionInput = document.querySelector('#task-option-input')
+taskOptionInput.addEventListener('keyup', (event) => {
+  document.querySelector('#primary').innerText = event.target.value
+  document.querySelector('#secondary').innerText = event.target.value
+})
+
 // Initialize and add listeners
 Object.entries(timerSettings).forEach(([key, {length, selector}]) => {
   const input = document.querySelector(selector)

@@ -396,16 +396,23 @@ polygon {
 }
 
 .option-title {
-  width: 35%;
+  width: 45%;
   text-align: end;
 }
 
 .option-input-container {
-  width: 35%;
+  width: 45%;
 }
 
 #option-task {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 20px;
+}
+
+#task-option-title,
+#task-option-input-container {
+  width: 100%;
+  text-align: center;
 }
