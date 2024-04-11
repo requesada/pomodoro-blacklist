@@ -84,6 +84,7 @@ volumeControl.addEventListener('mouseup', () => {
 // Options
 const toggleFlip = () => {
   document.querySelector('#device').classList.toggle('flip')
+  document.querySelector('#tray').classList.toggle('flip')
 }
 
 const optionsButton = document.querySelector('#options-button')
@@ -103,7 +104,7 @@ const getCurrentRoundNode = () => document.querySelector(`#round-${round}`)
 let intervalID
 const resetTimer = (newMinutes) => {
   clearInterval(intervalID)
-  document.querySelector('#display').innerHTML = `${String(newMinutes).padStart(2, '0')}:00`
+  document.querySelector('#countdown').innerText = `${String(newMinutes).padStart(2, '0')}:00`
 }
 
 const stopTimer = () => {
@@ -159,7 +160,7 @@ const timer = () => {
   let seconds = 2
 
   const subtractSecond = () => {
-    document.querySelector('#display').innerHTML = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
+    document.querySelector('#countdown').innerText = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
     if (seconds === 0 && minutes > 0) {
       minutes--
       seconds = 59
@@ -176,3 +177,7 @@ const timer = () => {
 
   intervalID = setInterval(subtractSecond, 1000)
 }
+
+document.querySelector('#tray').addEventListener('click', () => {
+  document.querySelector('#tray').classList.toggle('hidden')
+})
