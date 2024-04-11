@@ -43,6 +43,15 @@ taskOptionInput.addEventListener('keyup', (event) => {
   }
 })
 
+document.querySelector('#clear-task').addEventListener('click', () => {
+  document.querySelector('#countdown').className = 'no-task'
+  document.querySelector('#task').className = 'no-task'
+  document.querySelector('#primary').innerText = ''
+  document.querySelector('#secondary').innerText = ''
+  taskOptionInput.value = ''
+})
+
+
 // Initialize and add listeners
 Object.entries(timerSettings).forEach(([key, {length, selector}]) => {
   const input = document.querySelector(selector)

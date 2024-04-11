@@ -322,14 +322,19 @@ polygon {
 }
 
 #options-button,
-#options-close {
-  width: var(--optionsButtonSize);
-  height: var(--optionsButtonSize);
+#options-close,
+#clear-task {
   background-color: var(--turkeyRed);
   border: none;
+  cursor: pointer;
+}
+
+#options-button,
+#options-close {
   border-radius: var(--optionsButtonRadius);
   box-shadow: var(--richBlack) 0 3px;
-  cursor: pointer;
+  width: var(--optionsButtonSize);
+  height: var(--optionsButtonSize);
 }
 
 #options-button:active,
@@ -373,11 +378,15 @@ polygon {
   width: 100%;
 }
 
-#options-close {
+#options-close,
+#clear-task {
   color: var(--richBlack);
-  font-size: 18px;
   text-shadow: 0 -0.75px 0 var(--tomato);
-  margin: 22px 22px 22px 0;
+}
+
+#options-close {
+  font-size: 18px;
+  margin: 10px 10px 10px 0;
 }
 
 #options-list-container {
@@ -397,7 +406,10 @@ polygon {
 
 .option-title {
   width: 45%;
-  text-align: end;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  padding-top: 2px;
 }
 
 .option-input-container {
@@ -411,8 +423,30 @@ polygon {
   margin-top: 20px;
 }
 
-#task-option-title,
+#task-option-title-container,
 #task-option-input-container {
+  display: flex;
   width: 100%;
-  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+#task-option-title-container {
+  gap: 5px;
+}
+
+#task-option-title {
+  padding-top: 2px;
+}
+
+#clear-task {
+  font-size: 10px;
+  border-radius: 2px;
+  box-shadow: var(--richBlack) 0 2px;
+  margin-bottom: 2px;
+}
+
+#clear-task:active {
+  box-shadow: var(--richBlack) 0 1px;
+  transform: translateY(1px);
 }
