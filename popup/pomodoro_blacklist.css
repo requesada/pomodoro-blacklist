@@ -37,6 +37,7 @@ body {
   background-color: transparent;
   width: 350px;
   height: 400px;
+  z-index: 0;
 }
 
 #device {
@@ -92,6 +93,8 @@ body {
   height: 100%;
   color: white;
 }
+
+/* TODO Recessed area for back tray */
 
 .flip {
   transform: rotateY(180deg);
