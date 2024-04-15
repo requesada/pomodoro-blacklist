@@ -84,7 +84,6 @@ volumeControl.addEventListener('mouseup', () => {
 // Options
 const toggleFlip = () => {
   document.querySelector('#device').classList.toggle('flip')
-  document.querySelector('#tray').classList.toggle('flip')
 }
 
 const optionsButton = document.querySelector('#options-button')
@@ -178,6 +177,6 @@ const timer = () => {
   intervalID = setInterval(subtractSecond, 1000)
 }
 
-document.querySelector('#tray').addEventListener('click', () => {
-  document.querySelector('#tray').classList.toggle('hidden')
+document.querySelector('#blacklist').addEventListener('click', () => {
+  document.querySelector('#blacklist').classList.toggle('expanded')
 })

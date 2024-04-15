@@ -36,7 +36,7 @@ body {
 #table-top {
   background-color: transparent;
   width: 350px;
-  height: 400px;
+  height: var(--deviceHeight);
   z-index: 0;
 }
 
@@ -49,32 +49,18 @@ body {
   z-index: 10;
 }
 
-#tray {
-  position: relative;
-  width: 100%;
-  height: calc(400px - var(--deviceHeight));
-  transition: all 0.5s;
-  transform-style: preserve-3d;
-  background-color: black;
-  z-index: 1;
-  top: 0;
-}
-
-#tray.hidden {
-  top: calc(var(--deviceHeight) - 400px + 10px);
-}
-
 #front,
-#back,
-#tray-front,
-#tray-back {
+#back {
   position: absolute;
   width: 100%;
   backface-visibility: hidden;
   display: flex;
-  flex-direction: column;
   align-items: center;
   transform-style: preserve-3d;
+}
+
+#front {
+  flex-direction: column;
 }
 
 #front,
@@ -83,18 +69,71 @@ body {
   background-color: var(--cadetGray);
 }
 
-#back,
-#tray-back {
+#back {
   transform: rotateY(180deg);
 }
 
-#tray-front,
-#tray-back {
+#blacklist-compartment {
+  background-color: var(--cadetGray);
+  width: 16px;
   height: 100%;
-  color: white;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  /* box-shadow: 2px 0 1px;
+  clip-path: inset(0px -3px 0px 0px); */
+  z-index: 5;
 }
 
-/* TODO Recessed area for back tray */
+#blacklist {
+  color: white;
+  background-color: black;
+  height: 100%;
+  width: 35px;
+  position: absolute;
+  z-index: 3;
+  transition: width 0.5s;
+  display: flex;
+  align-items: center;
+}
+
+#blacklist.expanded {
+  width: 310px;
+}
+
+#compartment-gap {
+  height: 100%;
+  width: 16px;
+}
+
+#screen-container {
+  height: 100%;
+  width: 294px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#screen {
+  background-color: white;
+  width: 0;
+  height: 0;
+  position: relative;
+  transition-delay: 0.5s;
+}
+
+#blacklist.expanded #screen {
+  width: 90%;
+  height: 90%;
+}
+
+#back-face {
+  width: 95%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
 .flip {
   transform: rotateY(180deg);

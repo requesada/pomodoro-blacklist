@@ -85,38 +85,43 @@
           <button type="button" id="timer-button" class="start-button">Start</button>
         </div>
         <div id="back">
-          <div id="options-close-container"><button id="options-close">&times;</button></div>
-          <div id="options-list-container">
-            <div class="option-row">
-              <div class="option-title">Pomodoro length</div>
-              <div class="option-input-container">
-                <input type="number" class="option-input" id="pomodoro-length" size="5" min="1" max="120"> min
-              </div>
+          <div id="blacklist-compartment"></div>
+          <div id="blacklist">
+            <div id="compartment-gap"></div>
+            <div id="screen-container">
+              <div id="screen"></div>
             </div>
-            <div class="option-row">
-              <div class="option-title">Short break</div>
-              <div class="option-input-container">
-                <input type="number" class="option-input" id="short-break-length" size="5" min="1" max="15"> min
+          </div>
+          <div id="back-face">
+            <div id="options-close-container"><button id="options-close">&times;</button></div>
+            <div id="options-list-container">
+              <div class="option-row">
+                <div class="option-title">Pomodoro length</div>
+                <div class="option-input-container">
+                  <input type="number" class="option-input" id="pomodoro-length" size="5" min="1" max="120"> min
+                </div>
               </div>
-            </div>
-            <div class="option-row">
-              <div class="option-title">Long break</div>
-              <div class="option-input-container">
-                <input type="number" class="option-input" id="long-break-length" size="5" min="1" max="60"> min
+              <div class="option-row">
+                <div class="option-title">Short break</div>
+                <div class="option-input-container">
+                  <input type="number" class="option-input" id="short-break-length" size="5" min="1" max="15"> min
+                </div>
               </div>
-            </div>
-            <div id="option-task">
-              <div id="task-option-title-container"><span id="task-option-title">Task</span><button id="clear-task">&times;</button></div>
-              <div id="task-option-input-container">
-                <input id="task-option-input">
+              <div class="option-row">
+                <div class="option-title">Long break</div>
+                <div class="option-input-container">
+                  <input type="number" class="option-input" id="long-break-length" size="5" min="1" max="60"> min
+                </div>
+              </div>
+              <div id="option-task">
+                <div id="task-option-title-container"><span id="task-option-title">Task</span><button id="clear-task">&times;</button></div>
+                <div id="task-option-input-container">
+                  <input id="task-option-input">
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div id="tray">
-        <div id="tray-front">front</div>
-        <div id="tray-back">back</div>
       </div>
     </div>
     <script src="pomodoro_blacklist.js"></script>
