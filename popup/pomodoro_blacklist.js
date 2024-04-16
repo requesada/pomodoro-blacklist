@@ -177,6 +177,18 @@ const timer = () => {
   intervalID = setInterval(subtractSecond, 1000)
 }
 
-document.querySelector('#blacklist').addEventListener('click', () => {
-  document.querySelector('#blacklist').classList.toggle('expanded')
+const blacklist = document.querySelector('#blacklist')
+const blacklistMonitor = document.querySelector('#blacklist-monitor')
+blacklist.addEventListener('click', () => {
+  if (blacklist.classList.contains('expanded')) {
+    blacklist.classList.toggle('closing')
+    blacklistMonitor.addEventListener('animationend', () => {
+      if (blacklist.classList.contains('closing') && blacklist.classList.contains('expanded')) {
+        blacklist.classList.toggle('closing')
+        blacklist.classList.toggle('expanded')
+      }
+    })
+  } else {
+    blacklist.classList.toggle('expanded')
+  }
 })

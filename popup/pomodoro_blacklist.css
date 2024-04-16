@@ -79,8 +79,6 @@ body {
   height: 100%;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
-  /* box-shadow: 2px 0 1px;
-  clip-path: inset(0px -3px 0px 0px); */
   z-index: 5;
 }
 
@@ -104,7 +102,7 @@ body {
   width: 16px;
 }
 
-#screen-container {
+#monitor-container {
   height: 100%;
   width: 294px;
   display: flex;
@@ -112,21 +110,20 @@ body {
   align-items: center;
 }
 
-#screen {
+#blacklist-monitor {
   background-color: var(--richBlack);
   width: 0;
   height: 0;
   position: relative;
-  /* transition-delay: 0.5s; */
 }
 
 @keyframes screenOn {
-  20% {
+  0% {
     width: 0;
     height: 0;
     border: none;
   }
-  40% {
+  90% {
     width: 90%;
     height: 2px;
     border: 1px solid var(--lightGreen);
@@ -138,8 +135,30 @@ body {
   }
 }
 
-#blacklist.expanded #screen {
-  animation: 0.3s 0.5s ease-in forwards screenOn;
+@keyframes screenOff {
+  0% {
+    width: 90%;
+    height: 90%;
+    border: 1px solid var(--lightGreen);
+  }
+  10% {
+    width: 90%;
+    height: 0px;
+    border: 1px solid var(--lightGreen);
+  }
+  100% {
+    width: 0;
+    height: 0;
+    border: none;
+  }
+}
+
+#blacklist.expanded #blacklist-monitor {
+  animation: 0.2s 0.5s ease-in forwards screenOn;
+}
+
+#blacklist.expanded.closing #blacklist-monitor {
+  animation: 0.2s ease-in forwards screenOff;
 }
 
 #back-face {
