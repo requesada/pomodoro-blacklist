@@ -99,12 +99,12 @@ body {
 
 #compartment-gap {
   height: 100%;
-  width: 16px;
+  width: 16px; /* TODO Do I need to shrink this when the list is retracted? */
 }
 
 #monitor-container {
   height: 100%;
-  width: 294px;
+  width: 294px; /* TODO Do I need to shrink this when the list is retracted? */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -115,6 +115,10 @@ body {
   width: 0;
   height: 0;
   position: relative;
+}
+
+#list-input.hidden {
+  display: none;
 }
 
 @keyframes screenOn {
