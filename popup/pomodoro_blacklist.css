@@ -85,8 +85,7 @@ body {
 }
 
 #blacklist {
-  color: white;
-  background-color: black;
+  background-color: var(--richBlack);
   height: 100%;
   width: 35px;
   position: absolute;
@@ -114,7 +113,7 @@ body {
 }
 
 #screen {
-  background-color: white;
+  background-color: var(--richBlack);
   width: 0;
   height: 0;
   position: relative;
@@ -125,21 +124,22 @@ body {
   20% {
     width: 0;
     height: 0;
+    border: none;
   }
   40% {
     width: 90%;
     height: 2px;
+    border: 1px solid var(--lightGreen);
   }
   100% {
     width: 90%;
     height: 90%;
+    border: 1px solid var(--lightGreen);
   }
 }
 
 #blacklist.expanded #screen {
-  animation-delay: 0.5s;
-  animation-duration: 0.5s;
-  animation-name: screenOn;
+  animation: 0.3s 0.5s ease-in forwards screenOn;
 }
 
 #back-face {
