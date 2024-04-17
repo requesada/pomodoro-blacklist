@@ -27,6 +27,11 @@
   src: url(../fonts/bedstead.otf);
 }
 
+@font-face {
+  font-family: vt323;
+  src: url(../fonts/VT323-Regular.ttf);
+}
+
 html,
 body {
   margin: 0;
@@ -131,7 +136,7 @@ body {
 }
 
 #arrow-right {
-  color: var(--lighterGreen)
+  color: var(--lightGreen)
 }
 
 #arrow-left {
@@ -143,23 +148,38 @@ body {
 }
 
 #blacklist.expanded #arrow-left {
-  color: var(--lighterGreen)
+  color: var(--lightGreen)
 }
 
 #blacklist-monitor {
   background-color: var(--richBlack);
+  color: var(--lightGreen);
   width: 0;
   height: 0;
   position: relative;
+  font-family: vt323;
+  padding: 10px;
 }
 
 #list-input {
+  padding: 0 10px 10px 10px;
+  font-family: vt323;
   width: 100%;
-  height: 99%;
+  height: 75%;
   box-sizing: border-box;
+  resize: none;
+  color: var(--lightGreen);
+  background-color: var(--richBlack);
+  border: none;
+  outline: none;
+  box-shadow: none;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  text-wrap: nowrap;
 }
 
-#list-input.hidden {
+.hidden {
   display: none;
 }
 

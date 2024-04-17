@@ -181,19 +181,27 @@ const blacklist = document.querySelector('#blacklist')
 const blacklistMonitor = document.querySelector('#blacklist-monitor')
 const arrowTab = document.querySelector('#arrow-tab')
 const listInput = document.querySelector('#list-input')
+const instructions = document.querySelector('#instructions')
+
 blacklistMonitor.addEventListener('animationend', () => {
   if (blacklist.classList.contains('closing') && blacklist.classList.contains('expanded')) {
     blacklist.classList.toggle('closing')
     blacklist.classList.toggle('expanded')
   } else {
     listInput.classList.toggle('hidden')
+    instructions.classList.toggle('hidden')
+    listInput.focus()
   }
 })
+
 arrowTab.addEventListener('click', () => {
   if (blacklist.classList.contains('expanded')) {
     listInput.classList.toggle('hidden')
+    instructions.classList.toggle('hidden')
     blacklist.classList.toggle('closing')
   } else {
     blacklist.classList.toggle('expanded')
   }
 })
+
+listInput.addEventListener('keydown')
