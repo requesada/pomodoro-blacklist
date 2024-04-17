@@ -179,6 +179,7 @@ const timer = () => {
 
 const blacklist = document.querySelector('#blacklist')
 const blacklistMonitor = document.querySelector('#blacklist-monitor')
+const arrowTab = document.querySelector('#arrow-tab')
 const listInput = document.querySelector('#list-input')
 blacklistMonitor.addEventListener('animationend', () => {
   if (blacklist.classList.contains('closing') && blacklist.classList.contains('expanded')) {
@@ -188,7 +189,7 @@ blacklistMonitor.addEventListener('animationend', () => {
     listInput.classList.toggle('hidden')
   }
 })
-blacklist.addEventListener('click', () => {
+arrowTab.addEventListener('click', () => {
   if (blacklist.classList.contains('expanded')) {
     listInput.classList.toggle('hidden')
     blacklist.classList.toggle('closing')
