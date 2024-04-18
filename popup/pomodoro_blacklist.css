@@ -136,19 +136,19 @@ body {
 }
 
 #arrow-right {
-  color: var(--lightGreen)
+  color: var(--lightGreen);
 }
 
 #arrow-left {
-  color: var(--richBlack)
+  color: var(--richBlack);
 }
 
 #blacklist.expanded #arrow-right {
-  color: var(--richBlack)
+  color: var(--richBlack);
 }
 
 #blacklist.expanded #arrow-left {
-  color: var(--lightGreen)
+  color: var(--lightGreen);
 }
 
 #blacklist-monitor {
@@ -177,6 +177,10 @@ body {
   bottom: 0;
   left: 0;
   text-wrap: nowrap;
+}
+
+#asterisk {
+  color: var(--tomato);
 }
 
 .hidden {
