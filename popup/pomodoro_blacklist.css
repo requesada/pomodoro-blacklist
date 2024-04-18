@@ -161,6 +161,12 @@ body {
   padding: 10px;
 }
 
+#instructions {
+  border-bottom: 1px solid var(--lightGreen);
+  padding-bottom: 10px;
+  user-select: none;
+}
+
 #list-input {
   padding: 0 10px 10px 10px;
   font-family: vt323;
@@ -176,11 +182,16 @@ body {
   position: absolute;
   bottom: 0;
   left: 0;
-  text-wrap: nowrap;
+  scrollbar-width: none;
 }
 
-#asterisk {
-  color: var(--tomato);
+#list-input::selection {
+  color: var(--richBlack);
+  background-color: var(--lightGreen);
+}
+
+#list-input::-webkit-scrollbar {
+  display: none;
 }
 
 .hidden {

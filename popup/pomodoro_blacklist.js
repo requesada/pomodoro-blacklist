@@ -204,7 +204,17 @@ arrowTab.addEventListener('click', () => {
   }
 })
 
-const filterAddress = (event) => {
-  
-}
-listInput.addEventListener('keydown', () => {})
+let urlList
+listInput.addEventListener('input', (event) => {
+  urlList = event.target.value.split('\n')
+  console.log({urlList})
+})
+
+listInput.addEventListener('click', () => {
+  console.log({
+    clientHeight: listInput.clientHeight,
+    scrollTop: listInput.scrollTop,
+    scrollHeight: listInput.scrollHeight,
+    offsetHeight: listInput.offsetHeight
+  })
+})
