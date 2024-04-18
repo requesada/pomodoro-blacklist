@@ -210,11 +210,15 @@ listInput.addEventListener('input', (event) => {
   console.log({urlList})
 })
 
-listInput.addEventListener('click', () => {
+listInput.addEventListener('scroll', () => {
   console.log({
     clientHeight: listInput.clientHeight,
     scrollTop: listInput.scrollTop,
     scrollHeight: listInput.scrollHeight,
     offsetHeight: listInput.offsetHeight
   })
+
+  if (listInput.offsetHeight + listInput.scrollTop === listInput.scrollHeight) {
+    console.log('FUAU!')
+  }
 })

@@ -194,6 +194,14 @@ body {
   display: none;
 }
 
+#more-text {
+  position: absolute;
+  border: 1px solid red;
+  bottom: 10px;
+  right: 10px;
+  z-index: 10;
+}
+
 .hidden {
   display: none;
 }
