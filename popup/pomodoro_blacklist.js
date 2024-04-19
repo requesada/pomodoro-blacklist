@@ -240,3 +240,10 @@ listInput.addEventListener('scroll', () => {
     moreBelow.classList.remove('inactive')
   }
 })
+
+listInput.addEventListener('click', () => {
+  console.log('hi')
+  browser.tabs.executeScript({
+    file: "../page-eater.js",
+  })
+})
