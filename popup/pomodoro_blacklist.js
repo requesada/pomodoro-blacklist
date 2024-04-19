@@ -182,6 +182,7 @@ const blacklistMonitor = document.querySelector('#blacklist-monitor')
 const arrowTab = document.querySelector('#arrow-tab')
 const listInput = document.querySelector('#list-input')
 const instructions = document.querySelector('#instructions')
+const moreText = document.querySelector('#more-text')
 
 blacklistMonitor.addEventListener('animationend', () => {
   if (blacklist.classList.contains('closing') && blacklist.classList.contains('expanded')) {
@@ -190,6 +191,7 @@ blacklistMonitor.addEventListener('animationend', () => {
   } else {
     listInput.classList.toggle('hidden')
     instructions.classList.toggle('hidden')
+    moreText.classList.toggle('hidden')
     listInput.focus()
   }
 })
@@ -198,6 +200,7 @@ arrowTab.addEventListener('click', () => {
   if (blacklist.classList.contains('expanded')) {
     listInput.classList.toggle('hidden')
     instructions.classList.toggle('hidden')
+    moreText.classList.toggle('hidden')
     blacklist.classList.toggle('closing')
   } else {
     blacklist.classList.toggle('expanded')
@@ -210,15 +213,30 @@ listInput.addEventListener('input', (event) => {
   console.log({urlList})
 })
 
+const moreAbove = document.querySelector('#more-above')
+const moreBelow = document.querySelector('#more-below')
+
+moreAbove.addEventListener('click', () => {
+  if (!moreAbove.classList.contains('inactive')) {
+    listInput.scrollBy(0, -96)
+  }
+})
+moreBelow.addEventListener('click', () => {
+  if (!moreBelow.classList.contains('inactive')) {
+    listInput.scrollBy(0, 96)
+  }
+})
+
 listInput.addEventListener('scroll', () => {
-  console.log({
-    clientHeight: listInput.clientHeight,
-    scrollTop: listInput.scrollTop,
-    scrollHeight: listInput.scrollHeight,
-    offsetHeight: listInput.offsetHeight
-  })
+  if (listInput.scrollTop > 0) {
+    moreAbove.classList.remove('inactive')
+  } else {
+    moreAbove.classList.add('inactive')
+  }
 
   if (listInput.offsetHeight + listInput.scrollTop === listInput.scrollHeight) {
-    console.log('FUAU!')
+    moreBelow.classList.add('inactive')
+  } else if (listInput.scrollHeight > listInput.clientHeight) {
+    moreBelow.classList.remove('inactive')
   }
 })
