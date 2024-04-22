@@ -1,11 +1,3 @@
-// TODO: Refactor to use browser.storage.local
-
-// browser.storage.local.set({
-//   test: 99,
-//   alsoTest: 40
-// })
-// browser.storage.local.get('test').then((item) => console.log({test: item}))
-
 const sounds = {
   volumeTestTone: new Audio('../audio/volume-test-tone.mp3'),
   workTimerDone: new Audio('../audio/work-timer-done.mp3'),
@@ -207,12 +199,6 @@ arrowTab.addEventListener('click', () => {
   }
 })
 
-let urlList
-listInput.addEventListener('input', (event) => {
-  urlList = event.target.value.split('\n')
-  console.log({urlList})
-})
-
 const moreAbove = document.querySelector('#more-above')
 const moreBelow = document.querySelector('#more-below')
 
@@ -241,9 +227,28 @@ listInput.addEventListener('scroll', () => {
   }
 })
 
-listInput.addEventListener('click', () => {
-  console.log('hi')
-  browser.tabs.executeScript({
-    file: "../page-eater.js",
+const saveSites = (event) => {
+  const blockedSites = event.target.value.split('\n').map((siteString) => siteString.trim()).filter(Boolean)
+  browser.storage.sync.set({blockedSites})
+  browser.runtime.sendMessage({
+    action: 'updateSites', 
+    sites: blockedSites
   })
-})
+}
+
+const restoreSavedSites = () => {
+  const setCurrentSites = (result) => {
+    listInput.value = result.blockedSites ? result.blockedSites.join('\n') : ''
+  }
+
+  const onError = (error) => {
+    console.log(`Error: ${error}`)
+  }
+
+  browser.storage.sync.get('blockedSites')
+    .then(setCurrentSites, onError)
+}
+
+document.addEventListener('DOMContentLoaded', restoreSavedSites)
+
+listInput.addEventListener('input', saveSites)
