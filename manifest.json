@@ -4,6 +4,13 @@
     "version": "1.0",
   
     "description": "Work timer that uses the Pomodoro Technique and blocks sites.",
+
+    "browser_specific_settings": {
+      "gecko": {
+        "id": "{ce4318e0-1653-4d47-b05b-749958f04abc}",
+        "strict_min_version": "42.0"
+      }
+    },
   
     "icons": {
       "48": "icons/clock.png"

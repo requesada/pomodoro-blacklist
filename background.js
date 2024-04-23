@@ -5,7 +5,7 @@ const blockSite = (requestDetails) => {
   const urlString = url.hostname + url.pathname
 
   for (const site of blockedSites) {
-    if (urlString.startsWith(site)) {
+    if (urlString.startsWith(site) || urlString.startsWith(`www.${site}`)) {
       return { redirectUrl: browser.extension.getURL('blocked.html') }
     }
   }
