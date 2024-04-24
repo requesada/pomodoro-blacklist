@@ -1,6 +1,11 @@
 let blockedSites = []
 let currentPhaseIndex = 0
 
+const timerState = {
+  round: 0,
+  phaseIndex: 0
+}
+
 const blockSite = (requestDetails) => {
   const url = new URL(requestDetails.url)
   const urlString = url.hostname + url.pathname

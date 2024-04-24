@@ -161,7 +161,6 @@ const timer = () => {
   } else {
     startingMinutes = timerSettings.pomodoro.length
   }
-  console.log({startingMinutes})
   // let minutes = startingMinutes - 1
   let minutes = 0
   let seconds = 2
@@ -229,6 +228,7 @@ moreBelow.addEventListener('click', () => {
   }
 })
 
+// TODO Deleting selected text instead of using backspace breaks arrows
 listInput.addEventListener('scroll', () => {
   if (listInput.scrollTop > 0) {
     moreAbove.classList.remove('inactive')
