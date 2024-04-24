@@ -4,6 +4,7 @@ const sounds = {
   breakTimerDone: new Audio('../audio/break-timer-done.mp3')
 }
 
+// TODO move
 const timerSettings = {
   pomodoro: {
     length: 25,
@@ -22,6 +23,7 @@ const timerSettings = {
   },
 }
 
+// TODO This will need state
 const taskOptionInput = document.querySelector('#task-option-input')
 taskOptionInput.addEventListener('keyup', (event) => {
   if (event.target.value.replace(/\s/g, '').length  === 0) {
@@ -44,7 +46,6 @@ document.querySelector('#clear-task').addEventListener('click', () => {
 })
 
 
-// Initialize and add listeners
 Object.entries(timerSettings).forEach(([key, {length, selector}]) => {
   const input = document.querySelector(selector)
   input.value = length
@@ -54,7 +55,7 @@ Object.entries(timerSettings).forEach(([key, {length, selector}]) => {
   })
 })
 
-// Volume control behaviors
+// TODO State
 const volumeControl = document.querySelector('#volume-slider');
 volumeControl.addEventListener('input', () => {
   Object.values(sounds).forEach(sound => {
@@ -73,7 +74,6 @@ volumeControl.addEventListener('mouseup', () => {
   sounds.volumeTestTone.load()
 })
 
-// Options
 const toggleFlip = () => {
   document.querySelector('#device').classList.toggle('flip')
 }
@@ -84,10 +84,21 @@ optionsButton.addEventListener('click', toggleFlip)
 const optionsClose = document.querySelector('#options-close')
 optionsClose.addEventListener('click', toggleFlip)
 
-// Timer
+// TODO These need to be moved
 let round = 0
-
 let phaseIndex = 0
+const incrementPhaseIndex = (isIncrementing) => {
+  if (isIncrementing) {
+    phaseIndex++
+  } else {
+    phaseIndex = 0
+  }
+  browser.runtime.sendMessage({
+    action: 'updatePhase', 
+    phaseIndex
+  })
+}
+
 const phase = ['work-counting', 'work-done', 'break-counting', 'break-done']
 
 const getCurrentRoundNode = () => document.querySelector(`#round-${round}`)
@@ -99,24 +110,28 @@ const resetTimer = (newMinutes) => {
 }
 
 const stopTimer = () => {
-  phaseIndex = 0
+  // phaseIndex = 0
+  incrementPhaseIndex(false)
   getCurrentRoundNode().className = 'ready'
   resetTimer(timerSettings.pomodoro.length)
 }
 
 const advance = () => {
   if (getCurrentRoundNode().className !== 'ready' && phaseIndex < phase.length - 1) {
-    phaseIndex++
+    // phaseIndex++
+    incrementPhaseIndex(true)
     getCurrentRoundNode().className = phase[phaseIndex]
   } else if (round < 3 && phaseIndex === phase.length - 1) {
-    phaseIndex = 0
+    // phaseIndex = 0
+    incrementPhaseIndex(false)
     round++
     getCurrentRoundNode().className = phase[phaseIndex]
   } else if (getCurrentRoundNode().className === 'ready') {
     getCurrentRoundNode().className = phase[phaseIndex] 
   } else if (round === 3 && phaseIndex === phase.length - 1) {
     round = 0
-    phaseIndex = 0
+    // phaseIndex = 0
+    incrementPhaseIndex(false)
     document.querySelectorAll('div[id^="round-"]').forEach((node) => {node.className = 'ready'})
     document.querySelector('#round-0').className = phase[phaseIndex]
   }
@@ -147,7 +162,8 @@ const timer = () => {
     startingMinutes = timerSettings.pomodoro.length
   }
   console.log({startingMinutes})
-  let minutes = startingMinutes - 1
+  // let minutes = startingMinutes - 1
+  let minutes = 0
   let seconds = 2
 
   const subtractSecond = () => {

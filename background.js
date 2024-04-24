@@ -1,4 +1,5 @@
 let blockedSites = []
+let currentPhaseIndex = 0
 
 const blockSite = (requestDetails) => {
   const url = new URL(requestDetails.url)
@@ -13,6 +14,10 @@ const blockSite = (requestDetails) => {
 
 const updateBlockedSites = (sites) => {
   blockedSites = sites
+}
+
+const updatePhase = (phaseIndex) => {
+  currentPhaseIndex = phaseIndex
 }
 
 const loadBlockedSites = () => {
@@ -45,5 +50,10 @@ loadBlockedSites()
 browser.runtime.onMessage.addListener((message) => {
   if (message.action === 'updateSites') {
     updateBlockedSites(message.sites)
+  }
+
+  if (message.action === 'updatePhase') {
+    updatePhase(message.phaseIndex)
+    console.log({newPhaseIndex: currentPhaseIndex})
   }
 })
