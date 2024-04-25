@@ -1,29 +1,31 @@
-const sounds = {
-  volumeTestTone: new Audio('../audio/volume-test-tone.mp3'),
-  workTimerDone: new Audio('../audio/work-timer-done.mp3'),
-  breakTimerDone: new Audio('../audio/break-timer-done.mp3')
+const initializeTimer = () => {
+  
 }
 
-// TODO move
-const timerSettings = {
-  pomodoro: {
-    length: 25,
-    selector: '#pomodoro-length',
-    sound: sounds.workTimerDone
-  },
-  shortBreak: {
-    length: 5,
-    selector: '#short-break-length',
-    sound: sounds.breakTimerDone
-  },
-  longBreak: {
-    length: 15,
-    selector: '#long-break-length',
-    sound: sounds.breakTimerDone
-  },
+const restoreSavedSites = () => {
+  const setCurrentSites = (result) => {
+    listInput.value = result.blockedSites ? result.blockedSites.join('\n') : ''
+  }
+
+  const onError = (error) => {
+    console.log(`Error: ${error}`)
+  }
+
+  browser.storage.sync.get('blockedSites')
+    .then(setCurrentSites, onError)
 }
 
-// TODO This will need state
+// TODO Send message to manipulate
+Object.entries(timerSettings).forEach(([key, {length, selector}]) => {
+  const input = document.querySelector(selector)
+  input.value = length
+  input.addEventListener('change', (event) => {
+    timerSettings[key].length = event.target.value < 0.5 ? timerSettings[key].length : Math.round(Number(event.target.value))
+    event.target.value = timerSettings[key].length
+  })
+})
+
+// TODO This will need state, function to manipulate
 const taskOptionInput = document.querySelector('#task-option-input')
 taskOptionInput.addEventListener('keyup', (event) => {
   if (event.target.value.replace(/\s/g, '').length  === 0) {
@@ -46,16 +48,7 @@ document.querySelector('#clear-task').addEventListener('click', () => {
 })
 
 
-Object.entries(timerSettings).forEach(([key, {length, selector}]) => {
-  const input = document.querySelector(selector)
-  input.value = length
-  input.addEventListener('change', (event) => {
-    timerSettings[key].length = event.target.value < 0.5 ? timerSettings[key].length : Math.round(Number(event.target.value))
-    event.target.value = timerSettings[key].length
-  })
-})
-
-// TODO State
+// TODO State, messages
 const volumeControl = document.querySelector('#volume-slider');
 volumeControl.addEventListener('input', () => {
   Object.values(sounds).forEach(sound => {
@@ -84,9 +77,8 @@ optionsButton.addEventListener('click', toggleFlip)
 const optionsClose = document.querySelector('#options-close')
 optionsClose.addEventListener('click', toggleFlip)
 
-// TODO These need to be moved
-let round = 0
-let phaseIndex = 0
+
+// Messages
 const incrementPhaseIndex = (isIncrementing) => {
   if (isIncrementing) {
     phaseIndex++
@@ -151,38 +143,6 @@ const clickTimerButton = () => {
   }
 }
 timerButton.addEventListener('click', clickTimerButton)
-
-const timer = () => {
-  let startingMinutes
-  if (round === 3 && phaseIndex === 2) {
-    startingMinutes = timerSettings.longBreak.length
-  } else if (phaseIndex === 2) {
-    startingMinutes = timerSettings.shortBreak.length
-  } else {
-    startingMinutes = timerSettings.pomodoro.length
-  }
-  // let minutes = startingMinutes - 1
-  let minutes = 0
-  let seconds = 2
-
-  const subtractSecond = () => {
-    document.querySelector('#countdown').innerText = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
-    if (seconds === 0 && minutes > 0) {
-      minutes--
-      seconds = 59
-    } else if (seconds > 0) {
-      seconds--
-    } else {
-      clearInterval(intervalID)
-      advance()
-      timerButton.className = 'start-button'
-      timerButton.innerHTML = 'Start'
-      sounds.workTimerDone.play()
-    }
-  }
-
-  intervalID = setInterval(subtractSecond, 1000)
-}
 
 const blacklist = document.querySelector('#blacklist')
 const blacklistMonitor = document.querySelector('#blacklist-monitor')
@@ -250,19 +210,6 @@ const saveSites = (event) => {
     action: 'updateSites', 
     sites: blockedSites
   })
-}
-
-const restoreSavedSites = () => {
-  const setCurrentSites = (result) => {
-    listInput.value = result.blockedSites ? result.blockedSites.join('\n') : ''
-  }
-
-  const onError = (error) => {
-    console.log(`Error: ${error}`)
-  }
-
-  browser.storage.sync.get('blockedSites')
-    .then(setCurrentSites, onError)
 }
 
 document.addEventListener('DOMContentLoaded', restoreSavedSites)
