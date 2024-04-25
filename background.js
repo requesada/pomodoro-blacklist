@@ -93,7 +93,7 @@ const updatePhase = (phaseIndex) => {
 }
 
 const loadBlockedSites = () => {
-  browser.storage.sync.get('blockedSites').then((result) => {
+  browser.storage.local.get('blockedSites').then((result) => {
     updateBlockedSites(result.blockedSites || [])
   }, onError)
 }
@@ -102,8 +102,8 @@ const onError = (error) => {
   console.error(`Error: ${error}`)
 }
 
-browser.storage.onChanged.addListener((changes, area) => {
-  if (area === 'sync' && changes.blockedSites) {
+browser.storage.local.onChanged.addListener((changes) => {
+  if (changes.blockedSites) {
     updateBlockedSites(changes.blockedSites.newValue)
   }
 })

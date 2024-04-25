@@ -1,5 +1,42 @@
-const initializeTimer = () => {
+const initialize = () => {
   
+}
+
+const pomodoroInput = document.querySelector('#pomodoro-length')
+const shortBreakInput = document.querySelector('#short-break-length')
+const longBreakInput = document.querySelector('#long-break-length')
+
+// document.addEventListener('DOMContentLoaded', restoreSavedSites)
+
+const timerSettings = {
+  pomodoro: {
+    length: 25,
+    selector: '#pomodoro-length'
+  },
+  shortBreak: {
+    length: 5,
+    selector: '#short-break-length'
+  },
+  longBreak: {
+    length: 15,
+    selector: '#long-break-length'
+  },
+}
+
+const restoreSavedSettings = () => {
+  const setTimerSettings = (result) => {
+    timerSettings = result
+    pomodoroInput.value = result.pomodoro || 25
+    shortBreakInput.value = result.shortBreak || 5
+    longBreakInput.value = result.longBreak || 15
+  }
+
+  const onError = (error) => {
+    console.log(`Error retrieving timer settings: ${error}`)
+  }
+
+  browser.storage.local.get('timerSettings')
+    .then(setTimerSettings, onError)
 }
 
 const restoreSavedSites = () => {
@@ -8,14 +45,18 @@ const restoreSavedSites = () => {
   }
 
   const onError = (error) => {
-    console.log(`Error: ${error}`)
+    console.log(`Error retrieving sites: ${error}`)
   }
 
-  browser.storage.sync.get('blockedSites')
+  browser.storage.local.get('blockedSites')
     .then(setCurrentSites, onError)
 }
 
-// TODO Send message to manipulate
+pomodoroInput.addEventListener('change', (event) => {
+  timerSettings.pomodoro = event.target.value
+  browser.storage.local.set({timerSettings})
+})
+
 Object.entries(timerSettings).forEach(([key, {length, selector}]) => {
   const input = document.querySelector(selector)
   input.value = length
@@ -205,13 +246,11 @@ listInput.addEventListener('scroll', () => {
 
 const saveSites = (event) => {
   const blockedSites = event.target.value.split('\n').map((siteString) => siteString.trim()).filter(Boolean)
-  browser.storage.sync.set({blockedSites})
+  browser.storage.local.set({blockedSites})
   browser.runtime.sendMessage({
     action: 'updateSites', 
     sites: blockedSites
   })
 }
-
-document.addEventListener('DOMContentLoaded', restoreSavedSites)
 
 listInput.addEventListener('input', saveSites)
