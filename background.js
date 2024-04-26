@@ -6,40 +6,13 @@ const timerState = {
   phaseIndex: 0
 }
 
-const tempStorage = {
-  pomodoro: 25,
-  shortBreak: 5,
-  longBreak: 15
-}
-
 const sounds = {
   volumeTestTone: new Audio('../audio/volume-test-tone.mp3'),
   workTimerDone: new Audio('../audio/work-timer-done.mp3'),
   breakTimerDone: new Audio('../audio/break-timer-done.mp3')
 }
 
-// TODO storage
-const timerSettings = {
-  pomodoro: {
-    length: 25,
-    selector: '#pomodoro-length',
-    sound: sounds.workTimerDone
-  },
-  shortBreak: {
-    length: 5,
-    selector: '#short-break-length',
-    sound: sounds.breakTimerDone
-  },
-  longBreak: {
-    length: 15,
-    selector: '#long-break-length',
-    sound: sounds.breakTimerDone
-  },
-}
-
 const task = ''
-
-const volumeLevel = 50 // TODO Keep in storage
 
 const timer = () => {
   let startingMinutes

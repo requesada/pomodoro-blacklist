@@ -1,13 +1,3 @@
-const initialize = () => {
-  
-}
-
-const pomodoroInput = document.querySelector('#pomodoro-length')
-const shortBreakInput = document.querySelector('#short-break-length')
-const longBreakInput = document.querySelector('#long-break-length')
-
-// document.addEventListener('DOMContentLoaded', restoreSavedSites)
-
 const timerSettings = {
   pomodoro: {
     length: 25,
@@ -21,20 +11,19 @@ const timerSettings = {
     length: 15,
     selector: '#long-break-length'
   },
+  volume: 50
 }
 
 const restoreSavedSettings = () => {
   const setTimerSettings = (result) => {
-    timerSettings = result
-    pomodoroInput.value = result.pomodoro || 25
-    shortBreakInput.value = result.shortBreak || 5
-    longBreakInput.value = result.longBreak || 15
+    for (const [period, {length, selector}] of Object.entries(result.timerSettings)) {
+      timerSettings[period].length = length
+      document.querySelector(selector).value = length
+    }
   }
-
   const onError = (error) => {
     console.log(`Error retrieving timer settings: ${error}`)
   }
-
   browser.storage.local.get('timerSettings')
     .then(setTimerSettings, onError)
 }
@@ -43,28 +32,28 @@ const restoreSavedSites = () => {
   const setCurrentSites = (result) => {
     listInput.value = result.blockedSites ? result.blockedSites.join('\n') : ''
   }
-
   const onError = (error) => {
     console.log(`Error retrieving sites: ${error}`)
   }
-
   browser.storage.local.get('blockedSites')
     .then(setCurrentSites, onError)
 }
 
-pomodoroInput.addEventListener('change', (event) => {
-  timerSettings.pomodoro = event.target.value
-  browser.storage.local.set({timerSettings})
-})
-
-Object.entries(timerSettings).forEach(([key, {length, selector}]) => {
-  const input = document.querySelector(selector)
-  input.value = length
-  input.addEventListener('change', (event) => {
-    timerSettings[key].length = event.target.value < 0.5 ? timerSettings[key].length : Math.round(Number(event.target.value))
-    event.target.value = timerSettings[key].length
+for (const [period, {selector}] of Object.entries(timerSettings)) {
+  document.querySelector(selector).addEventListener('change', (event) => {
+    timerSettings[period].length = event.target.value < 0.5 ? timerSettings[period].length : Math.round(Number(event.target.value))
+    browser.storage.local.set({timerSettings})
   })
-})
+}
+
+// Object.entries(timerSettings).forEach(([key, {length, selector}]) => {
+//   const input = document.querySelector(selector)
+//   input.value = length
+//   input.addEventListener('change', (event) => {
+//     timerSettings[key].length = event.target.value < 0.5 ? timerSettings[key].length : Math.round(Number(event.target.value))
+//     event.target.value = timerSettings[key].length
+//   })
+// })
 
 // TODO This will need state, function to manipulate
 const taskOptionInput = document.querySelector('#task-option-input')
@@ -254,3 +243,9 @@ const saveSites = (event) => {
 }
 
 listInput.addEventListener('input', saveSites)
+
+const initialize = () => {
+  restoreSavedSettings()
+  restoreSavedSites()
+}
+document.addEventListener('DOMContentLoaded', initialize)
