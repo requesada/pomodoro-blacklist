@@ -1,4 +1,5 @@
 let blockedSites = []
+let task = ''
 let currentPhaseIndex = 0
 
 const timerState = {
@@ -12,8 +13,6 @@ const sounds = {
   breakTimerDone: new Audio('../audio/break-timer-done.mp3')
 }
 
-const task = ''
-
 const timer = () => {
   let startingMinutes
   if (round === 3 && phaseIndex === 2) {
@@ -26,7 +25,7 @@ const timer = () => {
   // let minutes = startingMinutes - 1
   let minutes = 0
   let seconds = 2
-
+  
   const subtractSecond = () => {
     document.querySelector('#countdown').innerText = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
     if (seconds === 0 && minutes > 0) {
@@ -42,14 +41,14 @@ const timer = () => {
       sounds.workTimerDone.play()
     }
   }
-
+  
   intervalID = setInterval(subtractSecond, 1000)
 }
 
 const blockSite = (requestDetails) => {
   const url = new URL(requestDetails.url)
   const urlString = url.hostname + url.pathname
-
+  
   for (const site of blockedSites) {
     if (urlString.startsWith(site) || urlString.startsWith(`www.${site}`)) {
       return { redirectUrl: browser.extension.getURL('blocked.html') }
@@ -59,6 +58,10 @@ const blockSite = (requestDetails) => {
 
 const updateBlockedSites = (sites) => {
   blockedSites = sites
+}
+
+const updateTask = (newTask) => {
+  task = newTask
 }
 
 const updatePhase = (phaseIndex) => {
@@ -92,7 +95,7 @@ browser.webRequest.onBeforeRequest.addListener(
 
 loadBlockedSites()
 
-browser.runtime.onMessage.addListener((message) => {
+browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === 'updateSites') {
     updateBlockedSites(message.sites)
   }
@@ -100,5 +103,9 @@ browser.runtime.onMessage.addListener((message) => {
   if (message.action === 'updatePhase') {
     updatePhase(message.phaseIndex)
     console.log({newPhaseIndex: currentPhaseIndex})
+  }
+
+  if (message.action === 'getTask') {
+    sendResponse({task})
   }
 })

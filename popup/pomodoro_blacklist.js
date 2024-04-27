@@ -17,8 +17,10 @@ const timerSettings = {
 const restoreSavedSettings = () => {
   const setTimerSettings = (result) => {
     for (const [period, {length, selector}] of Object.entries(result.timerSettings)) {
-      timerSettings[period].length = length
-      document.querySelector(selector).value = length
+      if (length && selector) {
+        timerSettings[period].length = length
+        document.querySelector(selector).value = length
+      }
     }
   }
   const onError = (error) => {
@@ -40,10 +42,12 @@ const restoreSavedSites = () => {
 }
 
 for (const [period, {selector}] of Object.entries(timerSettings)) {
-  document.querySelector(selector).addEventListener('change', (event) => {
-    timerSettings[period].length = event.target.value < 0.5 ? timerSettings[period].length : Math.round(Number(event.target.value))
-    browser.storage.local.set({timerSettings})
-  })
+  if (selector) {
+    document.querySelector(selector).addEventListener('change', (event) => {
+      timerSettings[period].length = event.target.value < 0.5 ? timerSettings[period].length : Math.round(Number(event.target.value))
+      browser.storage.local.set({timerSettings})
+    })
+  }
 }
 
 // Object.entries(timerSettings).forEach(([key, {length, selector}]) => {
@@ -56,8 +60,14 @@ for (const [period, {selector}] of Object.entries(timerSettings)) {
 // })
 
 // TODO This will need state, function to manipulate
+let currentTask = ''
+const getCurrentTask = () => {
+  browser.runtime.sendMessage({action: 'getTask'})
+    .then(({task}) => {currentTask = task})
+}
+getCurrentTask()
 const taskOptionInput = document.querySelector('#task-option-input')
-taskOptionInput.addEventListener('keyup', (event) => {
+taskOptionInput.addEventListener('change', (event) => {
   if (event.target.value.replace(/\s/g, '').length  === 0) {
     document.querySelector('#countdown').className = 'no-task'
     document.querySelector('#task').className = 'no-task'
