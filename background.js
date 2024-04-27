@@ -102,7 +102,10 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
   if (message.action === 'updatePhase') {
     updatePhase(message.phaseIndex)
-    console.log({newPhaseIndex: currentPhaseIndex})
+  }
+
+  if (message.action === 'updateTask') {
+    updateTask(message.newTask)
   }
 
   if (message.action === 'getTask') {

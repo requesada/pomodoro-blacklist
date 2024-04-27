@@ -16,10 +16,12 @@ const timerSettings = {
 
 const restoreSavedSettings = () => {
   const setTimerSettings = (result) => {
-    for (const [period, {length, selector}] of Object.entries(result.timerSettings)) {
-      if (length && selector) {
-        timerSettings[period].length = length
-        document.querySelector(selector).value = length
+    if (result.timerSettings) {
+      for (const [period, {length, selector}] of Object.entries(result.timerSettings)) {
+        if (length && selector) {
+          timerSettings[period].length = length
+          document.querySelector(selector).value = length
+        }
       }
     }
   }
@@ -63,19 +65,34 @@ for (const [period, {selector}] of Object.entries(timerSettings)) {
 let currentTask = ''
 const getCurrentTask = () => {
   browser.runtime.sendMessage({action: 'getTask'})
-    .then(({task}) => {currentTask = task})
+    .then(({task}) => {
+      currentTask = task
+      if (task) {
+        document.querySelector('#countdown').className = ''
+        document.querySelector('#task').className = ''
+        document.querySelector('#primary').innerText = task
+        document.querySelector('#secondary').innerText = task
+      }
+    })
 }
-getCurrentTask()
 const taskOptionInput = document.querySelector('#task-option-input')
 taskOptionInput.addEventListener('change', (event) => {
   if (event.target.value.replace(/\s/g, '').length  === 0) {
     document.querySelector('#countdown').className = 'no-task'
     document.querySelector('#task').className = 'no-task'
+    browser.runtime.sendMessage({
+      action: 'updateTask',
+      newTask: ''
+    })
   } else {
     document.querySelector('#countdown').className = ''
     document.querySelector('#task').className = ''
     document.querySelector('#primary').innerText = event.target.value
     document.querySelector('#secondary').innerText = event.target.value
+    browser.runtime.sendMessage({
+      action: 'updateTask',
+      newTask: event.target.value
+    })
   }
 })
 
@@ -257,5 +274,6 @@ listInput.addEventListener('input', saveSites)
 const initialize = () => {
   restoreSavedSettings()
   restoreSavedSites()
+  getCurrentTask()
 }
 document.addEventListener('DOMContentLoaded', initialize)
