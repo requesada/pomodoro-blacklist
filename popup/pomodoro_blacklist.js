@@ -61,7 +61,6 @@ for (const [period, {selector}] of Object.entries(timerSettings)) {
 //   })
 // })
 
-// TODO This will need state, function to manipulate
 let currentTask = ''
 const getCurrentTask = () => {
   browser.runtime.sendMessage({action: 'getTask'})
@@ -72,6 +71,7 @@ const getCurrentTask = () => {
         document.querySelector('#task').className = ''
         document.querySelector('#primary').innerText = task
         document.querySelector('#secondary').innerText = task
+        taskOptionInput.value = task
       }
     })
 }
@@ -102,6 +102,10 @@ document.querySelector('#clear-task').addEventListener('click', () => {
   document.querySelector('#primary').innerText = ''
   document.querySelector('#secondary').innerText = ''
   taskOptionInput.value = ''
+  browser.runtime.sendMessage({
+    action: 'updateTask',
+    newTask: ''
+  })
 })
 
 
