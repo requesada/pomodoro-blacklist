@@ -1,3 +1,9 @@
+const sounds = {
+  volumeTestTone: new Audio('../audio/volume-test-tone.mp3'),
+  workTimerDone: new Audio('../audio/work-timer-done.mp3'),
+  breakTimerDone: new Audio('../audio/break-timer-done.mp3')
+}
+
 const timerSettings = {
   pomodoro: {
     length: 25,
@@ -17,10 +23,12 @@ const timerSettings = {
 const restoreSavedSettings = () => {
   const setTimerSettings = (result) => {
     if (result.timerSettings) {
-      for (const [period, {length, selector}] of Object.entries(result.timerSettings)) {
-        if (length && selector) {
-          timerSettings[period].length = length
-          document.querySelector(selector).value = length
+      for (const [setting, value] of Object.entries(result.timerSettings)) {
+        if (value.length && value.selector) {
+          timerSettings[setting].length = value.length
+          document.querySelector(value.selector).value = value.length
+        } else {
+          timerSettings[setting] = value
         }
       }
     }
@@ -43,10 +51,10 @@ const restoreSavedSites = () => {
     .then(setCurrentSites, onError)
 }
 
-for (const [period, {selector}] of Object.entries(timerSettings)) {
+for (const [setting, {selector}] of Object.entries(timerSettings)) {
   if (selector) {
     document.querySelector(selector).addEventListener('change', (event) => {
-      timerSettings[period].length = event.target.value < 0.5 ? timerSettings[period].length : Math.round(Number(event.target.value))
+      timerSettings[setting].length = event.target.value < 0.5 ? timerSettings[setting].length : Math.round(Number(event.target.value))
       browser.storage.local.set({timerSettings})
     })
   }
@@ -113,7 +121,8 @@ document.querySelector('#clear-task').addEventListener('click', () => {
 const volumeControl = document.querySelector('#volume-slider');
 volumeControl.addEventListener('input', () => {
   Object.values(sounds).forEach(sound => {
-    sound.volume = volumeControl.value / 100;
+    timerSettings.volume = volumeControl.value / 100
+    sound.volume = volumeControl.value / 100
   });
 });
 

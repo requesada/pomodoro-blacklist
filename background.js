@@ -7,12 +7,6 @@ const timerState = {
   phaseIndex: 0
 }
 
-const sounds = {
-  volumeTestTone: new Audio('../audio/volume-test-tone.mp3'),
-  workTimerDone: new Audio('../audio/work-timer-done.mp3'),
-  breakTimerDone: new Audio('../audio/break-timer-done.mp3')
-}
-
 const timer = () => {
   let startingMinutes
   if (round === 3 && phaseIndex === 2) {
