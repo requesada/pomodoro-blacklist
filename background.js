@@ -6,6 +6,7 @@ const timerState = {
   phaseIndex: 0
 }
 
+let intervalID
 const timer = async () => {
   let startingMinutes
   let timerSettingLengths = {}
@@ -52,10 +53,12 @@ const timer = async () => {
       seconds--
     } else {
       clearInterval(intervalID)
-      advance()
-      timerButton.className = 'start-button'
-      timerButton.innerHTML = 'Start'
-      sounds.workTimerDone.play()
+      // advance()
+      browser.runtime.sendMessage({action: 'advance'})
+      browser.runtime.sendMessage({action: 'timeUp'})
+      // timerButton.className = 'start-button'
+      // timerButton.innerHTML = 'Start'
+      // sounds.workTimerDone.play()
     }
   }
   
@@ -117,6 +120,10 @@ browser.webRequest.onBeforeRequest.addListener(
 loadBlockedSites()
 
 browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action === 'clearInterval') {
+    clearInterval(intervalID)
+  }
+
   if (message.action === 'getTask') {
     sendResponse({task})
   }

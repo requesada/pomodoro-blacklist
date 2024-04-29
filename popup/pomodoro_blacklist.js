@@ -57,14 +57,16 @@ const restoreSavedSites = () => {
 }
 
 const getTimerState = () => {
+  const setCurrentTimerState = (response) => {
+    currentTimerState = response.timerState
+  }
+  const onError = () => {
+    console.log(`Error getting timerState: ${error}`)
+  }
   browser.runtime.sendMessage({
     action: 'getTimerState'
   })
-    .then(({timerState}) => {
-      currentTimerState = timerState
-    }, (error) => {
-      console.log(`Error getting timerState: ${error}`)
-    })
+    .then(setCurrentTimerState, onError)
 }
 
 for (const [setting, {selector}] of Object.entries(timerSettings)) {
@@ -167,13 +169,13 @@ optionsClose.addEventListener('click', toggleFlip)
 // TODO I think much of this needs to be in background
 const incrementPhaseIndex = (isIncrementing) => {
   if (isIncrementing) {
-    phaseIndex++
+    currentTimerState.phaseIndex++
   } else {
-    phaseIndex = 0
+    currentTimerState.phaseIndex = 0
   }
   browser.runtime.sendMessage({
     action: 'updatePhase', 
-    phaseIndex
+    phaseIndex: currentTimerState.phaseIndex
   })
 }
 
@@ -188,9 +190,8 @@ const phase = ['work-counting', 'work-done', 'break-counting', 'break-done']
 
 const getCurrentRoundNode = () => document.querySelector(`#round-${currentTimerState.round}`)
 
-let intervalID
 const resetTimer = (newMinutes) => {
-  clearInterval(intervalID)
+  browser.runtime.sendMessage({action: 'clearInterval'})
   countdown.innerText = `${String(newMinutes).padStart(2, '0')}:00`
 }
 
@@ -213,7 +214,7 @@ const advance = () => {
     getCurrentRoundNode().className = phase[currentTimerState.phaseIndex]
   } else if (getCurrentRoundNode().className === 'ready') {
     getCurrentRoundNode().className = phase[currentTimerState.phaseIndex] 
-  } else if (currentTimerState.round === 3 && phaseIndex === phase.length - 1) {
+  } else if (currentTimerState.round === 3 && currentTimerState.phaseIndex === phase.length - 1) {
     updateRound(0)
     // phaseIndex = 0
     incrementPhaseIndex(false)
@@ -320,6 +321,16 @@ const initialize = () => {
   getTimerState()
 
   browser.runtime.onMessage.addListener((message) => {
+    if (message.action === 'advance') {
+      advance()
+    }
+
+    if (message.action === 'timeUp') {
+      timerButton.className = 'start-button'
+      timerButton.innerHTML = 'Start'
+      sounds.workTimerDone.play()
+    }
+
     if (message.action === 'updateTime') {
       countdown.innerText = message.time
     }
