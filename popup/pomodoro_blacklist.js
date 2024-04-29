@@ -1,3 +1,7 @@
+const countdown = document.querySelector('#countdown')
+
+let currentTimerState
+
 const sounds = {
   volumeTestTone: new Audio('../audio/volume-test-tone.mp3'),
   workTimerDone: new Audio('../audio/work-timer-done.mp3'),
@@ -52,6 +56,17 @@ const restoreSavedSites = () => {
     .then(setCurrentSites, onError)
 }
 
+const getTimerState = () => {
+  browser.runtime.sendMessage({
+    action: 'getTimerState'
+  })
+    .then(({timerState}) => {
+      currentTimerState = timerState
+    }, (error) => {
+      console.log(`Error getting timerState: ${error}`)
+    })
+}
+
 for (const [setting, {selector}] of Object.entries(timerSettings)) {
   if (selector) {
     document.querySelector(selector).addEventListener('change', (event) => {
@@ -76,7 +91,7 @@ const getCurrentTask = () => {
     .then(({task}) => {
       currentTask = task
       if (task) {
-        document.querySelector('#countdown').className = ''
+        countdown.className = ''
         document.querySelector('#task').className = ''
         document.querySelector('#primary').innerText = task
         document.querySelector('#secondary').innerText = task
@@ -87,14 +102,14 @@ const getCurrentTask = () => {
 const taskOptionInput = document.querySelector('#task-option-input')
 taskOptionInput.addEventListener('change', (event) => {
   if (event.target.value.replace(/\s/g, '').length  === 0) {
-    document.querySelector('#countdown').className = 'no-task'
+    countdown.className = 'no-task'
     document.querySelector('#task').className = 'no-task'
     browser.runtime.sendMessage({
       action: 'updateTask',
       newTask: ''
     })
   } else {
-    document.querySelector('#countdown').className = ''
+    countdown.className = ''
     document.querySelector('#task').className = ''
     document.querySelector('#primary').innerText = event.target.value
     document.querySelector('#secondary').innerText = event.target.value
@@ -106,7 +121,7 @@ taskOptionInput.addEventListener('change', (event) => {
 })
 
 document.querySelector('#clear-task').addEventListener('click', () => {
-  document.querySelector('#countdown').className = 'no-task'
+  countdown.className = 'no-task'
   document.querySelector('#task').className = 'no-task'
   document.querySelector('#primary').innerText = ''
   document.querySelector('#secondary').innerText = ''
@@ -149,7 +164,7 @@ const optionsClose = document.querySelector('#options-close')
 optionsClose.addEventListener('click', toggleFlip)
 
 
-// Messages
+// TODO I think much of this needs to be in background
 const incrementPhaseIndex = (isIncrementing) => {
   if (isIncrementing) {
     phaseIndex++
@@ -162,14 +177,21 @@ const incrementPhaseIndex = (isIncrementing) => {
   })
 }
 
+const updateRound = (newRound) => {
+  browser.runtime.sendMessage({
+    action: 'updateRound',
+    round: newRound
+  })
+}
+
 const phase = ['work-counting', 'work-done', 'break-counting', 'break-done']
 
-const getCurrentRoundNode = () => document.querySelector(`#round-${round}`)
+const getCurrentRoundNode = () => document.querySelector(`#round-${currentTimerState.round}`)
 
 let intervalID
 const resetTimer = (newMinutes) => {
   clearInterval(intervalID)
-  document.querySelector('#countdown').innerText = `${String(newMinutes).padStart(2, '0')}:00`
+  countdown.innerText = `${String(newMinutes).padStart(2, '0')}:00`
 }
 
 const stopTimer = () => {
@@ -180,24 +202,30 @@ const stopTimer = () => {
 }
 
 const advance = () => {
-  if (getCurrentRoundNode().className !== 'ready' && phaseIndex < phase.length - 1) {
+  if (getCurrentRoundNode().className !== 'ready' && currentTimerState.phaseIndex < phase.length - 1) {
     // phaseIndex++
     incrementPhaseIndex(true)
-    getCurrentRoundNode().className = phase[phaseIndex]
-  } else if (round < 3 && phaseIndex === phase.length - 1) {
+    getCurrentRoundNode().className = phase[currentTimerState.phaseIndex]
+  } else if (currentTimerState.round < 3 && currentTimerState.phaseIndex === phase.length - 1) {
     // phaseIndex = 0
     incrementPhaseIndex(false)
-    round++
-    getCurrentRoundNode().className = phase[phaseIndex]
+    updateRound(currentTimerState.round++)
+    getCurrentRoundNode().className = phase[currentTimerState.phaseIndex]
   } else if (getCurrentRoundNode().className === 'ready') {
-    getCurrentRoundNode().className = phase[phaseIndex] 
-  } else if (round === 3 && phaseIndex === phase.length - 1) {
-    round = 0
+    getCurrentRoundNode().className = phase[currentTimerState.phaseIndex] 
+  } else if (currentTimerState.round === 3 && phaseIndex === phase.length - 1) {
+    updateRound(0)
     // phaseIndex = 0
     incrementPhaseIndex(false)
     document.querySelectorAll('div[id^="round-"]').forEach((node) => {node.className = 'ready'})
-    document.querySelector('#round-0').className = phase[phaseIndex]
+    document.querySelector('#round-0').className = phase[currentTimerState.phaseIndex]
   }
+}
+
+const startTimer = () => {
+  browser.runtime.sendMessage({
+    action: 'startTimer'
+  })
 }
 
 const timerButton = document.querySelector('#timer-button')
@@ -206,7 +234,7 @@ const clickTimerButton = () => {
     timerButton.className = 'stop-button'
     timerButton.innerHTML = 'Stop'
     advance()
-    timer()
+    startTimer()
   } else {
     timerButton.className = 'start-button'
     timerButton.innerHTML = 'Start'
@@ -289,5 +317,12 @@ const initialize = () => {
   restoreSavedSettings()
   restoreSavedSites()
   getCurrentTask()
+  getTimerState()
+
+  browser.runtime.onMessage.addListener((message) => {
+    if (message.action === 'updateTime') {
+      countdown.innerText = message.time
+    }
+  })
 }
 document.addEventListener('DOMContentLoaded', initialize)

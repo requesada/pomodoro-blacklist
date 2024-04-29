@@ -1,27 +1,50 @@
 let blockedSites = []
 let task = ''
-let currentPhaseIndex = 0
 
 const timerState = {
   round: 0,
   phaseIndex: 0
 }
 
-const timer = () => {
+const timer = async () => {
   let startingMinutes
-  if (round === 3 && phaseIndex === 2) {
-    startingMinutes = timerSettings.longBreak.length
-  } else if (phaseIndex === 2) {
-    startingMinutes = timerSettings.shortBreak.length
+  let timerSettingLengths = {}
+  const getTimerSettingLengths = (result) => {
+    if (result.timerSettings) {
+      for (const [setting, {length}] of Object.entries(result.timerSettings)) {
+        if (setting !== 'volume') {
+          timerSettingLengths[setting] = length
+        }
+      }
+    } else {
+      timerSettingLengths = {
+        pomodoro: 25,
+        shortBreak: 5,
+        longBreak: 15
+      }
+    }
+  }
+  const onGetLengthsError = (error) => {
+    console.log(`Error getting lengths: ${error}`)
+  }
+  await browser.storage.local.get('timerSettings')
+    .then(getTimerSettingLengths, onGetLengthsError)
+  if (timerState.round === 3 && timerState.phaseIndex === 2) {
+    startingMinutes = timerSettingLengths.longBreak
+  } else if (timerState.phaseIndex === 2) {
+    startingMinutes = timerSettingLengths.shortBreak
   } else {
-    startingMinutes = timerSettings.pomodoro.length
+    startingMinutes = timerSettingLengths.pomodoro
   }
   // let minutes = startingMinutes - 1
   let minutes = 0
   let seconds = 2
   
   const subtractSecond = () => {
-    document.querySelector('#countdown').innerText = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
+    browser.runtime.sendMessage({
+      action: 'updateTime',
+      time: `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
+    })
     if (seconds === 0 && minutes > 0) {
       minutes--
       seconds = 59
@@ -59,7 +82,11 @@ const updateTask = (newTask) => {
 }
 
 const updatePhase = (phaseIndex) => {
-  currentPhaseIndex = phaseIndex
+  timerState.phaseIndex = phaseIndex
+}
+
+const updateRound = (newRound) => {
+  timerState.round = newRound
 }
 
 const loadBlockedSites = () => {
@@ -90,19 +117,31 @@ browser.webRequest.onBeforeRequest.addListener(
 loadBlockedSites()
 
 browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.action === 'updateSites') {
-    updateBlockedSites(message.sites)
+  if (message.action === 'getTask') {
+    sendResponse({task})
+  }
+  
+  if (message.action === 'getTimerState') {
+    sendResponse({timerState})
   }
 
+  if (message.action === 'startTimer') {
+    timer()
+  }
+  
   if (message.action === 'updatePhase') {
     updatePhase(message.phaseIndex)
   }
 
-  if (message.action === 'updateTask') {
-    updateTask(message.newTask)
+  if (message.action === 'updateRound') {
+    updateRound(message.round)
+  }
+  
+  if (message.action === 'updateSites') {
+    updateBlockedSites(message.sites)
   }
 
-  if (message.action === 'getTask') {
-    sendResponse({task})
+  if (message.action === 'updateTask') {
+    updateTask(message.newTask)
   }
 })
