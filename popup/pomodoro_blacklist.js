@@ -29,6 +29,7 @@ const restoreSavedSettings = () => {
           document.querySelector(value.selector).value = value.length
         } else {
           timerSettings[setting] = value
+          volumeControl.value = value
         }
       }
     }
@@ -117,14 +118,14 @@ document.querySelector('#clear-task').addEventListener('click', () => {
 })
 
 
-// TODO State, messages
 const volumeControl = document.querySelector('#volume-slider');
 volumeControl.addEventListener('input', () => {
   Object.values(sounds).forEach(sound => {
-    timerSettings.volume = volumeControl.value / 100
-    sound.volume = volumeControl.value / 100
-  });
-});
+    sound.volume = Number(volumeControl.value) / 100
+  })
+  timerSettings.volume = Number(volumeControl.value)
+  browser.storage.local.set({timerSettings})
+})
 
 volumeControl.addEventListener('mousedown', () => {
   sounds.volumeTestTone.loop = true
