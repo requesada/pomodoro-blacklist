@@ -78,15 +78,6 @@ for (const [setting, {selector}] of Object.entries(timerSettings)) {
   }
 }
 
-// Object.entries(timerSettings).forEach(([key, {length, selector}]) => {
-//   const input = document.querySelector(selector)
-//   input.value = length
-//   input.addEventListener('change', (event) => {
-//     timerSettings[key].length = event.target.value < 0.5 ? timerSettings[key].length : Math.round(Number(event.target.value))
-//     event.target.value = timerSettings[key].length
-//   })
-// })
-
 let currentTask = ''
 const getCurrentTask = () => {
   browser.runtime.sendMessage({action: 'getTask'})
@@ -166,7 +157,6 @@ const optionsClose = document.querySelector('#options-close')
 optionsClose.addEventListener('click', toggleFlip)
 
 
-// TODO I think much of this needs to be in background
 const incrementPhaseIndex = (isIncrementing) => {
   if (isIncrementing) {
     currentTimerState.phaseIndex++
@@ -196,7 +186,6 @@ const resetTimer = (newMinutes) => {
 }
 
 const stopTimer = () => {
-  // phaseIndex = 0
   incrementPhaseIndex(false)
   getCurrentRoundNode().className = 'ready'
   resetTimer(timerSettings.pomodoro.length)
@@ -204,11 +193,9 @@ const stopTimer = () => {
 
 const advance = () => {
   if (getCurrentRoundNode().className !== 'ready' && currentTimerState.phaseIndex < phase.length - 1) {
-    // phaseIndex++
     incrementPhaseIndex(true)
     getCurrentRoundNode().className = phase[currentTimerState.phaseIndex]
   } else if (currentTimerState.round < 3 && currentTimerState.phaseIndex === phase.length - 1) {
-    // phaseIndex = 0
     incrementPhaseIndex(false)
     updateRound(currentTimerState.round++)
     getCurrentRoundNode().className = phase[currentTimerState.phaseIndex]
@@ -216,7 +203,6 @@ const advance = () => {
     getCurrentRoundNode().className = phase[currentTimerState.phaseIndex] 
   } else if (currentTimerState.round === 3 && currentTimerState.phaseIndex === phase.length - 1) {
     updateRound(0)
-    // phaseIndex = 0
     incrementPhaseIndex(false)
     document.querySelectorAll('div[id^="round-"]').forEach((node) => {node.className = 'ready'})
     document.querySelector('#round-0').className = phase[currentTimerState.phaseIndex]

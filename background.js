@@ -53,12 +53,8 @@ const timer = async () => {
       seconds--
     } else {
       clearInterval(intervalID)
-      // advance()
       browser.runtime.sendMessage({action: 'advance'})
       browser.runtime.sendMessage({action: 'timeUp'})
-      // timerButton.className = 'start-button'
-      // timerButton.innerHTML = 'Start'
-      // sounds.workTimerDone.play()
     }
   }
   
