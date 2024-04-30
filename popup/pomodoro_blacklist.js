@@ -69,6 +69,12 @@ const getTimerState = () => {
     .then(setCurrentTimerState, onError)
 }
 
+const restoreStyles = () => {
+  Array.from({length: 4}, (_, index) => index).forEach((number) => {
+    
+  })
+}
+
 for (const [setting, {selector}] of Object.entries(timerSettings)) {
   if (selector) {
     document.querySelector(selector).addEventListener('change', (event) => {
@@ -189,6 +195,7 @@ const stopTimer = () => {
   incrementPhaseIndex(false)
   getCurrentRoundNode().className = 'ready'
   resetTimer(timerSettings.pomodoro.length)
+  browser.runtime.sendMessage({action: 'clearInterval'})
 }
 
 const advance = () => {
@@ -307,19 +314,27 @@ const initialize = () => {
   getTimerState()
 
   browser.runtime.onMessage.addListener((message) => {
-    if (message.action === 'advance') {
-      advance()
-    }
-
-    if (message.action === 'timeUp') {
-      timerButton.className = 'start-button'
-      timerButton.innerHTML = 'Start'
-      sounds.workTimerDone.play()
-    }
-
-    if (message.action === 'updateTime') {
-      countdown.innerText = message.time
+    switch (message.action) {
+      case 'advance':
+        advance()
+        break
+    
+      case 'timeUp':
+        timerButton.className = 'start-button'
+        timerButton.innerHTML = 'Start'
+        sounds.workTimerDone.play()
+        break
+    
+      case 'updateTime':
+        countdown.innerText = message.time
+        break
     }
   })
+
+  browser.runtime.sendMessage({popupOpen: true})
 }
 document.addEventListener('DOMContentLoaded', initialize)
+
+window.addEventListener('unload', () => {
+  browser.runtime.sendMessage({popupOpen: false})
+})

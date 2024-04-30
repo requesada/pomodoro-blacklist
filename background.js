@@ -1,3 +1,5 @@
+let isPopupOpen = false
+
 let blockedSites = []
 let task = ''
 
@@ -6,30 +8,33 @@ const timerState = {
   phaseIndex: 0
 }
 
+let time
 let intervalID
-const timer = async () => {
-  let startingMinutes
-  let timerSettingLengths = {}
-  const getTimerSettingLengths = (result) => {
-    if (result.timerSettings) {
-      for (const [setting, {length}] of Object.entries(result.timerSettings)) {
-        if (setting !== 'volume') {
-          timerSettingLengths[setting] = length
-        }
-      }
-    } else {
-      timerSettingLengths = {
-        pomodoro: 25,
-        shortBreak: 5,
-        longBreak: 15
+let timerSettingLengths = {}
+const getTimerSettingLengths = (result) => {
+  if (result.timerSettings) {
+    for (const [setting, {length}] of Object.entries(result.timerSettings)) {
+      if (setting !== 'volume') {
+        timerSettingLengths[setting] = length
       }
     }
+  } else {
+    timerSettingLengths = {
+      pomodoro: 25,
+      shortBreak: 5,
+      longBreak: 15
+    }
   }
-  const onGetLengthsError = (error) => {
-    console.log(`Error getting lengths: ${error}`)
-  }
-  await browser.storage.local.get('timerSettings')
-    .then(getTimerSettingLengths, onGetLengthsError)
+  time = `${String(timerSettingLengths.pomodoro).padStart(2, '0')}:00`
+}
+const onGetLengthsError = (error) => {
+  console.log(`Error getting lengths: ${error}`)
+}
+browser.storage.local.get('timerSettings')
+  .then(getTimerSettingLengths, onGetLengthsError)
+// TODO This needs to drive a lot
+const timer = () => {
+  let startingMinutes
   if (timerState.round === 3 && timerState.phaseIndex === 2) {
     startingMinutes = timerSettingLengths.longBreak
   } else if (timerState.phaseIndex === 2) {
@@ -37,15 +42,18 @@ const timer = async () => {
   } else {
     startingMinutes = timerSettingLengths.pomodoro
   }
-  // let minutes = startingMinutes - 1
-  let minutes = 0
-  let seconds = 2
+  let minutes = startingMinutes - 1
+  // let minutes = 0
+  let seconds = 59
   
   const subtractSecond = () => {
-    browser.runtime.sendMessage({
-      action: 'updateTime',
-      time: `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
-    })
+    time = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
+    if (isPopupOpen) {
+      browser.runtime.sendMessage({
+        action: 'updateTime',
+        time
+      })
+    }
     if (seconds === 0 && minutes > 0) {
       minutes--
       seconds = 59
@@ -53,8 +61,10 @@ const timer = async () => {
       seconds--
     } else {
       clearInterval(intervalID)
-      browser.runtime.sendMessage({action: 'advance'})
-      browser.runtime.sendMessage({action: 'timeUp'})
+      if (isPopupOpen) {
+        browser.runtime.sendMessage({action: 'advance'})
+        browser.runtime.sendMessage({action: 'timeUp'})
+      }
     }
   }
   
@@ -76,16 +86,16 @@ const updateBlockedSites = (sites) => {
   blockedSites = sites
 }
 
-const updateTask = (newTask) => {
-  task = newTask
-}
-
 const updatePhase = (phaseIndex) => {
   timerState.phaseIndex = phaseIndex
 }
 
 const updateRound = (newRound) => {
   timerState.round = newRound
+}
+
+const updateTask = (newTask) => {
+  task = newTask
 }
 
 const loadBlockedSites = () => {
@@ -115,36 +125,49 @@ browser.webRequest.onBeforeRequest.addListener(
 
 loadBlockedSites()
 
-browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.action === 'clearInterval') {
-    clearInterval(intervalID)
-  }
-
-  if (message.action === 'getTask') {
-    sendResponse({task})
+browser.runtime.onMessage.addListener((message, _, sendResponse) => {
+  switch (message.action) {
+    case 'clearInterval':
+      clearInterval(intervalID)
+      break
+  
+    case 'getTask':
+      sendResponse({task})
+      break
+  
+    case 'getTimerState':
+      sendResponse({timerState})
+      break
+  
+    case 'startTimer':
+      timer()
+      break
+  
+    case 'updatePhase':
+      updatePhase(message.phaseIndex)
+      break
+  
+    case 'updateRound':
+      updateRound(message.round)
+      break
+  
+    case 'updateSites':
+      updateBlockedSites(message.sites)
+      break
+  
+    case 'updateTask':
+      updateTask(message.newTask)
+      break
   }
   
-  if (message.action === 'getTimerState') {
-    sendResponse({timerState})
-  }
 
-  if (message.action === 'startTimer') {
-    timer()
-  }
-  
-  if (message.action === 'updatePhase') {
-    updatePhase(message.phaseIndex)
-  }
-
-  if (message.action === 'updateRound') {
-    updateRound(message.round)
-  }
-  
-  if (message.action === 'updateSites') {
-    updateBlockedSites(message.sites)
-  }
-
-  if (message.action === 'updateTask') {
-    updateTask(message.newTask)
+  if (message.popupOpen) {
+    isPopupOpen = true
+    browser.runtime.sendMessage({
+      action: 'updateTime',
+      time
+    })
+  } else if (message.hasOwnProperty('popupOpen') && !message.popupOpen) {
+    isPopupOpen = false
   }
 })
