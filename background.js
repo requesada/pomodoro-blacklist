@@ -34,6 +34,7 @@ browser.storage.local.get('timerSettings')
   .then(getTimerSettingLengths, onGetLengthsError)
 // TODO This needs to drive a lot
 const timer = () => {
+  console.log({timerState})
   let startingMinutes
   if (timerState.round === 3 && timerState.phaseIndex === 2) {
     startingMinutes = timerSettingLengths.longBreak
@@ -42,9 +43,9 @@ const timer = () => {
   } else {
     startingMinutes = timerSettingLengths.pomodoro
   }
-  let minutes = startingMinutes - 1
-  // let minutes = 0
-  let seconds = 59
+  // let minutes = startingMinutes - 1
+  let minutes = 0
+  let seconds = 2
   
   const subtractSecond = () => {
     time = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
@@ -86,11 +87,14 @@ const updateBlockedSites = (sites) => {
   blockedSites = sites
 }
 
+// TODO One place for state
 const updatePhase = (phaseIndex) => {
+  console.log({phaseIndex})
   timerState.phaseIndex = phaseIndex
 }
 
 const updateRound = (newRound) => {
+  console.log({newRound})
   timerState.round = newRound
 }
 

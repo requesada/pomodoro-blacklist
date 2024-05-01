@@ -71,7 +71,9 @@ const getTimerState = () => {
 
 const restoreStyles = () => {
   Array.from({length: 4}, (_, index) => index).forEach((number) => {
-    
+    if (currentTimerState.round < number) {
+      document.querySelector(`round-${number}`).className = 'break-done'
+    }
   })
 }
 
@@ -217,6 +219,7 @@ const advance = () => {
 }
 
 const startTimer = () => {
+  console.log({currentTimerState})
   browser.runtime.sendMessage({
     action: 'startTimer'
   })
