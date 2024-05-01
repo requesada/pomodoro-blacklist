@@ -56,9 +56,23 @@ const restoreSavedSites = () => {
     .then(setCurrentSites, onError)
 }
 
+const restoreStyles = () => {
+  Array.from({length: 4}, (_, index) => index).forEach((number) => {
+    const roundNode = document.querySelector(`#round-${number}`)
+    if (currentTimerState.round > number || (currentTimerState.round === number && currentTimerState.phaseIndex === phase.length - 1)) {
+      roundNode.className = 'break-done'
+    } else {
+      roundNode.className = phase[currentTimerState.phaseIndex]
+    }
+  })
+
+}
+
 const getTimerState = () => {
   const setCurrentTimerState = (response) => {
     currentTimerState = response.timerState
+    console.log({currentTimerState})
+    restoreStyles()
   }
   const onError = () => {
     console.log(`Error getting timerState: ${error}`)
@@ -67,14 +81,6 @@ const getTimerState = () => {
     action: 'getTimerState'
   })
     .then(setCurrentTimerState, onError)
-}
-
-const restoreStyles = () => {
-  Array.from({length: 4}, (_, index) => index).forEach((number) => {
-    if (currentTimerState.round < number) {
-      document.querySelector(`round-${number}`).className = 'break-done'
-    }
-  })
 }
 
 for (const [setting, {selector}] of Object.entries(timerSettings)) {
@@ -167,9 +173,9 @@ optionsClose.addEventListener('click', toggleFlip)
 
 const incrementPhaseIndex = (isIncrementing) => {
   if (isIncrementing) {
-    currentTimerState.phaseIndex++
+    currentTimerState.phaseIndex++ // TODO Don't set directly
   } else {
-    currentTimerState.phaseIndex = 0
+    currentTimerState.phaseIndex = 0 // TODO Don't set directly
   }
   browser.runtime.sendMessage({
     action: 'updatePhase', 
@@ -206,7 +212,7 @@ const advance = () => {
     getCurrentRoundNode().className = phase[currentTimerState.phaseIndex]
   } else if (currentTimerState.round < 3 && currentTimerState.phaseIndex === phase.length - 1) {
     incrementPhaseIndex(false)
-    updateRound(currentTimerState.round++)
+    updateRound(++currentTimerState.round)
     getCurrentRoundNode().className = phase[currentTimerState.phaseIndex]
   } else if (getCurrentRoundNode().className === 'ready') {
     getCurrentRoundNode().className = phase[currentTimerState.phaseIndex] 
@@ -219,7 +225,6 @@ const advance = () => {
 }
 
 const startTimer = () => {
-  console.log({currentTimerState})
   browser.runtime.sendMessage({
     action: 'startTimer'
   })

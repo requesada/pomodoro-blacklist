@@ -4,8 +4,9 @@ let blockedSites = []
 let task = ''
 
 const timerState = {
-  round: 0,
-  phaseIndex: 0
+  round: 0, // TODO Not incrementing
+  phaseIndex: 0,
+  isRunning: false
 }
 
 let time
@@ -34,7 +35,7 @@ browser.storage.local.get('timerSettings')
   .then(getTimerSettingLengths, onGetLengthsError)
 // TODO This needs to drive a lot
 const timer = () => {
-  console.log({timerState})
+  timerState.isRunning = true
   let startingMinutes
   if (timerState.round === 3 && timerState.phaseIndex === 2) {
     startingMinutes = timerSettingLengths.longBreak
@@ -61,9 +62,10 @@ const timer = () => {
     } else if (seconds > 0) {
       seconds--
     } else {
+      timerState.isRunning = false
       clearInterval(intervalID)
       if (isPopupOpen) {
-        browser.runtime.sendMessage({action: 'advance'})
+        browser.runtime.sendMessage({action: 'advance'}) // TODO Should advance either way
         browser.runtime.sendMessage({action: 'timeUp'})
       }
     }
@@ -87,14 +89,11 @@ const updateBlockedSites = (sites) => {
   blockedSites = sites
 }
 
-// TODO One place for state
 const updatePhase = (phaseIndex) => {
-  console.log({phaseIndex})
   timerState.phaseIndex = phaseIndex
 }
 
 const updateRound = (newRound) => {
-  console.log({newRound})
   timerState.round = newRound
 }
 
