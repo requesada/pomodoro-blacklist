@@ -3,8 +3,10 @@ let isPopupOpen = false
 let blockedSites = []
 let task = ''
 
+const roundPhases = ['ready', 'ready', 'ready', 'ready']
+
 const timerState = {
-  round: 0, // TODO Not incrementing
+  round: 0,
   phaseIndex: 0,
   isRunning: false
 }
@@ -33,10 +35,33 @@ const onGetLengthsError = (error) => {
 }
 browser.storage.local.get('timerSettings')
   .then(getTimerSettingLengths, onGetLengthsError)
-// TODO This needs to drive a lot
+
+const phase = ['work-counting', 'work-done', 'break-counting', 'break-done']
+
+const advance = () => {
+  if (roundPhases[timerState.round] !== 'ready' && timerState.phaseIndex < phase.length - 1) {
+    ++timerState.phaseIndex
+    roundPhases[timerState.round] = phase[timerState.phaseIndex]
+  } else if (timerState.round < 3 && timerState.phaseIndex === phase.length - 1) {
+    timerState.phaseIndex = 0
+    ++timerState.round
+    roundPhases[timerState.round] = phase[timerState.phaseIndex]
+  } else if (roundPhases[timerState.round] === 'ready') {
+    roundPhases[timerState.round] = phase[timerState.phaseIndex] 
+  } else if (timerState.round === 3 && timerState.phaseIndex === phase.length - 1) {
+    timerState.round = 0
+    timerState.phaseIndex = 0
+    for (let i = 1; i < roundPhases.length; i++) {
+      roundPhases[i] = 'ready'
+    }
+    roundPhases[0] = phase[0]
+  }
+  if (isPopupOpen) browser.runtime.sendMessage({action: 'getStyles'})
+}
+
 const timer = () => {
   timerState.isRunning = true
-  let startingMinutes
+  // let startingMinutes
   if (timerState.round === 3 && timerState.phaseIndex === 2) {
     startingMinutes = timerSettingLengths.longBreak
   } else if (timerState.phaseIndex === 2) {
@@ -63,9 +88,10 @@ const timer = () => {
       seconds--
     } else {
       timerState.isRunning = false
+      if (isPopupOpen) browser.runtime.sendMessage({action: 'getTimerState'})
       clearInterval(intervalID)
+      advance()
       if (isPopupOpen) {
-        browser.runtime.sendMessage({action: 'advance'}) // TODO Should advance either way
         browser.runtime.sendMessage({action: 'timeUp'})
       }
     }
@@ -130,8 +156,16 @@ loadBlockedSites()
 
 browser.runtime.onMessage.addListener((message, _, sendResponse) => {
   switch (message.action) {
+    case 'advance':
+      advance()
+      break
+
     case 'clearInterval':
       clearInterval(intervalID)
+      break
+
+    case 'getPhases':
+      sendResponse({roundPhases})
       break
   
     case 'getTask':
@@ -145,9 +179,12 @@ browser.runtime.onMessage.addListener((message, _, sendResponse) => {
     case 'startTimer':
       timer()
       break
-  
-    case 'updatePhase':
-      updatePhase(message.phaseIndex)
+
+    case 'stopTimer':
+      clearInterval(intervalID)
+      timerState.phaseIndex = 0
+      timerState.isRunning = false
+      roundPhases[timerState.round] = 'ready'
       break
   
     case 'updateRound':

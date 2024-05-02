@@ -56,23 +56,26 @@ const restoreSavedSites = () => {
     .then(setCurrentSites, onError)
 }
 
-const restoreStyles = () => {
-  Array.from({length: 4}, (_, index) => index).forEach((number) => {
-    const roundNode = document.querySelector(`#round-${number}`)
-    if (currentTimerState.round > number || (currentTimerState.round === number && currentTimerState.phaseIndex === phase.length - 1)) {
-      roundNode.className = 'break-done'
-    } else {
-      roundNode.className = phase[currentTimerState.phaseIndex]
-    }
+const getStyles = () => {
+  const applyStyles = (response) => {
+    const {roundPhases} = response
+    roundPhases.forEach((phaseClass, round) => {
+      document.querySelector(`#round-${round}`).className = phaseClass
+    })
+  }
+  const onError = (error) => {
+    console.log(`Couldn't get phases: ${error}`)
+  }
+  browser.runtime.sendMessage({
+    action: 'getPhases'
   })
-
+    .then(applyStyles, onError)
 }
 
 const getTimerState = () => {
   const setCurrentTimerState = (response) => {
     currentTimerState = response.timerState
-    console.log({currentTimerState})
-    restoreStyles()
+    getStyles()
   }
   const onError = () => {
     console.log(`Error getting timerState: ${error}`)
@@ -170,19 +173,6 @@ optionsButton.addEventListener('click', toggleFlip)
 const optionsClose = document.querySelector('#options-close')
 optionsClose.addEventListener('click', toggleFlip)
 
-
-const incrementPhaseIndex = (isIncrementing) => {
-  if (isIncrementing) {
-    currentTimerState.phaseIndex++ // TODO Don't set directly
-  } else {
-    currentTimerState.phaseIndex = 0 // TODO Don't set directly
-  }
-  browser.runtime.sendMessage({
-    action: 'updatePhase', 
-    phaseIndex: currentTimerState.phaseIndex
-  })
-}
-
 const updateRound = (newRound) => {
   browser.runtime.sendMessage({
     action: 'updateRound',
@@ -190,57 +180,23 @@ const updateRound = (newRound) => {
   })
 }
 
-const phase = ['work-counting', 'work-done', 'break-counting', 'break-done']
-
 const getCurrentRoundNode = () => document.querySelector(`#round-${currentTimerState.round}`)
-
-const resetTimer = (newMinutes) => {
-  browser.runtime.sendMessage({action: 'clearInterval'})
-  countdown.innerText = `${String(newMinutes).padStart(2, '0')}:00`
-}
-
-const stopTimer = () => {
-  incrementPhaseIndex(false)
-  getCurrentRoundNode().className = 'ready'
-  resetTimer(timerSettings.pomodoro.length)
-  browser.runtime.sendMessage({action: 'clearInterval'})
-}
-
-const advance = () => {
-  if (getCurrentRoundNode().className !== 'ready' && currentTimerState.phaseIndex < phase.length - 1) {
-    incrementPhaseIndex(true)
-    getCurrentRoundNode().className = phase[currentTimerState.phaseIndex]
-  } else if (currentTimerState.round < 3 && currentTimerState.phaseIndex === phase.length - 1) {
-    incrementPhaseIndex(false)
-    updateRound(++currentTimerState.round)
-    getCurrentRoundNode().className = phase[currentTimerState.phaseIndex]
-  } else if (getCurrentRoundNode().className === 'ready') {
-    getCurrentRoundNode().className = phase[currentTimerState.phaseIndex] 
-  } else if (currentTimerState.round === 3 && currentTimerState.phaseIndex === phase.length - 1) {
-    updateRound(0)
-    incrementPhaseIndex(false)
-    document.querySelectorAll('div[id^="round-"]').forEach((node) => {node.className = 'ready'})
-    document.querySelector('#round-0').className = phase[currentTimerState.phaseIndex]
-  }
-}
-
-const startTimer = () => {
-  browser.runtime.sendMessage({
-    action: 'startTimer'
-  })
-}
 
 const timerButton = document.querySelector('#timer-button')
 const clickTimerButton = () => {
-  if (timerButton.className === 'start-button') {
+  if (!currentTimerState.isRunning) {
     timerButton.className = 'stop-button'
     timerButton.innerHTML = 'Stop'
-    advance()
-    startTimer()
+    browser.runtime.sendMessage({action: 'advance'})
+    browser.runtime.sendMessage({action: 'startTimer'})
+      .then(() => getStyles())
+      .then(() => getTimerState())
   } else {
     timerButton.className = 'start-button'
     timerButton.innerHTML = 'Start'
-    stopTimer()
+    browser.runtime.sendMessage({action: 'stopTimer'})
+      .then(() => getTimerState())
+    countdown.innerText = `${String(timerSettings.pomodoro.length).padStart(2, '0')}:00`
   }
 }
 timerButton.addEventListener('click', clickTimerButton)
@@ -316,6 +272,7 @@ const saveSites = (event) => {
 listInput.addEventListener('input', saveSites)
 
 const initialize = () => {
+  getStyles()
   restoreSavedSettings()
   restoreSavedSites()
   getCurrentTask()
@@ -325,6 +282,14 @@ const initialize = () => {
     switch (message.action) {
       case 'advance':
         advance()
+        break
+
+      case 'getStyles':
+        getStyles()
+        break
+
+      case 'getTimerState':
+        getTimerState()
         break
     
       case 'timeUp':
