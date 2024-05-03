@@ -3,6 +3,25 @@ let isPopupOpen = false
 let blockedSites = []
 let task = ''
 
+const sounds = {
+  volumeTestTone: new Audio('../audio/volume-test-tone.mp3'),
+  workTimerDone: new Audio('../audio/work-timer-done.mp3'),
+  breakTimerDone: new Audio('../audio/break-timer-done.mp3')
+}
+
+const playSound = (sound) => {
+  if (sound === 'volumeTestTone') {
+    sounds[sound].currentTime = 0
+  }
+  sounds[sound].play()
+}
+
+const updateVolume = (newValue) => {
+  Object.values(sounds).forEach(sound => {
+    sound.volume = newValue
+  })
+}
+
 const roundPhases = ['ready', 'ready', 'ready', 'ready']
 
 const timerState = {
@@ -91,8 +110,9 @@ const timer = () => {
       if (isPopupOpen) browser.runtime.sendMessage({action: 'getTimerState'})
       clearInterval(intervalID)
       advance()
+      sounds.workTimerDone.play()
       if (isPopupOpen) {
-        browser.runtime.sendMessage({action: 'timeUp'})
+        browser.runtime.sendMessage({action: 'resetStart'})
       }
     }
   }
@@ -175,6 +195,10 @@ browser.runtime.onMessage.addListener((message, _, sendResponse) => {
     case 'getTimerState':
       sendResponse({timerState})
       break
+
+    case 'playSound':
+      playSound(message.sound)
+      break
   
     case 'startTimer':
       timer()
@@ -197,6 +221,10 @@ browser.runtime.onMessage.addListener((message, _, sendResponse) => {
   
     case 'updateTask':
       updateTask(message.newTask)
+      break
+    
+    case 'updateVolume':
+      updateVolume(message.volume)
       break
   }
   

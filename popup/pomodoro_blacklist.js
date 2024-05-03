@@ -2,12 +2,6 @@ const countdown = document.querySelector('#countdown')
 
 let currentTimerState
 
-const sounds = {
-  volumeTestTone: new Audio('../audio/volume-test-tone.mp3'),
-  workTimerDone: new Audio('../audio/work-timer-done.mp3'),
-  breakTimerDone: new Audio('../audio/break-timer-done.mp3')
-}
-
 const timerSettings = {
   pomodoro: {
     length: 25,
@@ -142,25 +136,31 @@ document.querySelector('#clear-task').addEventListener('click', () => {
   })
 })
 
-
-const volumeControl = document.querySelector('#volume-slider');
+// TODO
+let testToneInterval
+const volumeControl = document.querySelector('#volume-slider')
 volumeControl.addEventListener('input', () => {
-  Object.values(sounds).forEach(sound => {
-    sound.volume = Number(volumeControl.value) / 100
+  browser.runtime.sendMessage({
+    action: 'updateVolume',
+    volume: Number(volumeControl.value) / 100
   })
   timerSettings.volume = Number(volumeControl.value)
-  browser.storage.local.set({timerSettings})
 })
 
 volumeControl.addEventListener('mousedown', () => {
-  sounds.volumeTestTone.loop = true
-  sounds.volumeTestTone.play()
+  if (!testToneInterval) {
+    testToneInterval = setInterval(() => {
+      browser.runtime.sendMessage({
+        action: 'playSound',
+        sound: 'volumeTestTone'
+      })
+    }, 600) // TODO Tuned to this sound, prob change later
+  }
 })
 
 volumeControl.addEventListener('mouseup', () => {
-  sounds.volumeTestTone.pause()
-  sounds.volumeTestTone.loop = false
-  sounds.volumeTestTone.load()
+  clearInterval(testToneInterval)
+  browser.storage.local.set({timerSettings})
 })
 
 const toggleFlip = () => {
@@ -292,10 +292,9 @@ const initialize = () => {
         getTimerState()
         break
     
-      case 'timeUp':
+      case 'resetStart':
         timerButton.className = 'start-button'
         timerButton.innerHTML = 'Start'
-        sounds.workTimerDone.play()
         break
     
       case 'updateTime':
