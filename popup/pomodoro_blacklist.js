@@ -136,7 +136,6 @@ document.querySelector('#clear-task').addEventListener('click', () => {
   })
 })
 
-// TODO
 let testToneInterval
 const volumeControl = document.querySelector('#volume-slider')
 volumeControl.addEventListener('input', () => {
@@ -173,13 +172,6 @@ optionsButton.addEventListener('click', toggleFlip)
 const optionsClose = document.querySelector('#options-close')
 optionsClose.addEventListener('click', toggleFlip)
 
-const updateRound = (newRound) => {
-  browser.runtime.sendMessage({
-    action: 'updateRound',
-    round: newRound
-  })
-}
-
 const getCurrentRoundNode = () => document.querySelector(`#round-${currentTimerState.round}`)
 
 const timerButton = document.querySelector('#timer-button')
@@ -196,7 +188,7 @@ const clickTimerButton = () => {
     timerButton.innerHTML = 'Start'
     browser.runtime.sendMessage({action: 'stopTimer'})
       .then(() => getTimerState())
-    countdown.innerText = `${String(timerSettings.pomodoro.length).padStart(2, '0')}:00`
+    countdown.innerText = `${String(timerSettings.pomodoro.length).padStart(2, '0')}:00` // TODO This should prob be driven by the background
   }
 }
 timerButton.addEventListener('click', clickTimerButton)

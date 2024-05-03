@@ -135,14 +135,6 @@ const updateBlockedSites = (sites) => {
   blockedSites = sites
 }
 
-const updatePhase = (phaseIndex) => {
-  timerState.phaseIndex = phaseIndex
-}
-
-const updateRound = (newRound) => {
-  timerState.round = newRound
-}
-
 const updateTask = (newTask) => {
   task = newTask
 }
@@ -209,10 +201,6 @@ browser.runtime.onMessage.addListener((message, _, sendResponse) => {
       timerState.phaseIndex = 0
       timerState.isRunning = false
       roundPhases[timerState.round] = 'ready'
-      break
-  
-    case 'updateRound':
-      updateRound(message.round)
       break
   
     case 'updateSites':
