@@ -78,6 +78,22 @@ const advance = () => {
   if (isPopupOpen) browser.runtime.sendMessage({action: 'getStyles'})
 }
 
+const setTime = () => {
+  let nextTime
+  const formatTime = (minutes) => `${String(minutes).padStart(2, '0')}:00`
+  if (timerState.round === 3 && roundPhases[timerState.round] === 'work-done') {
+    nextTime = formatTime(timerSettingLengths.longBreak)
+  } else if (roundPhases[timerState.round] === 'work-done') {
+    nextTime = formatTime(timerSettingLengths.shortBreak)
+  } else {
+    nextTime = formatTime(timerSettingLengths.pomodoro)
+  }
+  browser.runtime.sendMessage({
+    action: 'updateTime',
+    time: nextTime
+  })
+}
+
 const timer = () => {
   timerState.isRunning = true
   // let startingMinutes
@@ -113,6 +129,7 @@ const timer = () => {
       sounds.workTimerDone.play()
       if (isPopupOpen) {
         browser.runtime.sendMessage({action: 'resetStart'})
+        setTime()
       }
     }
   }
@@ -201,6 +218,7 @@ browser.runtime.onMessage.addListener((message, _, sendResponse) => {
       timerState.phaseIndex = 0
       timerState.isRunning = false
       roundPhases[timerState.round] = 'ready'
+      setTime()
       break
   
     case 'updateSites':

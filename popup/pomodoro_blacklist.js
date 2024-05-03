@@ -188,7 +188,6 @@ const clickTimerButton = () => {
     timerButton.innerHTML = 'Start'
     browser.runtime.sendMessage({action: 'stopTimer'})
       .then(() => getTimerState())
-    countdown.innerText = `${String(timerSettings.pomodoro.length).padStart(2, '0')}:00` // TODO This should prob be driven by the background
   }
 }
 timerButton.addEventListener('click', clickTimerButton)
