@@ -126,7 +126,11 @@ const timer = () => {
       if (isPopupOpen) browser.runtime.sendMessage({action: 'getTimerState'})
       clearInterval(intervalID)
       advance()
-      sounds.workTimerDone.play()
+      if (roundPhases[timerState.round].includes('work')) {
+        sounds.workTimerDone.play()
+      } else {
+        sounds.breakTimerDone.play()
+      }
       if (isPopupOpen) {
         browser.runtime.sendMessage({action: 'resetStart'})
         setTime()

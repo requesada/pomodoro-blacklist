@@ -149,6 +149,7 @@ volumeControl.addEventListener('input', () => {
 volumeControl.addEventListener('mousedown', () => {
   if (!testToneInterval) {
     testToneInterval = setInterval(() => {
+      console.log('play')
       browser.runtime.sendMessage({
         action: 'playSound',
         sound: 'volumeTestTone'
@@ -159,6 +160,7 @@ volumeControl.addEventListener('mousedown', () => {
 
 volumeControl.addEventListener('mouseup', () => {
   clearInterval(testToneInterval)
+  testToneInterval = undefined
   browser.storage.local.set({timerSettings})
 })
 
