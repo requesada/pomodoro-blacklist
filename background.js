@@ -208,6 +208,17 @@ browser.runtime.onMessage.addListener((message, _, sendResponse) => {
     case 'playSound':
       playSound(message.sound)
       break
+    
+    case 'reset':
+      clearInterval(intervalID)
+      for (let i = 0; i < roundPhases.length; i++) {
+        roundPhases[i] = 'ready'
+      }
+      timerState.round = 0
+      timerState.phaseIndex = 0
+      timerState.isRunning = false
+      setTime()
+      break
   
     case 'startTimer':
       timer()

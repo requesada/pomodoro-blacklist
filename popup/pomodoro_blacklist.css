@@ -557,18 +557,13 @@ polygon {
 }
 
 #reset-button {
-  /* width: var(--resetButtonSize);
-  height: var(--resetButtonSize); */
   border: none;
   background: none;
   cursor: pointer;
   z-index: 100;
-  /* TODO: buttonize and give inset shadow */
 }
 
 #reset-button svg {
-  /* width: 100%;
-  height: 100%; */
   width: var(--resetButtonSize);
   height: var(--resetButtonSize);
   display: block;
@@ -583,7 +578,11 @@ polygon {
 }
 
 .resetting {
-  animation: resetBloom 3s;
+  animation: resetBloom 3s forwards;
+}
+
+.post-reset {
+  animation: resetShrink 1s forwards;
 }
 
 @keyframes resetBloom {
@@ -594,6 +593,17 @@ polygon {
   to {
     r: 350px;
     fill: red;
+  }
+}
+
+@keyframes resetShrink {
+  from {
+    r: 350px;
+    fill: red;
+  }
+  to {
+    r: calc(var(--resetButtonSize) / 2);
+    fill: var(--richBlack);
   }
 }
 

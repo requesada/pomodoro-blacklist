@@ -178,11 +178,16 @@ let resetTimeout
 resetButton.addEventListener('mousedown', () => {
   resetButtonCircle.classList.add('resetting')
   if (!resetTimeout) {
-    console.log({test: resetButtonCircle.classList})
     resetTimeout = setTimeout(() => {
-      console.log('YO')
+      browser.runtime.sendMessage({action: 'reset'})
+        .then(() => {
+          getStyles()
+          getTimerState()
+        })
       clearTimeout(resetTimeout)
       resetTimeout = undefined
+      resetButtonCircle.classList.remove('resetting')
+      resetButtonCircle.classList.add('post-reset')
     }, 3000)
   }
 })
@@ -193,7 +198,11 @@ resetButton.addEventListener('mouseup', () => {
     resetTimeout = undefined
   }
 })
-
+resetButtonCircle.addEventListener('animationend', (event) => {
+  if (event.animationName === 'resetShrink') {
+    resetButtonCircle.classList.remove('post-reset');
+  }
+});
 
 const getCurrentRoundNode = () => document.querySelector(`#round-${currentTimerState.round}`)
 
