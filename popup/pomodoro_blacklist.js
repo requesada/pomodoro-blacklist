@@ -172,6 +172,29 @@ optionsButton.addEventListener('click', toggleFlip)
 const optionsClose = document.querySelector('#options-close')
 optionsClose.addEventListener('click', toggleFlip)
 
+const resetButton = document.querySelector('#reset-button')
+const resetButtonCircle = document.querySelector('#reset-button-circle')
+let resetTimeout
+resetButton.addEventListener('mousedown', () => {
+  resetButtonCircle.classList.add('resetting')
+  if (!resetTimeout) {
+    console.log({test: resetButtonCircle.classList})
+    resetTimeout = setTimeout(() => {
+      console.log('YO')
+      clearTimeout(resetTimeout)
+      resetTimeout = undefined
+    }, 3000)
+  }
+})
+resetButton.addEventListener('mouseup', () => {
+  resetButtonCircle.classList.remove('resetting')
+  if (resetTimeout) {
+    clearTimeout(resetTimeout)
+    resetTimeout = undefined
+  }
+})
+
+
 const getCurrentRoundNode = () => document.querySelector(`#round-${currentTimerState.round}`)
 
 const timerButton = document.querySelector('#timer-button')
