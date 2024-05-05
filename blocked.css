@@ -1,0 +1,20 @@
+@font-face {
+  font-family: vt323;
+  src: url(fonts/VT323-Regular.ttf);
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  word-break: break-all;
+  background-color: #001011;
+  color: #92DE91;
+  font-family: vt323;
+}
+
+#go-back {
+  font-size: 32px;
+  position: absolute;
+  top: -12px;
+}
