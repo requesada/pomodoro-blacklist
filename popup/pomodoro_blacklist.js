@@ -103,8 +103,8 @@ const getCurrentTask = () => {
       }
     })
 }
-const taskOptionInput = document.querySelector('#task-option-input')
-taskOptionInput.addEventListener('change', (event) => {
+const taskInput = document.querySelector('#task-input')
+taskInput.addEventListener('change', (event) => {
   if (event.target.value.replace(/\s/g, '').length  === 0) {
     countdown.className = 'no-task'
     document.querySelector('#task').className = 'no-task'
@@ -124,17 +124,17 @@ taskOptionInput.addEventListener('change', (event) => {
   }
 })
 
-document.querySelector('#clear-task').addEventListener('click', () => {
-  countdown.className = 'no-task'
-  document.querySelector('#task').className = 'no-task'
-  document.querySelector('#primary').innerText = ''
-  document.querySelector('#secondary').innerText = ''
-  taskOptionInput.value = ''
-  browser.runtime.sendMessage({
-    action: 'updateTask',
-    newTask: ''
-  })
-})
+// document.querySelector('#clear-task').addEventListener('click', () => {
+//   countdown.className = 'no-task'
+//   document.querySelector('#task').className = 'no-task'
+//   document.querySelector('#primary').innerText = ''
+//   document.querySelector('#secondary').innerText = ''
+//   taskInput.value = ''
+//   browser.runtime.sendMessage({
+//     action: 'updateTask',
+//     newTask: ''
+//   })
+// })
 
 let testToneInterval
 const volumeControl = document.querySelector('#volume-slider')
@@ -228,6 +228,7 @@ timerButton.addEventListener('click', clickTimerButton)
 const blacklist = document.querySelector('#blacklist')
 const blacklistMonitor = document.querySelector('#blacklist-monitor')
 const arrowTab = document.querySelector('#arrow-tab')
+const taskContainer = document.querySelector('#task-container')
 const listInput = document.querySelector('#list-input')
 const instructions = document.querySelector('#instructions')
 const moreText = document.querySelector('#more-text')
@@ -237,6 +238,7 @@ blacklistMonitor.addEventListener('animationend', () => {
     blacklist.classList.toggle('closing')
     blacklist.classList.toggle('expanded')
   } else {
+    taskContainer.classList.toggle('hidden')
     listInput.classList.toggle('hidden')
     instructions.classList.toggle('hidden')
     moreText.classList.toggle('hidden')
@@ -246,6 +248,7 @@ blacklistMonitor.addEventListener('animationend', () => {
 
 arrowTab.addEventListener('click', () => {
   if (blacklist.classList.contains('expanded')) {
+    taskContainer.classList.toggle('hidden')
     listInput.classList.toggle('hidden')
     instructions.classList.toggle('hidden')
     moreText.classList.toggle('hidden')

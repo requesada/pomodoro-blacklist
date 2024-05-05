@@ -162,6 +162,19 @@ body {
   padding: 10px;
 }
 
+#task-container {
+  margin-bottom: 5px;
+}
+
+#task-input {
+  font-family: vt323;
+  background-color: var(--richBlack);
+  color: var(--lightGreen);
+  border: 1px solid var(--lightGreen);
+  outline: none;
+  box-shadow: none;
+}
+
 #instructions {
   border-bottom: 1px solid var(--lightGreen);
   padding-bottom: 10px;
@@ -172,7 +185,7 @@ body {
   padding: 0 10px 10px 10px;
   font-family: vt323;
   width: 100%;
-  height: 75%;
+  height: 60%;
   box-sizing: border-box;
   resize: none;
   color: var(--lightGreen);
@@ -186,6 +199,7 @@ body {
   scrollbar-width: none;
 }
 
+#task-input::selection,
 #list-input::selection {
   color: var(--richBlack);
   background-color: var(--lightGreen);
@@ -529,9 +543,11 @@ polygon {
   align-items: center;
 }
 
-#options-button,
+/* #options-button,
 #options-close,
-#clear-task {
+#clear-task  */
+#options-button,
+#options-close {
   background-color: var(--turkeyRed);
   border: none;
   cursor: pointer;
@@ -618,8 +634,9 @@ polygon {
   width: 100%;
 }
 
-#options-close,
-#clear-task {
+/* #options-close,
+#clear-task  */
+#options-close {
   color: var(--richBlack);
   text-shadow: 0 -0.75px 0 var(--tomato);
 }
@@ -657,7 +674,7 @@ polygon {
   width: 45%;
 }
 
-#option-task {
+/* #option-task {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -690,4 +707,4 @@ polygon {
 #clear-task:active {
   box-shadow: var(--richBlack) 0 1px;
   transform: translateY(1px);
-}
+} */
