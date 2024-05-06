@@ -6,15 +6,15 @@
   --tomato: #F95738;
   --lightTomato: #FDBDB0;
   --turkeyRed: #A30000;
-  --sliderThumbWidth: 9px;
-  --volumeSvgWidth: 10px;
-  --volumeSvgHeight: 65px;
-  --oliveSize: 24px;
-  --oliveStrokes: 1px;
-  --optionsButtonSize: 24px;
-  --optionsButtonRadius: 5px;
-  --resetButtonSize: 8px;
-  --deviceHeight: 245px;
+  --sliderThumbWidth: 12.6px;
+  --volumeImageWidth: 14px;
+  --volumeImageHeight: 91px;
+  --oliveSize: 33.6px;
+  --oliveStrokes: 1.4px;
+  --optionsButtonSize: 33.6px;
+  --optionsButtonRadius: 7px;
+  --resetButtonSize: 11.2px;
+  --deviceHeight: 343px;
 }
 
 @font-face {
@@ -41,7 +41,7 @@ body {
 
 #table-top {
   background-color: transparent;
-  width: 350px;
+  width: 490px;
   height: var(--deviceHeight);
   z-index: 0;
 }
@@ -81,38 +81,36 @@ body {
 
 #blacklist-compartment {
   background-color: var(--cadetGray);
-  width: 16px;
+  width: 22.4px;
   height: 100%;
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
   z-index: 5;
 }
 
 #blacklist {
   background-color: var(--richBlack);
   height: 100%;
-  width: 35px;
+  width: 49px;
   position: absolute;
   z-index: 3;
   transition: width 0.5s;
   display: flex;
   align-items: center;
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
+  border-top-right-radius: 14px;
+  border-bottom-right-radius: 14px;
 }
 
 #blacklist.expanded {
-  width: 310px;
+  width: 434px;
 }
 
 #compartment-gap {
   height: 100%;
-  width: 16px; /* TODO Do I need to shrink this when the list is retracted? */
+  width: 22.4px;
 }
 
 #monitor-container {
   height: 100%;
-  width: 278px; /* TODO Do I need to shrink this when the list is retracted? */
+  width: 389.2px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -120,7 +118,7 @@ body {
 
 #arrow-tab {
   height: 100%;
-  width: 16px;
+  width: 22.4px;
   box-sizing: border-box;
   background-color: var(--cadetGray);
   flex-shrink: 0;
@@ -131,17 +129,19 @@ body {
   cursor: pointer;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
-  border-right: 2px solid var(--richBlack);
-  border-top: 2px solid var(--richBlack);
-  border-bottom: 2px solid var(--richBlack);
+  border-right: 2.8px solid var(--richBlack);
+  border-top: 2.8px solid var(--richBlack);
+  border-bottom: 2.8px solid var(--richBlack);
 }
 
 #arrow-right {
   color: var(--lightGreen);
+  font-size: 1.4rem;
 }
 
 #arrow-left {
   color: var(--richBlack);
+  font-size: 1.4rem;
 }
 
 #blacklist.expanded #arrow-right {
@@ -159,31 +159,34 @@ body {
   height: 0;
   position: relative;
   font-family: vt323;
-  padding: 10px;
+  font-size: 1.4rem;
+  padding: 14px;
 }
 
 #task-container {
-  margin-bottom: 5px;
+  margin-bottom: 7px;
 }
 
 #task-input {
   font-family: vt323;
+  font-size: 1.4rem;
   background-color: var(--richBlack);
   color: var(--lightGreen);
-  border: 1px solid var(--lightGreen);
+  border: 1.4px solid var(--lightGreen);
   outline: none;
   box-shadow: none;
 }
 
 #instructions {
-  border-bottom: 1px solid var(--lightGreen);
-  padding-bottom: 10px;
+  border-bottom: 1.4px solid var(--lightGreen);
+  padding-bottom: 14px;
   user-select: none;
 }
 
 #list-input {
-  padding: 0 10px 10px 10px;
+  padding: 0 14px 14px 14px;
   font-family: vt323;
+  font-size: 1.4rem;
   width: 100%;
   height: 65%;
   box-sizing: border-box;
@@ -211,8 +214,8 @@ body {
 
 #more-text {
   position: absolute;
-  bottom: 10px;
-  right: 10px;
+  bottom: 14px;
+  right: 14px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -244,13 +247,13 @@ body {
   }
   90% {
     width: 90%;
-    height: 2px;
-    border: 1px solid var(--lightGreen);
+    height: 2.8px;
+    border: 1.4px solid var(--lightGreen);
   }
   100% {
     width: 90%;
     height: 90%;
-    border: 1px solid var(--lightGreen);
+    border: 1.4px solid var(--lightGreen);
   }
 }
 
@@ -258,12 +261,12 @@ body {
   0% {
     width: 90%;
     height: 90%;
-    border: 1px solid var(--lightGreen);
+    border: 1.4px solid var(--lightGreen);
   }
   10% {
     width: 90%;
     height: 0px;
-    border: 1px solid var(--lightGreen);
+    border: 1.4px solid var(--lightGreen);
   }
   100% {
     width: 0;
@@ -286,7 +289,6 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 }
 
 .flip {
@@ -367,8 +369,8 @@ input[type="range"][orient="vertical"] {
   appearance: slider-vertical;
   -webkit-appearance: none;
   appearance: none;
-  width: 2px;
-  height: 65px;
+  width: 2.8px;
+  height: var(--volumeImageHeight);
   background: var(--richBlack);
   outline: none;
 }
@@ -377,8 +379,8 @@ input[type="range"][orient="vertical"]::-webkit-slider-thumb,
 input[type="range"][orient="vertical"]::-moz-range-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 9px;
-  height: 2px;
+  width: var(--sliderThumbWidth);
+  height: 2.8px;
   background: var(--richBlack);
   cursor: pointer;
 }
@@ -388,45 +390,42 @@ input[type="range"][orient="vertical"]::-moz-range-thumb {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 30px;
-}
-
-#volume-svg {
-  width: var(--volumeSvgWidth);
-  height: var(--volumeSvgHeight);
-}
-
-polygon {
-  fill: var(--richBlack);
+  width: 42px;
 }
 
 #slider-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: calc(1.5 * var(--sliderThumbWidth) + var(--volumeSvgWidth))
+  width: calc(1.5 * var(--sliderThumbWidth) + var(--volumeImageWidth))
 }
 
 #volume-image {
-  display: flex;
-  align-items: center;
+  width: var(--volumeImageWidth);
+  height: var(--volumeImageHeight);
+  background-color: var(--richBlack);
+  clip-path: polygon(0% 0%, 100% 0%, 0% 100%);
 }
 
 #volume-label,
 #options-label {
-  font-size: 16px;
+  font-size: 1.4rem;
+}
+
+#options-label {
+  line-height: 1.5;
 }
 
 #counter {
   display: flex;
   justify-content: space-evenly;
-  margin: 22px 0 11px 0;
-  width: 225px;
+  margin: 30.8px 0 15.4px 0;
+  width: 315px;
 }
 
 #middle-row {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   width: 100%;
 }
 
@@ -435,12 +434,12 @@ polygon {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 225px;
-  height: 110px;
+  width: 315px;
+  height: 154px;
   background-color: white;
   color: var(--richBlack);
-  border-radius: 10px;
-  border: 1px solid var(--richBlack);
+  border-radius: 14px;
+  border: 1.4px solid var(--richBlack);
   font-family: bedstead;
 }
 
@@ -453,19 +452,19 @@ polygon {
 }
 
 #countdown {
-  height: 60px;
-  font-size: 64px;
-  padding-top: 8px;
+  height: 84px;
+  font-size: 5.6rem;
+  padding-top: 11.2px;
 }
 
 #countdown.no-task {
-  height: 110px;
+  height: 154px;
 }
 
 #task {
-  height: 50px;
-  font-size: 24px;
-  padding-top: 4px;
+  height: 70px;
+  font-size: 2.1rem;
+  padding-top: 5.6px;
   overflow: hidden;
 }
 
@@ -489,17 +488,17 @@ polygon {
 }
 
 #timer-button {
-  border-radius: 10px;
-  border: 1px solid var(--richBlack);
-  padding-top: 8px;
-  width: 225px;
+  border-radius: 14px;
+  border: 1.4px solid var(--richBlack);
+  padding-top: 11.2px;
+  width: 315px;
   font-family: josefin;
-  font-size: 40px;
+  font-size: 3.5rem;
 }
 
 .start-button {
   background-color: var(--lighterGreen);
-  box-shadow: var(--richBlack) 0 6px;
+  box-shadow: var(--richBlack) 0 8.4px;
   cursor: pointer;
 }
 
@@ -508,14 +507,14 @@ polygon {
 }
 
 .start-button:active {
-  box-shadow: var(--richBlack) 0 1px;
-  transform: translateY(5px);
+  box-shadow: var(--richBlack) 0 1.4px;
+  transform: translateY(7px);
 }
 
 .stop-button {
   background-color: var(--lightTomato);
-  box-shadow: var(--richBlack) 0 3px;
-  transform: translateY(3px);
+  box-shadow: var(--richBlack) 0 4.2px;
+  transform: translateY(4.2px);
   cursor: pointer;
 }
 
@@ -524,8 +523,8 @@ polygon {
 }
 
 .stop-button:active {
-  box-shadow: var(--richBlack) 0 1px;
-  transform: translateY(5px);
+  box-shadow: var(--richBlack) 0 1.4px;
+  transform: translateY(7px);
 }
 
 #options-and-reset {
@@ -533,7 +532,7 @@ polygon {
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
-  width: 30px;
+  width: 42px;
 }
 
 #options-button-container,
@@ -543,9 +542,6 @@ polygon {
   align-items: center;
 }
 
-/* #options-button,
-#options-close,
-#clear-task  */
 #options-button,
 #options-close {
   background-color: var(--turkeyRed);
@@ -556,20 +552,20 @@ polygon {
 #options-button,
 #options-close {
   border-radius: var(--optionsButtonRadius);
-  box-shadow: var(--richBlack) 0 3px;
+  box-shadow: var(--richBlack) 0 4.2px;
   width: var(--optionsButtonSize);
   height: var(--optionsButtonSize);
 }
 
 #options-button:active,
 #options-close:active {
-  box-shadow: var(--richBlack) 0 1px;
-  transform: translateY(2px);
+  box-shadow: var(--richBlack) 0 1.4px;
+  transform: translateY(2.8px);
 }
 
 #options-button,
 #reset-button {
-  margin-bottom: 4px;
+  margin-bottom: 5.6px;
 }
 
 #reset-button {
@@ -607,14 +603,14 @@ polygon {
     fill: var(--richBlack);
   }
   to {
-    r: 350px;
+    r: 490px;
     fill: red;
   }
 }
 
 @keyframes resetShrink {
   from {
-    r: 350px;
+    r: 490px;
     fill: red;
   }
   to {
@@ -624,7 +620,7 @@ polygon {
 }
 
 #reset-label {
-  font-size: 8px;
+  font-size: 0.7rem;
   text-transform: uppercase;
 }
 
@@ -632,18 +628,18 @@ polygon {
   display: flex;
   justify-content: right;
   width: 100%;
+  height: 60px;
+  padding-top: 15px;
 }
 
-/* #options-close,
-#clear-task  */
 #options-close {
   color: var(--richBlack);
-  text-shadow: 0 -0.75px 0 var(--tomato);
+  text-shadow: 0 -1.05px 0 var(--tomato);
 }
 
 #options-close {
-  font-size: 18px;
-  margin: 10px 10px 10px 0;
+  font-size: 1.575rem;
+  margin: 14px 14px 14px 0;
 }
 
 #options-list-container {
@@ -651,14 +647,17 @@ polygon {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  gap: 10px;
+  height: 100%;
+  gap: 28px;
+  padding-top: 32px;
+  padding-left: 40px;
 }
 
 .option-row {
   display: flex;
   justify-content: center;
   width: 100%;
-  gap: 20px;
+  gap: 28px;
   margin-left: 9%;
 }
 
@@ -667,44 +666,11 @@ polygon {
   display: flex;
   justify-content: end;
   align-items: center;
-  padding-top: 2px;
+  padding-top: 2.8px;
+  font-size: 1.4rem;
 }
 
 .option-input-container {
   width: 45%;
+  font-size: 1.4rem;
 }
-
-/* #option-task {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 20px;
-}
-
-#task-option-title-container,
-#task-option-input-container {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-}
-
-#task-option-title-container {
-  gap: 5px;
-}
-
-#task-option-title {
-  padding-top: 2px;
-}
-
-#clear-task {
-  font-size: 10px;
-  border-radius: 2px;
-  box-shadow: var(--richBlack) 0 2px;
-  margin-bottom: 2px;
-}
-
-#clear-task:active {
-  box-shadow: var(--richBlack) 0 1px;
-  transform: translateY(1px);
-} */
