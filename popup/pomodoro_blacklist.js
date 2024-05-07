@@ -124,17 +124,6 @@ taskInput.addEventListener('change', (event) => {
   }
 })
 
-// document.querySelector('#clear-task').addEventListener('click', () => {
-//   countdown.className = 'no-task'
-//   document.querySelector('#task').className = 'no-task'
-//   document.querySelector('#primary').innerText = ''
-//   document.querySelector('#secondary').innerText = ''
-//   taskInput.value = ''
-//   browser.runtime.sendMessage({
-//     action: 'updateTask',
-//     newTask: ''
-//   })
-// })
 
 let testToneInterval
 const volumeControl = document.querySelector('#volume-slider')

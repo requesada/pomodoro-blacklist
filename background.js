@@ -30,6 +30,52 @@ const timerState = {
   isRunning: false
 }
 
+const iconSetter = (icon) => (
+  browser.browserAction.setIcon({
+    path: {
+      48: `icons/${icon}-48.png`,
+      96: `icons/${icon}-96.png`
+    }
+  })
+)
+
+let alternate
+const alternateIcons = () => {
+  let iconArray
+  if (roundPhases[timerState.round] === 'work-counting') {
+    iconArray = ['none', 'green']
+  } else if (roundPhases[timerState.round] === 'break-counting') {
+    iconArray = ['green', 'all']
+  }
+
+  iconSetter(iconArray[1])
+    .then(() => {
+      if (roundPhases[timerState.round].includes('counting')) {
+        alternate = setTimeout(() => {
+          iconSetter(iconArray[0])
+        }, 500)
+      }
+    })
+}
+
+const setIcon = () => {
+  clearTimeout(alternate)
+  switch (roundPhases[timerState.round]) {
+    case 'work-counting':
+      iconSetter('none')
+      break
+    case 'work-done':
+      iconSetter('green')
+      break
+    case 'break-counting':
+      iconSetter('green')
+      break
+    case 'break-done':
+      iconSetter('all')
+      break
+  }
+}
+
 let time
 let intervalID
 let timerSettingLengths = {}
@@ -95,6 +141,8 @@ const setTime = () => {
 }
 
 const timer = () => {
+  setIcon()
+  let iconInterval = setInterval(() => {alternateIcons()}, 1000)
   timerState.isRunning = true
   // let startingMinutes
   if (timerState.round === 3 && timerState.phaseIndex === 2) {
@@ -125,7 +173,9 @@ const timer = () => {
       timerState.isRunning = false
       if (isPopupOpen) browser.runtime.sendMessage({action: 'getTimerState'})
       clearInterval(intervalID)
+      clearInterval(iconInterval)
       advance()
+      setIcon()
       if (roundPhases[timerState.round].includes('work')) {
         sounds.workTimerDone.play()
       } else {
