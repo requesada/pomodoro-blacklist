@@ -30,16 +30,19 @@ const timerState = {
   isRunning: false
 }
 
-const iconSetter = (icon) => (
-  browser.browserAction.setIcon({
-    path: {
-      48: `icons/${icon}-48.png`,
-      96: `icons/${icon}-96.png`
-    }
-  })
-)
+let currentIcon
+const iconSetter = (icon) => {
+  currentIcon = icon
+  return (
+    browser.browserAction.setIcon({
+      path: {
+        48: `icons/${icon}-48.png`,
+        96: `icons/${icon}-96.png`
+      }
+    })
+  )
+}
 
-let alternate
 const alternateIcons = () => {
   let iconArray
   if (roundPhases[timerState.round] === 'work-counting') {
@@ -48,18 +51,17 @@ const alternateIcons = () => {
     iconArray = ['green', 'all']
   }
 
-  iconSetter(iconArray[1])
-    .then(() => {
-      if (roundPhases[timerState.round].includes('counting')) {
-        alternate = setTimeout(() => {
-          iconSetter(iconArray[0])
-        }, 500)
-      }
-    })
+  let newIcon
+  if (!iconArray.includes(currentIcon)) {
+    newIcon = iconArray[1]
+  } else {
+    newIcon = currentIcon === iconArray[0] ? iconArray[1] : iconArray[0]
+  }
+
+  iconSetter(newIcon)
 }
 
 const setIcon = () => {
-  clearTimeout(alternate)
   switch (roundPhases[timerState.round]) {
     case 'work-counting':
       iconSetter('none')
@@ -142,7 +144,6 @@ const setTime = () => {
 
 const timer = () => {
   setIcon()
-  let iconInterval = setInterval(() => {alternateIcons()}, 1000)
   timerState.isRunning = true
   // let startingMinutes
   if (timerState.round === 3 && timerState.phaseIndex === 2) {
@@ -154,6 +155,7 @@ const timer = () => {
   }
   // let minutes = startingMinutes - 1
   let minutes = 0
+  // let seconds = 59
   let seconds = 2
   
   const subtractSecond = () => {
@@ -167,13 +169,14 @@ const timer = () => {
     if (seconds === 0 && minutes > 0) {
       minutes--
       seconds = 59
+      alternateIcons()
     } else if (seconds > 0) {
       seconds--
+      alternateIcons()
     } else {
       timerState.isRunning = false
       if (isPopupOpen) browser.runtime.sendMessage({action: 'getTimerState'})
       clearInterval(intervalID)
-      clearInterval(iconInterval)
       advance()
       setIcon()
       if (roundPhases[timerState.round].includes('work')) {
