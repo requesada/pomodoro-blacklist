@@ -262,8 +262,7 @@ moreBelow.addEventListener('click', () => {
   }
 })
 
-// TODO Deleting selected text instead of using backspace breaks arrows
-listInput.addEventListener('scroll', () => {
+const listListener = () => {
   if (listInput.scrollTop > 0) {
     moreAbove.classList.remove('inactive')
   } else {
@@ -275,7 +274,9 @@ listInput.addEventListener('scroll', () => {
   } else if (listInput.scrollHeight > listInput.clientHeight) {
     moreBelow.classList.remove('inactive')
   }
-})
+}
+listInput.addEventListener('scroll', listListener)
+listInput.addEventListener('change', listListener)
 
 const saveSites = (event) => {
   const blockedSites = event.target.value.split('\n').map((siteString) => siteString.trim()).filter(Boolean)
