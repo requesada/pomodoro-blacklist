@@ -28,9 +28,8 @@
 
     "permissions": [
       "storage",
-      "webRequest",
-      "webRequestBlocking",
-      "<all_urls>"
+      "<all_urls>",
+      "tabs"
     ],
 
     "background": {

@@ -242,6 +242,7 @@ arrowTab.addEventListener('click', () => {
     instructions.classList.toggle('hidden')
     moreText.classList.toggle('hidden')
     blacklist.classList.toggle('closing')
+    browser.runtime.sendMessage({action: 'checkOpenTabs'})
   } else {
     blacklist.classList.toggle('expanded')
   }

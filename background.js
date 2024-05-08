@@ -156,7 +156,7 @@ const timer = () => {
   // let minutes = startingMinutes - 1
   let minutes = 0
   // let seconds = 59
-  let seconds = 2
+  let seconds = 10
   
   const subtractSecond = () => {
     time = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
@@ -194,16 +194,37 @@ const timer = () => {
   intervalID = setInterval(subtractSecond, 1000)
 }
 
-const blockSite = (requestDetails) => {
-  const url = new URL(requestDetails.url)
-  const urlString = url.hostname + url.pathname
-  
+const blockTab = (tabID, address) => {
+  const url = new URL(address)
+  const urlString = url.hostname
   for (const site of blockedSites) {
     if (urlString.startsWith(site) || urlString.startsWith(`www.${site}`)) {
-      return { redirectUrl: browser.extension.getURL('blocked.html') }
+      browser.tabs.update(tabID, {url: 'blocked.html'})
     }
   }
 }
+
+browser.tabs.onUpdated.addListener((tabID, {url}) => {
+  if (url) {
+    blockTab(tabID, url)
+  }
+})
+
+browser.tabs.onActivated.addListener((activeInfo) => {
+  browser.tabs.get(activeInfo.tabId)
+    .then(({id, url}) => {
+      blockTab(id, url)
+    })
+})
+
+const checkOpenTabs = () => (
+  browser.tabs.query({}).then((tabs) => {
+    tabs.forEach(({id, url}) => {
+      blockTab(id, url)
+    })
+  })
+)
+checkOpenTabs()
 
 const updateBlockedSites = (sites) => {
   blockedSites = sites
@@ -214,9 +235,10 @@ const updateTask = (newTask) => {
 }
 
 const loadBlockedSites = () => {
-  browser.storage.local.get('blockedSites').then((result) => {
-    updateBlockedSites(result.blockedSites || [])
-  }, onError)
+  browser.storage.local.get('blockedSites')
+    .then((result) => {
+      updateBlockedSites(result.blockedSites || [])
+    }, onError)
 }
 
 const onError = (error) => {
@@ -229,21 +251,16 @@ browser.storage.local.onChanged.addListener((changes) => {
   }
 })
 
-browser.webRequest.onBeforeRequest.addListener(
-  blockSite,
-  {
-    urls: ['<all_urls>'],
-    types: ['main_frame']
-  },
-  ['blocking']
-)
-
 loadBlockedSites()
 
 browser.runtime.onMessage.addListener((message, _, sendResponse) => {
   switch (message.action) {
     case 'advance':
       advance()
+      break
+
+    case 'checkOpenTabs':
+      checkOpenTabs()
       break
 
     case 'clearInterval':
