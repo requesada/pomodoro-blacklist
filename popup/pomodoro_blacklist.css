@@ -674,3 +674,19 @@ input[type="range"][orient="vertical"]::-moz-range-thumb {
   width: 45%;
   font-size: 1.4rem;
 }
+
+/* .option-input::-webkit-outer-spin-button,
+.option-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.option-input {
+  -moz-appearance: textfield;
+} */
+
+.spinners {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
