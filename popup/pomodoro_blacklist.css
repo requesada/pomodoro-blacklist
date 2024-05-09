@@ -543,7 +543,8 @@ input[type="range"][orient="vertical"]::-moz-range-thumb {
 }
 
 #options-button,
-#options-close {
+#options-close,
+.spinners button {
   background-color: var(--turkeyRed);
   border: none;
   cursor: pointer;
@@ -689,4 +690,15 @@ input[type="range"][orient="vertical"]::-moz-range-thumb {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.spinners button {
+  border-radius: var(--optionsButtonRadius);
+  width: var(--optionsButtonSize);
+  height: var(--optionsButtonSize);
+  box-shadow: 1px 1px var(--richBlack) inset, 1px 0 var(--richBlack);
+}
+
+.spinners button:active {
+  box-shadow: 1.5px 3px var(--richBlack) inset, 1.5px 0 var(--richBlack);
 }
