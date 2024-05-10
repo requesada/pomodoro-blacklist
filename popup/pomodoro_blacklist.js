@@ -46,6 +46,17 @@ const changeLength = (event) => {
   lengthDisplay.innerText = String(newValue).padStart(2, '0')
   timerSettings[setting].length = newValue
   browser.storage.local.set({timerSettings})
+    .then(() => {
+      browser.runtime.sendMessage({
+        action: 'updateTimerSettingLengths',
+        newLength: {[setting]: newValue}
+      })
+    })
+    .then(() => {
+      if (!currentTimerState.isRunning) {
+        browser.runtime.sendMessage({action: 'setTime'})
+      }
+    })
 }
 
 let lengthChangeInterval
@@ -128,9 +139,12 @@ const getStyles = () => {
 }
 
 const getTimerState = () => {
-  const setCurrentTimerState = (response) => {
-    currentTimerState = response.timerState
+  const setCurrentTimerState = ({timerState}) => {
+    currentTimerState = timerState
     getStyles()
+    if (!timerState.isRunning) {
+      browser.runtime.sendMessage({action: 'setTime'})
+    }
   }
   const onError = () => {
     console.log(`Error getting timerState: ${error}`)

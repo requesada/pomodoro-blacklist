@@ -156,7 +156,7 @@ const timer = () => {
   // let minutes = startingMinutes - 1
   let minutes = 0
   // let seconds = 59
-  let seconds = 10
+  let seconds = 2
   
   const subtractSecond = () => {
     time = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
@@ -282,7 +282,7 @@ browser.runtime.onMessage.addListener((message, _, sendResponse) => {
     case 'playSound':
       playSound(message.sound)
       break
-    
+      
     case 'reset':
       clearInterval(intervalID)
       for (let i = 0; i < roundPhases.length; i++) {
@@ -293,7 +293,11 @@ browser.runtime.onMessage.addListener((message, _, sendResponse) => {
       timerState.isRunning = false
       setTime()
       break
-  
+      
+    case 'setTime':
+      setTime()
+      break
+    
     case 'startTimer':
       timer()
       break
@@ -312,6 +316,10 @@ browser.runtime.onMessage.addListener((message, _, sendResponse) => {
   
     case 'updateTask':
       updateTask(message.newTask)
+      break
+
+    case 'updateTimerSettingLengths':
+      timerSettingLengths = {...timerSettingLengths, ...message.newLength}
       break
     
     case 'updateVolume':
