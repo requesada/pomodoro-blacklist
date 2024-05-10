@@ -18,13 +18,74 @@ const timerSettings = {
   volume: 50
 }
 
+const changeLength = (event) => {
+  const buttonParent = event.target.parentElement.id
+  const spinnerIndex = buttonParent.indexOf('-spinner')
+  const identifier = buttonParent.substring(0, spinnerIndex)
+  const upButton = event.target.className.endsWith('up')
+  const selector = `#${identifier}-length`
+  const lengthDisplay = document.querySelector(selector)
+  let currentValue = Number(lengthDisplay.innerText)
+  let max
+  let newValue
+
+  const setting = identifier.includes('-') ? identifier.replace('b', 'B').split('-').join('') : identifier
+
+  if (identifier === 'pomodoro') {
+    max = 120
+  } else if (identifier === 'short-break') {
+    max = 15 
+  } else {
+    max = 60
+  }
+  if (upButton && currentValue !== max) {
+    newValue = ++currentValue
+  } else if (!upButton && currentValue !== 1) {
+    newValue = --currentValue
+  }
+  lengthDisplay.innerText = String(newValue).padStart(2, '0')
+  timerSettings[setting].length = newValue
+  browser.storage.local.set({timerSettings})
+}
+
+let lengthChangeInterval
+let changeRate = 500
+const accelerationFactor = 0.9
+
+const startLengthChangeInterval = (event) => {
+  if (lengthChangeInterval) clearInterval(lengthChangeInterval)
+  lengthChangeInterval = setInterval(() => {
+    changeLength(event)
+    changeRate *= accelerationFactor
+    changeRate = Math.max(changeRate, 50)
+    clearInterval(lengthChangeInterval)
+    startLengthChangeInterval(event)
+  }, changeRate)
+}
+
+const stopButtonAction = () => {
+  clearInterval(lengthChangeInterval)
+  lengthChangeInterval = undefined
+  changeRate = 500
+}
+
+const spinnerButtons = document.querySelectorAll('button[class^="spinner-"]')
+spinnerButtons.forEach((button) => {
+  button.addEventListener('mousedown', (event) => {
+    changeLength(event)
+    startLengthChangeInterval(event)
+  })
+  button.addEventListener('mouseup', stopButtonAction)
+  button.addEventListener('mouseleave', stopButtonAction)
+})
+
 const restoreSavedSettings = () => {
   const setTimerSettings = (result) => {
     if (result.timerSettings) {
       for (const [setting, value] of Object.entries(result.timerSettings)) {
         if (value.length && value.selector) {
           timerSettings[setting].length = value.length
-          document.querySelector(value.selector).value = value.length
+          document.querySelector(value.selector).innerText = String(value.length).padStart(2, '0')
         } else {
           timerSettings[setting] = value
           volumeControl.value = value
@@ -80,15 +141,6 @@ const getTimerState = () => {
     .then(setCurrentTimerState, onError)
 }
 
-for (const [setting, {selector}] of Object.entries(timerSettings)) {
-  if (selector) {
-    document.querySelector(selector).addEventListener('change', (event) => {
-      timerSettings[setting].length = event.target.value < 0.5 ? timerSettings[setting].length : Math.round(Number(event.target.value))
-      browser.storage.local.set({timerSettings})
-    })
-  }
-}
-
 let currentTask = ''
 const getCurrentTask = () => {
   browser.runtime.sendMessage({action: 'getTask'})
@@ -124,7 +176,6 @@ taskInput.addEventListener('change', (event) => {
   }
 })
 
-
 let testToneInterval
 const volumeControl = document.querySelector('#volume-slider')
 volumeControl.addEventListener('input', () => {
@@ -155,6 +206,7 @@ volumeControl.addEventListener('mouseup', () => {
 const toggleFlip = () => {
   document.querySelector('#device').classList.toggle('flip')
 }
+toggleFlip()
 
 const optionsButton = document.querySelector('#options-button')
 optionsButton.addEventListener('click', toggleFlip)
