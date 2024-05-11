@@ -202,12 +202,16 @@ volumeControl.addEventListener('input', () => {
 
 volumeControl.addEventListener('mousedown', () => {
   if (!testToneInterval) {
+    browser.runtime.sendMessage({
+      action: 'playSound',
+      sound: 'volumeTestTone'
+    })
     testToneInterval = setInterval(() => {
       browser.runtime.sendMessage({
         action: 'playSound',
         sound: 'volumeTestTone'
       })
-    }, 600) // TODO Tuned to this sound, prob change later
+    }, 600)
   }
 })
 
