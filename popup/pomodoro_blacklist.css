@@ -59,20 +59,16 @@ body {
 #back {
   position: absolute;
   width: 100%;
+  height: var(--deviceHeight);
   backface-visibility: hidden;
   display: flex;
   align-items: center;
   transform-style: preserve-3d;
+  background-color: var(--cadetGray);
 }
 
 #front {
   flex-direction: column;
-}
-
-#front,
-#back {
-  height: var(--deviceHeight);
-  background-color: var(--cadetGray);
 }
 
 #back {

@@ -4,9 +4,9 @@ let blockedSites = []
 let task = ''
 
 const sounds = {
-  volumeTestTone: new Audio('../audio/volume-test-tone.mp3'),
-  workTimerDone: new Audio('../audio/work-timer-done.mp3'),
-  breakTimerDone: new Audio('../audio/break-timer-done.mp3')
+  volumeTestTone: new Audio('./audio/volume-test-tone.mp3'),
+  workTimerDone: new Audio('./audio/work-timer-done.mp3'),
+  breakTimerDone: new Audio('./audio/break-timer-done.mp3')
 }
 
 const playSound = (sound) => {
@@ -17,7 +17,7 @@ const playSound = (sound) => {
 }
 
 const updateVolume = (newValue) => {
-  Object.values(sounds).forEach(sound => {
+  Object.values(sounds).forEach((sound) => {
     sound.volume = newValue
   })
 }

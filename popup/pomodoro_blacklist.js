@@ -1,3 +1,21 @@
+const buttonSounds = {
+  optionsMousedown: new Audio('../audio/opt-mousedown.mp3'),
+  optionsMouseup: new Audio('../audio/opt-mouseup.mp3'),
+  spinnerMousedown: new Audio('../audio/spinner-mousedown.mp3'),
+  spinnerMouseup: new Audio('../audio/spinner-mouseup.mp3'),
+  timerIn: new Audio('../audio/spinner-timer-in.mp3'),
+  timerMid: new Audio('../audio/spinner-timer-mid.mp3'),
+  timerOut: new Audio('../audio/spinner-timer-out.mp3')
+}
+
+const playSound = (sound) => {
+  if (!sound.paused) {
+    sound.pause()
+    sound.currentTime = 0
+  }
+  sound.play()
+}
+
 const countdown = document.querySelector('#countdown')
 
 let currentTimerState
@@ -83,11 +101,14 @@ const stopButtonAction = () => {
 const spinnerButtons = document.querySelectorAll('button[class^="spinner-"]')
 spinnerButtons.forEach((button) => {
   button.addEventListener('mousedown', (event) => {
+    playSound(buttonSounds.spinnerMousedown)
     changeLength(event)
     startLengthChangeInterval(event)
   })
-  button.addEventListener('mouseup', stopButtonAction)
-  button.addEventListener('mouseleave', stopButtonAction)
+  button.addEventListener('mouseup', () => {
+    playSound(buttonSounds.spinnerMouseup)
+    stopButtonAction()
+  })
 })
 
 const restoreSavedSettings = () => {
@@ -198,6 +219,9 @@ volumeControl.addEventListener('input', () => {
     volume: Number(volumeControl.value) / 100
   })
   timerSettings.volume = Number(volumeControl.value)
+  Object.values(buttonSounds).forEach((sound) => {
+    sound.volume = Number(volumeControl.value) / 100
+  })
 })
 
 volumeControl.addEventListener('mousedown', () => {
@@ -224,13 +248,24 @@ volumeControl.addEventListener('mouseup', () => {
 const toggleFlip = () => {
   document.querySelector('#device').classList.toggle('flip')
 }
-toggleFlip()
 
 const optionsButton = document.querySelector('#options-button')
 optionsButton.addEventListener('click', toggleFlip)
+optionsButton.addEventListener('mousedown', () => {
+  playSound(buttonSounds.optionsMousedown)
+})
+optionsButton.addEventListener('mouseup', () => {
+  playSound(buttonSounds.optionsMouseup)
+})
 
 const optionsClose = document.querySelector('#options-close')
 optionsClose.addEventListener('click', toggleFlip)
+optionsClose.addEventListener('mousedown', () => {
+  playSound(buttonSounds.optionsMousedown)
+})
+optionsClose.addEventListener('mouseup', () => {
+  playSound(buttonSounds.optionsMouseup)
+})
 
 const resetButton = document.querySelector('#reset-button')
 const resetButtonCircle = document.querySelector('#reset-button-circle')
