@@ -24,8 +24,8 @@
 }
 
 @font-face {
-  font-family: bedstead;
-  src: url(../fonts/bedstead.otf);
+  font-family: moshita;
+  src: url(../fonts/MoshitaMono.ttf);
 }
 
 @font-face {
@@ -440,11 +440,10 @@ input[type="range"][orient="vertical"]::-moz-range-thumb {
   width: 315px;
   height: 154px;
   background-color: var(--displayGray); 
-  /* TODO: Make grayish? */
   color: var(--richBlack);
   border-radius: 14px;
   border: 1.4px solid var(--richBlack);
-  font-family: bedstead;
+  font-family: moshita;
 }
 
 #countdown,
@@ -457,9 +456,8 @@ input[type="range"][orient="vertical"]::-moz-range-thumb {
 }
 
 #countdown {
-  height: 84px;
-  font-size: 5.6rem;
-  padding-top: 11.2px;
+  height: 93px;
+  font-size: 8rem;
 }
 
 #countdown.no-task {
@@ -468,8 +466,7 @@ input[type="range"][orient="vertical"]::-moz-range-thumb {
 
 #task {
   height: 70px;
-  font-size: 2.1rem;
-  padding-top: 5.6px;
+  font-size: 3.6rem;
   overflow: hidden;
 }
 
@@ -691,7 +688,6 @@ input[type="range"][orient="vertical"]::-moz-range-thumb {
 
 .option-display {
   background-color: var(--displayGray); 
-  /* TODO: Make grayish? */
   width: 52px;
   height: 24px;
   display: flex;
@@ -700,9 +696,8 @@ input[type="range"][orient="vertical"]::-moz-range-thumb {
   text-align: center;
   border: 1.4px var(--richBlack) solid;
   border-radius: 5px;
-  font-family: bedstead;
-  font-size: 1em;
-  padding-top: 2px;
+  font-family: moshita;
+  font-size: 1.5em;
 }
 
 .spinner {
