@@ -185,6 +185,7 @@ const getTimerState = () => {
 }
 
 let currentTask = ''
+const taskInput = document.querySelector('#task-input')
 const getCurrentTask = () => {
   browser.runtime.sendMessage({action: 'getTask'})
     .then(({task}) => {
@@ -194,11 +195,10 @@ const getCurrentTask = () => {
         document.querySelector('#task').className = ''
         document.querySelector('#primary').innerText = task
         document.querySelector('#secondary').innerText = task
-        taskOptionInput.value = task
+        taskInput.value = task
       }
     })
 }
-const taskInput = document.querySelector('#task-input')
 taskInput.addEventListener('change', (event) => {
   if (event.target.value.replace(/\s/g, '').length  === 0) {
     countdown.className = 'no-task'
