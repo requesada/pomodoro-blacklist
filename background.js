@@ -145,7 +145,7 @@ const setTime = () => {
 const timer = () => {
   setIcon()
   timerState.isRunning = true
-  // let startingMinutes
+  let startingMinutes
   if (timerState.round === 3 && timerState.phaseIndex === 2) {
     startingMinutes = timerSettingLengths.longBreak
   } else if (timerState.phaseIndex === 2) {
@@ -153,10 +153,8 @@ const timer = () => {
   } else {
     startingMinutes = timerSettingLengths.pomodoro
   }
-  // let minutes = startingMinutes - 1
-  let minutes = 0
-  // let seconds = 59
-  let seconds = 2
+  let minutes = startingMinutes - 1
+  let seconds = 59
   
   const subtractSecond = () => {
     time = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
