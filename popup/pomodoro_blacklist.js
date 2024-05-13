@@ -1,11 +1,12 @@
 const buttonSounds = {
   optionsMousedown: new Audio('../audio/opt-mousedown.mp3'),
   optionsMouseup: new Audio('../audio/opt-mouseup.mp3'),
+  reset: new Audio('../audio/reset.mp3'),
   spinnerMousedown: new Audio('../audio/spinner-mousedown.mp3'),
   spinnerMouseup: new Audio('../audio/spinner-mouseup.mp3'),
-  timerIn: new Audio('../audio/spinner-timer-in.mp3'),
-  timerMid: new Audio('../audio/spinner-timer-mid.mp3'),
-  timerOut: new Audio('../audio/spinner-timer-out.mp3')
+  timerIn: new Audio('../audio/timer-in.mp3'),
+  timerMid: new Audio('../audio/timer-mid.mp3'),
+  timerOut: new Audio('../audio/timer-out.mp3')
 }
 
 const playSound = (sound) => {
@@ -271,6 +272,7 @@ const resetButton = document.querySelector('#reset-button')
 const resetButtonCircle = document.querySelector('#reset-button-circle')
 let resetTimeout
 resetButton.addEventListener('mousedown', () => {
+  buttonSounds.reset.play()
   resetButtonCircle.classList.add('resetting')
   if (!resetTimeout) {
     resetTimeout = setTimeout(() => {
@@ -287,6 +289,8 @@ resetButton.addEventListener('mousedown', () => {
   }
 })
 resetButton.addEventListener('mouseup', () => {
+  buttonSounds.reset.pause()
+  buttonSounds.reset.currentTime = 0
   resetButtonCircle.classList.remove('resetting')
   if (resetTimeout) {
     clearTimeout(resetTimeout)
@@ -318,6 +322,20 @@ const clickTimerButton = () => {
   }
 }
 timerButton.addEventListener('click', clickTimerButton)
+timerButton.addEventListener('mousedown', () => {
+  if (timerButton.innerHTML === 'Start') {
+    playSound(buttonSounds.timerIn)
+  } else {
+    playSound(buttonSounds.timerMid)
+  }
+})
+timerButton.addEventListener('mouseup', () => {
+  if (timerButton.innerHTML === 'Stop') {
+    playSound(buttonSounds.timerOut)
+  } else {
+    playSound(buttonSounds.timerMid)
+  }
+})
 
 const blacklist = document.querySelector('#blacklist')
 const blacklistMonitor = document.querySelector('#blacklist-monitor')
