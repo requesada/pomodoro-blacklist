@@ -129,6 +129,7 @@ body {
   border-right: 2.8px solid var(--richBlack);
   border-top: 2.8px solid var(--richBlack);
   border-bottom: 2.8px solid var(--richBlack);
+  user-select: none;
 }
 
 #arrow-right {
@@ -162,6 +163,10 @@ body {
 
 #task-container {
   margin-bottom: 7px;
+}
+
+#task-label {
+  user-select: none;
 }
 
 #task-input {
@@ -407,6 +412,7 @@ input[type="range"][orient="vertical"]::-moz-range-thumb {
 #volume-label,
 #options-label {
   font-size: 1.4rem;
+  user-select: none;
 }
 
 #options-label {
@@ -447,6 +453,7 @@ input[type="range"][orient="vertical"]::-moz-range-thumb {
   justify-content: center;
   align-items: center;
   width: 100%;
+  user-select: none;
 }
 
 #countdown {
@@ -621,6 +628,7 @@ input[type="range"][orient="vertical"]::-moz-range-thumb {
 #reset-label {
   font-size: 0.7rem;
   text-transform: uppercase;
+  user-select: none;
 }
 
 #options-close-container {
@@ -656,6 +664,7 @@ input[type="range"][orient="vertical"]::-moz-range-thumb {
   display: flex;
   justify-content: center;
   width: 100%;
+  user-select: none;
 }
 
 .option-title {

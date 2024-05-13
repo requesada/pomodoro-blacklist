@@ -52,18 +52,7 @@ const changeLength = (event) => {
 
   const setting = identifier.includes('-') ? identifier.replace('b', 'B').split('-').join('') : identifier
 
-  if (identifier === 'pomodoro') {
-    max = 120
-  } else if (identifier === 'short-break') {
-    max = 15 
-  } else {
-    max = 60
-  }
-  if (upButton && currentValue !== max) {
-    newValue = ++currentValue
-  } else if (!upButton && currentValue !== 1) {
-    newValue = --currentValue
-  }
+  const updateAndStore = () => {
   lengthDisplay.innerText = String(newValue).padStart(2, '0')
   timerSettings[setting].length = newValue
   browser.storage.local.set({timerSettings})
@@ -78,6 +67,22 @@ const changeLength = (event) => {
         browser.runtime.sendMessage({action: 'setTime'})
       }
     })
+  }
+
+  if (identifier === 'pomodoro') {
+    max = 90
+  } else if (identifier === 'short-break') {
+    max = 15 
+  } else {
+    max = 45
+  }
+  if (upButton && currentValue < max) {
+    newValue = currentValue + 1
+    updateAndStore()
+  } else if (!upButton && currentValue > 1) {
+    newValue = currentValue - 1
+    updateAndStore()
+  }
 }
 
 let lengthChangeInterval
