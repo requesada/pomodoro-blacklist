@@ -1,4 +1,5 @@
 :root {
+  --displayGray: #F4F3F6;
   --cadetGray: #7D98A1;
   --richBlack: #001011;
   --lightGreen: #92DE91;
@@ -432,7 +433,7 @@ input[type="range"][orient="vertical"]::-moz-range-thumb {
   align-items: center;
   width: 315px;
   height: 154px;
-  background-color: white; 
+  background-color: var(--displayGray); 
   /* TODO: Make grayish? */
   color: var(--richBlack);
   border-radius: 14px;
@@ -680,7 +681,7 @@ input[type="range"][orient="vertical"]::-moz-range-thumb {
 }
 
 .option-display {
-  background-color: white; 
+  background-color: var(--displayGray); 
   /* TODO: Make grayish? */
   width: 52px;
   height: 24px;

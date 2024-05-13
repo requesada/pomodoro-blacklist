@@ -1,4 +1,6 @@
 const buttonSounds = {
+  monitorOpen: new Audio('../audio/monitor-open.mp3'),
+  monitorClose: new Audio('../audio/monitor-close.mp3'),
   optionsMousedown: new Audio('../audio/opt-mousedown.mp3'),
   optionsMouseup: new Audio('../audio/opt-mouseup.mp3'),
   reset: new Audio('../audio/reset.mp3'),
@@ -360,6 +362,7 @@ blacklistMonitor.addEventListener('animationend', () => {
 
 arrowTab.addEventListener('click', () => {
   if (blacklist.classList.contains('expanded')) {
+    playSound(buttonSounds.monitorClose)
     taskContainer.classList.toggle('hidden')
     listInput.classList.toggle('hidden')
     instructions.classList.toggle('hidden')
@@ -367,6 +370,7 @@ arrowTab.addEventListener('click', () => {
     blacklist.classList.toggle('closing')
     browser.runtime.sendMessage({action: 'checkOpenTabs'})
   } else {
+    playSound(buttonSounds.monitorOpen)
     blacklist.classList.toggle('expanded')
   }
 })
