@@ -1,0 +1,36 @@
+Section I
+---------
+
+Creative Commons Attribution-NonCommercial 4.0 International Public License (CC BY-NC 4.0)
+
+By exercising the Licensed Rights (defined below), You accept and agree to be bound by the terms and conditions of this Creative Commons Attribution-NonCommercial 4.0 International Public License ("Public License"). To the extent this Public License may be interpreted as a contract, You are granted the Licensed Rights in consideration of Your acceptance of these terms and conditions, and the Licensor grants You such rights in consideration of benefits the Licensor receives from making the Licensed Material available under these terms and conditions.
+
+...
+
+Full license text available at: https://creativecommons.org/licenses/by-nc/4.0/legalcode
+
+
+
+Section II
+----------
+
+Custom Commercial License
+
+This software is available under a dual licensing model. For non-commercial use, the software is provided under the terms of the Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0) License. For commercial use, the following terms apply:
+
+1. **Commercial Use**:
+   - Any use of the software in a product or project for which you receive payment requires a commercial license.
+
+2. **Royalty Payments**:
+   - Commercial use of the software requires payment of royalties. To negotiate royalty terms, please contact Roberto Quesada at roberto.quesada@gmail.com.
+
+3. **Contact Information**:
+   - For obtaining a commercial license or for any inquiries regarding the terms, please contact Roberto Quesada at roberto.quesada@gmail.com.
+
+4. **Termination**:
+   - If you violate the terms of the commercial license, your rights to use the software will terminate automatically.
+
+5. **Disclaimer**:
+   - The software is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, and noninfringement. In no event shall the authors or copyright holders be liable for any claim, damages, or other liability, whether in an action of contract, tort, or otherwise, arising from, out of, or in connection with the software or the use or other dealings in the software.
+
+By using the software, you agree to the terms of the appropriate license based on your use case.
