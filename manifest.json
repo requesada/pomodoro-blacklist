@@ -13,17 +13,17 @@
     },
   
     "icons": {
-      "48": "icons/all-48.png",
-      "96": "icons/all-96.png"
+      "48": "assets/icons/all-48.png",
+      "96": "assets/icons/all-96.png"
     },
 
     "browser_action": {
         "default_icon": {
-          "48": "icons/all-48.png",
-          "96": "icons/all-96.png"
+          "48": "assets/icons/all-48.png",
+          "96": "assets/icons/all-96.png"
         },
         "default_title": "Pomodoro Blacklist",
-        "default_popup": "popup/pomodoro_blacklist.html"
+        "default_popup": "src/popup/pomodoro_blacklist.html"
     },
 
     "permissions": [
@@ -33,11 +33,11 @@
     ],
 
     "background": {
-      "scripts": ["background.js"]
+      "scripts": ["src/background.js"]
     },
 
     "web_accessible_resources": [
-      "blocked.html"
+      "src/blocked.html"
     ]
   }
   

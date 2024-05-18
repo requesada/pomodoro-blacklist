@@ -3,10 +3,13 @@ let isPopupOpen = false
 let blockedSites = []
 let task = ''
 
+const audioPath = '../assets/audio'
+const iconPath = '../assets/icons'
+
 const sounds = {
-  volumeTestTone: new Audio('./audio/volume-test-tone.mp3'),
-  workTimerDone: new Audio('./audio/work-timer-done.mp3'),
-  breakTimerDone: new Audio('./audio/break-timer-done.mp3')
+  volumeTestTone: new Audio(`${audioPath}/volume-test-tone.mp3`),
+  workTimerDone: new Audio(`${audioPath}/work-timer-done.mp3`),
+  breakTimerDone: new Audio(`${audioPath}/break-timer-done.mp3`)
 }
 
 const playSound = (sound) => {
@@ -36,8 +39,8 @@ const iconSetter = (icon) => {
   return (
     browser.browserAction.setIcon({
       path: {
-        48: `icons/${icon}-48.png`,
-        96: `icons/${icon}-96.png`
+        48: `${iconPath}/${icon}-48.png`,
+        96: `${iconPath}/${icon}-96.png`
       }
     })
   )
@@ -197,7 +200,7 @@ const blockTab = (tabID, address) => {
   const urlString = url.hostname
   for (const site of blockedSites) {
     if (urlString.startsWith(site) || urlString.startsWith(`www.${site}`)) {
-      browser.tabs.update(tabID, {url: 'blocked.html'})
+      browser.tabs.update(tabID, {url: 'src/blocked.html'})
     }
   }
 }

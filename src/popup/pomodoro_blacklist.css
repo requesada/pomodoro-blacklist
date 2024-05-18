@@ -20,17 +20,17 @@
 
 @font-face {
   font-family: josefin;
-  src: url(../fonts/josefin-sans-variable-weight.ttf);
+  src: url(../../assets/fonts/josefin-sans-variable-weight.ttf);
 }
 
 @font-face {
   font-family: moshita;
-  src: url(../fonts/MoshitaMono.ttf);
+  src: url(../../assets/fonts/MoshitaMono.ttf);
 }
 
 @font-face {
   font-family: vt323;
-  src: url(../fonts/VT323-Regular.ttf);
+  src: url(../../assets/fonts/VT323-Regular.ttf);
 }
 
 html,
@@ -721,3 +721,4 @@ input[type="range"][orient="vertical"]::-moz-range-thumb {
 .spinner button:active {
   box-shadow: 1.5px 2px var(--richBlack) inset, 1.5px 0 var(--richBlack);
 }
+

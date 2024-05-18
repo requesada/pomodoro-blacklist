@@ -1,14 +1,15 @@
+const audioPath = '../../assets/audio'
 const buttonSounds = {
-  monitorOpen: new Audio('../audio/monitor-open.mp3'),
-  monitorClose: new Audio('../audio/monitor-close.mp3'),
-  optionsMousedown: new Audio('../audio/opt-mousedown.mp3'),
-  optionsMouseup: new Audio('../audio/opt-mouseup.mp3'),
-  reset: new Audio('../audio/reset.mp3'),
-  spinnerMousedown: new Audio('../audio/spinner-mousedown.mp3'),
-  spinnerMouseup: new Audio('../audio/spinner-mouseup.mp3'),
-  timerIn: new Audio('../audio/timer-in.mp3'),
-  timerMid: new Audio('../audio/timer-mid.mp3'),
-  timerOut: new Audio('../audio/timer-out.mp3')
+  monitorOpen: new Audio(`${audioPath}/monitor-open.mp3`),
+  monitorClose: new Audio(`${audioPath}/monitor-close.mp3`),
+  optionsMousedown: new Audio(`${audioPath}/opt-mousedown.mp3`),
+  optionsMouseup: new Audio(`${audioPath}/opt-mouseup.mp3`),
+  reset: new Audio(`${audioPath}/reset.mp3`),
+  spinnerMousedown: new Audio(`${audioPath}/spinner-mousedown.mp3`),
+  spinnerMouseup: new Audio(`${audioPath}/spinner-mouseup.mp3`),
+  timerIn: new Audio(`${audioPath}/timer-in.mp3`),
+  timerMid: new Audio(`${audioPath}/timer-mid.mp3`),
+  timerOut: new Audio(`${audioPath}/timer-out.mp3`)
 }
 
 const playSound = (sound) => {
