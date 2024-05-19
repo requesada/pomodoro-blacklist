@@ -7,7 +7,7 @@
   --tomato: #F95738;
   --lightTomato: #FDBDB0;
   --turkeyRed: #A30000;
-  --sliderThumbWidth: 12.6px;
+  --sliderThumbWidth: 12px;
   --volumeImageWidth: 14px;
   --volumeImageHeight: 91px;
   --oliveSize: 33.6px;
@@ -382,8 +382,9 @@ input[type="range"][orient="vertical"]::-moz-range-thumb {
   -webkit-appearance: none;
   appearance: none;
   width: var(--sliderThumbWidth);
-  height: 2.8px;
+  height: 30px;
   background: var(--richBlack);
+  border: none;
   cursor: pointer;
 }
 
