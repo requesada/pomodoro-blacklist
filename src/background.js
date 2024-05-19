@@ -20,9 +20,9 @@ const playSound = (sound) => {
 }
 
 const updateVolume = (newValue) => {
-  Object.values(sounds).forEach((sound) => {
+  for (const sound of Object.values(sounds)) {
     sound.volume = newValue
-  })
+  }
 }
 
 const roundPhases = ['ready', 'ready', 'ready', 'ready']
@@ -55,10 +55,10 @@ const alternateIcons = () => {
   }
 
   let newIcon
-  if (!iconArray.includes(currentIcon)) {
-    newIcon = iconArray[1]
-  } else {
+  if (iconArray.includes(currentIcon)) {
     newIcon = currentIcon === iconArray[0] ? iconArray[1] : iconArray[0]
+  } else {
+    newIcon = iconArray[1]
   }
 
   iconSetter(newIcon)
@@ -66,18 +66,22 @@ const alternateIcons = () => {
 
 const setIcon = () => {
   switch (roundPhases[timerState.round]) {
-    case 'work-counting':
+    case 'work-counting': {
       iconSetter('none')
       break
-    case 'work-done':
+    }
+    case 'work-done': {
       iconSetter('green')
       break
-    case 'break-counting':
+    }
+    case 'break-counting': {
       iconSetter('green')
       break
-    case 'break-done':
+    }
+    case 'break-done': {
       iconSetter('all')
       break
+    }
   }
 }
 
@@ -121,17 +125,17 @@ const advance = () => {
   } else if (timerState.round === 3 && timerState.phaseIndex === phase.length - 1) {
     timerState.round = 0
     timerState.phaseIndex = 0
-    for (let i = 1; i < roundPhases.length; i++) {
-      roundPhases[i] = 'ready'
+    for (let index = 1; index < roundPhases.length; index++) {
+      roundPhases[index] = 'ready'
     }
     roundPhases[0] = phase[0]
   }
   if (isPopupOpen) browser.runtime.sendMessage({action: 'getStyles'})
 }
 
+const formatTime = (minutes) => `${String(minutes).padStart(2, '0')}:00`
 const setTime = () => {
   let nextTime
-  const formatTime = (minutes) => `${String(minutes).padStart(2, '0')}:00`
   if (timerState.round === 3 && roundPhases[timerState.round] === 'work-done') {
     nextTime = formatTime(timerSettingLengths.longBreak)
   } else if (roundPhases[timerState.round] === 'work-done') {
@@ -220,9 +224,9 @@ browser.tabs.onActivated.addListener((activeInfo) => {
 
 const checkOpenTabs = () => (
   browser.tabs.query({}).then((tabs) => {
-    tabs.forEach(({id, url}) => {
+    for (const {id, url} of tabs) {
       blockTab(id, url)
-    })
+    }
   })
 )
 checkOpenTabs()
@@ -256,76 +260,91 @@ loadBlockedSites()
 
 browser.runtime.onMessage.addListener((message, _, sendResponse) => {
   switch (message.action) {
-    case 'advance':
+    case 'advance': {
       advance()
       break
+    }
 
-    case 'checkOpenTabs':
+    case 'checkOpenTabs': {
       checkOpenTabs()
       break
+    }
 
-    case 'clearInterval':
+    case 'clearInterval': {
       clearInterval(intervalID)
       break
+    }
 
-    case 'getPhases':
+    case 'getPhases': {
       sendResponse({roundPhases})
       break
+    }
   
-    case 'getTask':
+    case 'getTask': {
       sendResponse({task})
       break
+    }
   
-    case 'getTimerState':
+    case 'getTimerState': {
       sendResponse({timerState})
       break
+    }
 
-    case 'playSound':
+    case 'playSound': {
       playSound(message.sound)
       break
+    }
       
-    case 'reset':
+    case 'reset': {
       clearInterval(intervalID)
-      for (let i = 0; i < roundPhases.length; i++) {
-        roundPhases[i] = 'ready'
+      for (let index = 0; index < roundPhases.length; index++) {
+        roundPhases[index] = 'ready'
       }
       timerState.round = 0
       timerState.phaseIndex = 0
       timerState.isRunning = false
       setTime()
       break
+    }
       
-    case 'setTime':
+    case 'setTime': {
       setTime()
       break
+    }
     
-    case 'startTimer':
+    case 'startTimer': {
       timer()
       break
+    }
 
-    case 'stopTimer':
+    case 'stopTimer': {
       clearInterval(intervalID)
       timerState.phaseIndex = 0
       timerState.isRunning = false
       roundPhases[timerState.round] = 'ready'
       setTime()
       break
+    }
   
-    case 'updateSites':
+    case 'updateSites': {
       updateBlockedSites(message.sites)
       break
+    }
   
-    case 'updateTask':
+    case 'updateTask': {
       updateTask(message.newTask)
       break
+    }
 
-    case 'updateTimerSettingLengths':
+    case 'updateTimerSettingLengths': {
       timerSettingLengths = {...timerSettingLengths, ...message.newLength}
       break
+    }
     
-    case 'updateVolume':
+    case 'updateVolume': {
       updateVolume(message.volume)
       break
+    }
   }
   
 

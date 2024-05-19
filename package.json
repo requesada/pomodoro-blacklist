@@ -1,14 +1,15 @@
 {
   "name": "pomodoro-blacklist",
+  "type": "module",
   "version": "1.0.0",
   "description": "Minimalist, gently dystopian Pomodoro timer and site blocker browser extension",
   "main": "src/background.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint . --fix"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/requesada/pomodoro-blacklist.git"
+    "url": "https://github.com/requesada/pomodoro-blacklist.git"
   },
   "keywords": [
     "pomodoro",
@@ -22,8 +23,9 @@
   ],
   "author": "Roberto Quesada",
   "license": "SEE LICENSE IN LICENSE.txt",
-  "bugs": {
-    "url": "https://github.com/requesada/pomodoro-blacklist/issues"
-  },
-  "homepage": "https://github.com/requesada/pomodoro-blacklist#readme"
+  "homepage": "https://github.com/requesada/pomodoro-blacklist#readme",
+  "devDependencies": {
+    "eslint": "^9.3.0",
+    "eslint-plugin-unicorn": "^53.0.0"
+  }
 }

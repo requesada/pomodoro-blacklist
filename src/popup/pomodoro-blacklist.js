@@ -43,18 +43,18 @@ const timerSettings = {
 const changeLength = (event) => {
   const buttonParent = event.target.parentElement.id
   const spinnerIndex = buttonParent.indexOf('-spinner')
-  const identifier = buttonParent.substring(0, spinnerIndex)
+  const identifier = buttonParent.slice(0, Math.max(0, spinnerIndex))
   const upButton = event.target.className.endsWith('up')
   const selector = `#${identifier}-length`
   const lengthDisplay = document.querySelector(selector)
-  let currentValue = Number(lengthDisplay.innerText)
+  let currentValue = Number(lengthDisplay.textContent)
   let max
   let newValue
 
   const setting = identifier.includes('-') ? identifier.replace('b', 'B').split('-').join('') : identifier
 
   const updateAndStore = () => {
-  lengthDisplay.innerText = String(newValue).padStart(2, '0')
+  lengthDisplay.textContent = String(newValue).padStart(2, '0')
   timerSettings[setting].length = newValue
   browser.storage.local.set({timerSettings})
     .then(() => {
@@ -108,7 +108,7 @@ const stopButtonAction = () => {
 }
 
 const spinnerButtons = document.querySelectorAll('button[class^="spinner-"]')
-spinnerButtons.forEach((button) => {
+for (const button of spinnerButtons) {
   button.addEventListener('mousedown', (event) => {
     playSound(buttonSounds.spinnerMousedown)
     changeLength(event)
@@ -118,15 +118,15 @@ spinnerButtons.forEach((button) => {
     playSound(buttonSounds.spinnerMouseup)
     stopButtonAction()
   })
-})
+}
 
 const restoreSavedSettings = () => {
   const setTimerSettings = (result) => {
     if (result.timerSettings) {
       for (const [setting, value] of Object.entries(result.timerSettings)) {
-        if (value.length && value.selector) {
+        if (value.length > 0 && value.selector) {
           timerSettings[setting].length = value.length
-          document.querySelector(value.selector).innerText = String(value.length).padStart(2, '0')
+          document.querySelector(value.selector).textContent = String(value.length).padStart(2, '0')
         } else {
           timerSettings[setting] = value
           volumeControl.value = value
@@ -155,9 +155,9 @@ const restoreSavedSites = () => {
 const getStyles = () => {
   const applyStyles = (response) => {
     const {roundPhases} = response
-    roundPhases.forEach((phaseClass, round) => {
+    for (const [round, phaseClass] of roundPhases.entries()) {
       document.querySelector(`#round-${round}`).className = phaseClass
-    })
+    }
   }
   const onError = (error) => {
     console.log(`Couldn't get phases: ${error}`)
@@ -194,14 +194,14 @@ const getCurrentTask = () => {
       if (task) {
         countdown.className = ''
         document.querySelector('#task').className = ''
-        document.querySelector('#primary').innerText = task
-        document.querySelector('#secondary').innerText = task
+        document.querySelector('#primary').textContent = task
+        document.querySelector('#secondary').textContent = task
         taskInput.value = task
       }
     })
 }
 taskInput.addEventListener('change', (event) => {
-  if (event.target.value.replace(/\s/g, '').length  === 0) {
+  if (event.target.value.replaceAll(/\s/g, '').length  === 0) {
     countdown.className = 'no-task'
     document.querySelector('#task').className = 'no-task'
     browser.runtime.sendMessage({
@@ -211,8 +211,8 @@ taskInput.addEventListener('change', (event) => {
   } else {
     countdown.className = ''
     document.querySelector('#task').className = ''
-    document.querySelector('#primary').innerText = event.target.value
-    document.querySelector('#secondary').innerText = event.target.value
+    document.querySelector('#primary').textContent = event.target.value
+    document.querySelector('#secondary').textContent = event.target.value
     browser.runtime.sendMessage({
       action: 'updateTask',
       newTask: event.target.value
@@ -228,9 +228,9 @@ volumeControl.addEventListener('input', () => {
     volume: Number(volumeControl.value) / 100
   })
   timerSettings.volume = Number(volumeControl.value)
-  Object.values(buttonSounds).forEach((sound) => {
+  for (const sound of Object.values(buttonSounds)) {
     sound.volume = Number(volumeControl.value) / 100
-  })
+  }
 })
 
 volumeControl.addEventListener('mousedown', () => {
@@ -315,17 +315,17 @@ const getCurrentRoundNode = () => document.querySelector(`#round-${currentTimerS
 
 const timerButton = document.querySelector('#timer-button')
 const clickTimerButton = () => {
-  if (!currentTimerState.isRunning) {
+  if (currentTimerState.isRunning) {
+    timerButton.className = 'start-button'
+    timerButton.innerHTML = 'Start'
+    browser.runtime.sendMessage({action: 'stopTimer'})
+      .then(() => getTimerState())
+  } else {
     timerButton.className = 'stop-button'
     timerButton.innerHTML = 'Stop'
     browser.runtime.sendMessage({action: 'advance'})
     browser.runtime.sendMessage({action: 'startTimer'})
       .then(() => getStyles())
-      .then(() => getTimerState())
-  } else {
-    timerButton.className = 'start-button'
-    timerButton.innerHTML = 'Start'
-    browser.runtime.sendMessage({action: 'stopTimer'})
       .then(() => getTimerState())
   }
 }
@@ -431,26 +431,31 @@ const initialize = () => {
 
   browser.runtime.onMessage.addListener((message) => {
     switch (message.action) {
-      case 'advance':
+      case 'advance': {
         advance()
         break
+      }
 
-      case 'getStyles':
+      case 'getStyles': {
         getStyles()
         break
+      }
 
-      case 'getTimerState':
+      case 'getTimerState': {
         getTimerState()
         break
+      }
     
-      case 'resetStart':
+      case 'resetStart': {
         timerButton.className = 'start-button'
         timerButton.innerHTML = 'Start'
         break
+      }
     
-      case 'updateTime':
-        countdown.innerText = message.time
+      case 'updateTime': {
+        countdown.textContent = message.time
         break
+      }
     }
   })
 

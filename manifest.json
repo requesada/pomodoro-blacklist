@@ -23,7 +23,7 @@
           "96": "assets/icons/all-96.png"
         },
         "default_title": "Pomodoro Blacklist",
-        "default_popup": "src/popup/pomodoro_blacklist.html"
+        "default_popup": "src/popup/pomodoro-blacklist.html"
     },
 
     "permissions": [
