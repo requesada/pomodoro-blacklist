@@ -423,7 +423,7 @@ input[type="range"][orient="vertical"]::-moz-range-thumb {
 #counter {
   display: flex;
   justify-content: space-evenly;
-  margin: 30.8px 0 15.4px 0;
+  margin: 20px 0 20px 0;
   width: 315px;
 }
 
