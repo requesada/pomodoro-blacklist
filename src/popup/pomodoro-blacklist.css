@@ -289,7 +289,6 @@ body {
   width: 95%;
   height: 100%;
   display: flex;
-  flex-direction: column;
   align-items: center;
 }
 
@@ -547,6 +546,7 @@ input[type="range"][orient="vertical"]::-moz-range-thumb {
 
 #options-button,
 #options-close,
+#help-button,
 .spinner button {
   background-color: var(--turkeyRed);
   border: none;
@@ -631,18 +631,17 @@ input[type="range"][orient="vertical"]::-moz-range-thumb {
 
 #options-close-container {
   display: flex;
+  flex-direction: column;
   justify-content: right;
-  width: 100%;
-  height: 60px;
+  align-items: center;
+  height: 100%;
+  width: 60px;
   padding-top: 15px;
 }
 
 #options-close {
   color: var(--richBlack);
   text-shadow: 0 -1.05px 0 var(--tomato);
-}
-
-#options-close {
   font-size: 1.575rem;
   margin: 14px 14px 14px 0;
   padding-left: 6px;
@@ -652,10 +651,11 @@ input[type="range"][orient="vertical"]::-moz-range-thumb {
 #options-list-container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   width: 100%;
   height: 100%;
-  gap: 28px;
+  gap: 40px;
 }
 
 .option-row {
@@ -666,7 +666,7 @@ input[type="range"][orient="vertical"]::-moz-range-thumb {
 }
 
 .option-title {
-  width: 30%;
+  width: 40%;
   display: flex;
   justify-content: end;
   align-items: center;
@@ -709,6 +709,7 @@ input[type="range"][orient="vertical"]::-moz-range-thumb {
   align-items: center;
 }
 
+#help-button,
 .spinner button {
   border-radius: var(--optionsButtonRadius);
   width: calc(0.8 * var(--optionsButtonSize));
@@ -719,7 +720,13 @@ input[type="range"][orient="vertical"]::-moz-range-thumb {
   padding-left: 6px;
 }
 
+#help-button:active,
 .spinner button:active {
   box-shadow: 1.5px 2px var(--richBlack) inset, 1.5px 0 var(--richBlack);
 }
 
+#help-button {
+  font-weight: 700;
+  font-size: 1em;
+  margin-right: 14px;
+}

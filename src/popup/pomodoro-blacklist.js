@@ -276,6 +276,11 @@ optionsClose.addEventListener('mouseup', () => {
   playSound(buttonSounds.optionsMouseup)
 })
 
+const helpButton = document.querySelector('#help-button')
+helpButton.addEventListener('click', () => {browser.tabs.create({url: 'https://github.com/requesada/pomodoro-blacklist'})})
+helpButton.addEventListener('mousedown', () => {  playSound(buttonSounds.spinnerMousedown)})
+helpButton.addEventListener('mouseup', () => {  playSound(buttonSounds.spinnerMouseup)})
+
 const resetButton = document.querySelector('#reset-button')
 const resetButtonCircle = document.querySelector('#reset-button-circle')
 let resetTimeout
