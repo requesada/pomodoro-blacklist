@@ -293,6 +293,8 @@ resetButton.addEventListener('mousedown', () => {
         .then(() => {
           getStyles()
           getTimerState()
+          timerButton.className = 'start-button'
+          timerButton.textContent = 'Start'
         })
       clearTimeout(resetTimeout)
       resetTimeout = undefined
