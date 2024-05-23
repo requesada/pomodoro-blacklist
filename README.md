@@ -5,11 +5,9 @@
 
 This device will help your inattentive brain stay on task using the [Pomodoro Technique](https://en.wikipedia.org/wiki/Pomodoro_Technique). 
 
-<!-- ![Front of device](/assets/images/front.png) -->
-<!-- ![Back of device](/assets/images/back.png) -->
-<!-- ![Blacklist view](/assets/images/blacklist.png) -->
-<!-- ![Display detail](/assets/images/display.png) -->
-<!-- ![Counter detail](/assets/images/counter.png) -->
+## Running
+This is currently being submitted to [AMO](https://addons.mozilla.org), and future work may include porting it to Chrome. For now, you can run it temporarily in Firefox following [these instructions](https://extensionworkshop.com/documentation/develop/temporary-installation-in-firefox/).
+
 ## Front of device
 <img src="assets/images/front.png" alt="Front of device" style="width: 50%; height: auto;"><br>
 <ol>
