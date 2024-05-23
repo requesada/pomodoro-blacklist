@@ -3,7 +3,7 @@
     "name": "Pomodoro Blacklist",
     "version": "1.0",
   
-    "description": "Work timer that uses the Pomodoro Technique and blocks sites.",
+    "description": "Minimalist, gently dystopian Pomodoro timer and site blocker",
 
     "browser_specific_settings": {
       "gecko": {
