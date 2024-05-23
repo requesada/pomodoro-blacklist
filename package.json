@@ -5,7 +5,7 @@
   "description": "Minimalist, gently dystopian Pomodoro timer and site blocker browser extension",
   "main": "src/background.js",
   "scripts": {
-    "lint": "eslint . --fix"
+    "lint": "eslint '**/*.js' --fix --debug"
   },
   "repository": {
     "type": "git",

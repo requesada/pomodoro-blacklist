@@ -322,12 +322,12 @@ const timerButton = document.querySelector('#timer-button')
 const clickTimerButton = () => {
   if (currentTimerState.isRunning) {
     timerButton.className = 'start-button'
-    timerButton.innerHTML = 'Start'
+    timerButton.textContent = 'Start'
     browser.runtime.sendMessage({action: 'stopTimer'})
       .then(() => getTimerState())
   } else {
     timerButton.className = 'stop-button'
-    timerButton.innerHTML = 'Stop'
+    timerButton.textContent = 'Stop'
     browser.runtime.sendMessage({action: 'advance'})
     browser.runtime.sendMessage({action: 'startTimer'})
       .then(() => getStyles())
@@ -336,14 +336,14 @@ const clickTimerButton = () => {
 }
 timerButton.addEventListener('click', clickTimerButton)
 timerButton.addEventListener('mousedown', () => {
-  if (timerButton.innerHTML === 'Start') {
+  if (timerButton.textContent === 'Start') {
     playSound(buttonSounds.timerIn)
   } else {
     playSound(buttonSounds.timerMid)
   }
 })
 timerButton.addEventListener('mouseup', () => {
-  if (timerButton.innerHTML === 'Stop') {
+  if (timerButton.textContent === 'Stop') {
     playSound(buttonSounds.timerOut)
   } else {
     playSound(buttonSounds.timerMid)
@@ -453,7 +453,7 @@ const initialize = () => {
     
       case 'resetStart': {
         timerButton.className = 'start-button'
-        timerButton.innerHTML = 'Start'
+        timerButton.textContent = 'Start'
         break
       }
     

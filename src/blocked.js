@@ -19,7 +19,7 @@ const minimumDuration = 1
 const decreaseFactor = 0.98
 
 pasteSelection = () => {
-  div.innerHTML += selection
+  div.textContent += selection
   duration = Math.max(minimumDuration, duration * decreaseFactor)
 
   if (div.scrollHeight > 1.1 * window.innerHeight) return
