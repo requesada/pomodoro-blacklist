@@ -5,8 +5,8 @@
 
 This device will help your inattentive brain stay on task using the [Pomodoro Technique](https://en.wikipedia.org/wiki/Pomodoro_Technique). 
 
-## Running
-Currently awaiting review at [AMO](https://addons.mozilla.org), and future work may include porting it to Chrome. For now, you can run it temporarily in Firefox following [these instructions](https://extensionworkshop.com/documentation/develop/temporary-installation-in-firefox/).
+## Installation
+Available as a Firefox extension [here](https://addons.mozilla.org/addon/pomodoro-blacklist/). Future work may include porting to Chrome.
 
 ## Front of device
 <img src="assets/images/front.png" alt="Front of device" style="width: 50%; height: auto;"><br>
