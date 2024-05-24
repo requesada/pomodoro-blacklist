@@ -3,10 +3,10 @@
 ![License: CC BY-NC 4.0](https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg)
 ![License: Custom Commercial](https://img.shields.io/badge/License-Commercial-blue.svg)
 
-This device will help your inattentive brain stay on task using the <a href="https://en.wikipedia.org/wiki/Pomodoro_Technique" target="_blank">Pomodoro Technique</a>.
+This device will help your inattentive brain stay on task using the [Pomodoro Technique](https://en.wikipedia.org/wiki/Pomodoro_Technique). 
 
 ## Installation
-Available as a Firefox extension <a href="https://addons.mozilla.org/addon/pomodoro-blacklist" target="_blank">here</a>. Future work may include porting to Chrome.
+Available as a Firefox extension [here](https://addons.mozilla.org/addon/pomodoro-blacklist/). Future work may include porting to Chrome.
 
 ## Front of device
 <img src="assets/images/front.png" alt="Front of device" style="width: 50%; height: auto;"><br>
