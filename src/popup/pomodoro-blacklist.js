@@ -172,7 +172,10 @@ const getTimerState = () => {
   const setCurrentTimerState = ({timerState}) => {
     currentTimerState = timerState
     getStyles()
-    if (!timerState.isRunning) {
+    if (timerState.isRunning) {
+      timerButton.className = 'stop-button'
+      timerButton.textContent = 'Stop'
+    } else {
       browser.runtime.sendMessage({action: 'setTime'})
     }
   }
