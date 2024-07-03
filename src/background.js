@@ -203,7 +203,7 @@ const blockTab = (tabID, address) => {
   const url = new URL(address)
   const urlString = url.hostname
   for (const site of blockedSites) {
-    if (urlString.startsWith(site) || urlString.startsWith(`www.${site}`)) {
+    if (roundPhases[timerState.round] === 'work-counting' && (urlString.startsWith(site) || urlString.startsWith(`www.${site}`))) {
       browser.tabs.update(tabID, {url: 'src/blocked.html'})
     }
   }
